@@ -68,7 +68,7 @@ class CalulateRoutesTSP:
         Method that calculate the distance matrix
 
         :param cidades: points or towns informed
-        :return: matrix in numpy with the distance between points
+        :return: numpy.matrix
         """
         qtd = cidades.shape[0]
         distancias = np.zeros([qtd, qtd])
@@ -125,7 +125,14 @@ class CalulateRoutesTSP:
         return new_pop
 
     def GA(self, generation, population, towns):
+        """
+        Calculation of the best route using Genetic Algorithm
 
+        :param generation: number of the generations
+        :param population: size of the population
+        :param towns: file with the location of cities on a Cartesian plane
+        :return: 2 values (cost best route, the sequence of towns of the route found)
+        """
         #    Carrega os pontos do mapas que deverão ser gerados as rotas
         mapa = np.loadtxt(towns)
 
