@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 class CalulateRoutesTSP:
 
     @staticmethod
-    def __plota_rotas(cidades, rota, size=5, font_size=15):
+    def _plota_rotas(cidades, rota, size=5, font_size=15):
         """
         Method to create a chart with the best routes found
 
@@ -44,7 +44,7 @@ class CalulateRoutesTSP:
         plt.title('Mapa GA')
 
     @staticmethod
-    def __mede_custo(distancias, rota):
+    def _mede_custo(distancias, rota):
         """
         Method that calculates the distance of the points of the route from the distance matrix
 
@@ -63,7 +63,7 @@ class CalulateRoutesTSP:
 
         return dist_total
 
-    def __matriz_distancia(self, cidades):
+    def _matriz_distancia(self, cidades):
         """
         Method that calculate the distance matrix
 
@@ -96,7 +96,7 @@ class CalulateRoutesTSP:
         id_pop = np.array()
 
         for i, indiv in enumerate(new_pop):
-            rotas = np.append(rotas, self.__mede_custo(distancias, indiv))
+            rotas = np.append(rotas, self._mede_custo(distancias, indiv))
 
         for i in range(num):
             min_pop = np.append(min_pop, rotas.min())
@@ -104,7 +104,7 @@ class CalulateRoutesTSP:
             id_pop = np.append(id_pop, id_min)
 
         for i, indiv in enumerate(new_pop):
-            rotas = np.append(rotas, self.__mede_custo(distancias, indiv))
+            rotas = np.append(rotas, self._mede_custo(distancias, indiv))
             if len(min_pop) < num:
                 min_pop = np.append(min_pop, ind)
                 id_pop = np.id_pop(min_pop, i)
@@ -113,7 +113,8 @@ class CalulateRoutesTSP:
                     min_pop = np.append(min_pop, ind)
                     id_pop = np.id_pop(min_pop, i)
 
-    def generate_population(self, size_population, ancestral, first_gene):
+    @staticmethod
+    def _generate_population(size_population, ancestral, first_gene):
         new_pop = np.zeros((size_population, ancestral.shape[0] + 2))
 
         for i in range(size_population):
@@ -137,7 +138,7 @@ class CalulateRoutesTSP:
         mapa = np.loadtxt(towns)
 
         #    Calculo da matriz de distancias entre todos os pontos
-        distancias = self.__matriz_distancia(mapa)
+        distancias = self._matriz_distancia(mapa)
 
         #    Dados das gerações população e numero de pontos da rota
         geracoes = generation
@@ -166,7 +167,7 @@ class CalulateRoutesTSP:
             ind = np.array(ind)
             new_pop[i] = np.concatenate([[primeiro_gene], ind, [primeiro_gene]])
 
-            custo_rotas[i] = self.__mede_custo(distancias, ind)
+            custo_rotas[i] = self._mede_custo(distancias, ind)
 
         #   Inicio das gerações, quando o for é iniciado será buscado os 4 melhores
         #   individuos da população, o restante dos individos serão descartados
@@ -230,12 +231,12 @@ class CalulateRoutesTSP:
                 indice = j * 4
                 new_pop[indice:indice + 4] = resultado
 
-            x = self.generate_population(populacao - 16, inicial, primeiro_gene)
+            x = self._generate_population(populacao - 16, inicial, primeiro_gene)
             new_pop[16:] = x
 
             custo_rotas = np.zeros(populacao)
             for k in range(new_pop.shape[0]):
-                custo_rotas[k] = self.__mede_custo(distancias, new_pop[k])
+                custo_rotas[k] = self._mede_custo(distancias, new_pop[k])
 
             if best_element == best_4_cousts[0]:
                 count_best += count_best
