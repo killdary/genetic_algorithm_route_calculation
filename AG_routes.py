@@ -13,6 +13,11 @@ import matplotlib.pyplot as plt
 
 class CalulateRoutesTSP:
 
+    """
+    Desenvolvimento do TSTSP para 'Prize Collect(PC)'
+    """
+
+
     @staticmethod
     def plota_rotas(cidades, rota, size=8, font_size=20):
         """
@@ -60,7 +65,8 @@ class CalulateRoutesTSP:
 
         return dist_total
 
-    def _matriz_distancia(self, cidades):
+    @staticmethod
+    def _matriz_distancia(cidades):
         """
         Method that calculate the distance matrix
         :param cidades: points or towns informed
@@ -324,7 +330,6 @@ class CalulateRoutesTSP:
         np.savetxt('./limites.txt', np.asarray(_temp_results), delimiter=',', fmt='%.5f')
 
         return travelled_distance, travelling
-
 
 if __name__ == "__main__":
     x = CalulateRoutesTSP()
