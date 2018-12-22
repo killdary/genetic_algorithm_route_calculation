@@ -15,6 +15,10 @@ class CalulateRoutesTSP:
 
     """
     Desenvolvimento do TSTSP para 'Prize Collect(PC)'
+    methods -
+        calculo do premio e selecao de cidades
+        calculo penalidade
+        calculo funcao objetivo
     """
 
 
