@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="a6e4ef44-e8a5-44f7-b3c5-1d4abf1a169a" name="Default Changelist" comment="Gerando tabela de prêmioes e penalidades para o CPTSP">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AG_routes.py" afterPath="$PROJECT_DIR$/AG_routes.py" />
+=======
+    <list default="true" id="a6e4ef44-e8a5-44f7-b3c5-1d4abf1a169a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/pontos_peso.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pontos_peso.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/relatorios/Relatório - Adicionando a funcionalidade de Tanque.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/relatorios/Relatório - Adicionando a funcionalidade de Tanque.ipynb" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,10 +22,15 @@
     <session id="-1977915613">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+<<<<<<< Updated upstream
           <entry key="project.closed" value="2" />
+=======
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.11" value="1" />
+>>>>>>> Stashed changes
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -52,8 +63,13 @@
       <file leaf-file-name="AG_routes.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AG_routes.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="237">
               <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+=======
+            <state relative-caret-position="3495">
+              <caret line="235" column="13" selection-start-line="235" selection-start-column="13" selection-end-line="235" selection-end-column="13" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#482#1293#0" expanded="false" />
                 <element signature="e#1360#1838#0" expanded="false" />
@@ -71,9 +87,14 @@
       <file leaf-file-name="pontos.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pontos.txt">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+=======
+            <state>
+              <caret column="22" selection-start-column="22" selection-end-column="22" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -81,9 +102,14 @@
       <file leaf-file-name="prize_penalty" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/prize_penalty">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="221">
               <caret line="13" column="21" lean-forward="true" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
               <folding />
+=======
+            <state relative-caret-position="45">
+              <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -274,6 +300,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/limites.txt">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -286,14 +313,26 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="3495">
+          <caret line="235" column="13" selection-start-line="235" selection-start-column="13" selection-end-line="235" selection-end-column="13" />
+          <folding>
+            <element signature="e#126#144#0" expanded="true" />
+          </folding>
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pontos.txt">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+=======
+        <state>
+          <caret column="22" selection-start-column="22" selection-end-column="22" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -307,6 +346,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AG_routes.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="237">
           <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
           <folding>
@@ -319,6 +359,10 @@
             <element signature="e#8934#9993#0" expanded="false" />
             <element signature="e#10042#11933#0" expanded="false" />
           </folding>
+=======
+        <state relative-caret-position="45">
+          <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
