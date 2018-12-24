@@ -14,12 +14,54 @@ import matplotlib.pyplot as plt
 class CalulateRoutesTSP:
 
     """
-    Desenvolvimento do TSTSP para 'Prize Collect(PC)'
+    Desenvolvimento do TSP para 'Prize Collect(PC)'
     methods -
         calculo do premio e selecao de cidades
         calculo penalidade
         calculo funcao objetivo
     """
+    def prize_calculation(self, prize_min, lst_prizes_true):
+        # pegando o numero de cidade
+        lst_prizes = np.asarray(lst_prizes_true)
+
+        # media dos premios das cidades
+        mean_prize = lst_prizes.mean()
+
+        # range das cidades a serem visitadas, essas cidades devem vir sem a cidade deposito
+        citys = np.arange(0,50)
+
+        # numero de cidades a serem selecionadas para se aproximar da rota
+        number_city_select = round(len(citys)/mean_prize)
+
+        # fluxo de cidade que serão visitadas selecionadas aleatoriamente
+        flux_citys = np.random.choice(citys,number_city_select)
+        citys = np.delete(citys, flux_citys)
+
+        while True:
+            prize = lst_prizes.take(flux_citys).sum()
+
+            if prize < prize_min:
+                new_city = np.random.choice(citys, 1)
+                flux_citys = np.add(flux_citys, new_city)
+                citys = np.delete(citys, new_city)
+
+            elif prize_min <= prize:
+                break
+
+        citys_visited = np.zeros(50)
+        np.put(citys_visited, flux_citys, 1)
+
+        return flux_citys, prize, citys_visited
+
+
+    """ metodo que realiza o calculo da penalidade de uma rota
+        para realizar o calculo é necessario passar o array com o status de visita de todas
+        as cidades        
+    """
+    def penalty_calculation(self, citys_visited, penaltys):
+        city_not_visited = np.where(citys_visited == 0)
+        sum_penalty = penaltys.take(city_not_visited).sum()
+        return  sum_penalty
 
 
     @staticmethod
@@ -136,9 +178,11 @@ class CalulateRoutesTSP:
 
         return new_pop
 
-    def ga(self, generation, population, towns):
+    def ga(self, generation, population, towns, type='classic', prize_penalty=0):
         """
         Calculation of the best route using Genetic Algorithm
+        :param prize_penalty:
+        :param type:
         :param generation: number of the generations
         :param population: size of the population
         :param towns: file with the location of cities on a Cartesian plane
@@ -146,6 +190,10 @@ class CalulateRoutesTSP:
         """
         #    Carrega os pontos do mapas que deverão ser gerados as rotas
         mapa = np.loadtxt(towns)
+
+        if type == 'prize_colect':
+            prize = np.load(prize_penalty)
+
         self.mapa = mapa
 
         #    Calculo da matriz de distancias entre todos os pontos
@@ -342,15 +390,17 @@ if __name__ == "__main__":
                 towns='./pontos.txt')
     print(y, z)
 
-    nova_rota = x.percorre_rota(z, 30)
 
-    distancia_nova_rota, rota_recarga = x.tanque_rota(z, 30.0)
-
-    print("Metodo ANtigo:")
-    print(nova_rota)
-
-    print("\nMetodo Novo:")
-    print(distancia_nova_rota, rota_recarga)
+    #
+    # nova_rota = x.percorre_rota(z, 30)
+    #
+    # distancia_nova_rota, rota_recarga = x.tanque_rota(z, 30.0)
+    #
+    # print("Metodo ANtigo:")
+    # print(nova_rota)
+    #
+    # print("\nMetodo Novo:")
+    # print(distancia_nova_rota, rota_recarga)
 
     # x.plota_rotas(x.mapa,z)
     # x.plota_rotas(x.mapa,np.array(nova_rota[1], dtype=np.int32))
