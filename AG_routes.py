@@ -382,6 +382,10 @@ class CalulateRoutesTSP:
 
             cidades_visitadas = np.zeros((populacao, size))
 
+            best_4_penalty_rotes = np.zeros((4, size + 1))
+            best_4_penalty = np.zeros(4)
+            best_4_flux_visited =  np.zeros((4, size + 1))
+
         #    Matriz qprize_penprize_minaltyue armazenará os 4 melhores individuos da população
         best_4_rotes = np.zeros((4, size + 1))
         best_4_cousts = np.zeros(4)
@@ -396,6 +400,7 @@ class CalulateRoutesTSP:
 
 
         # percoreendo a população e gerando os primiros indivíduos
+        # a nova populacao eh da nao apenas para a rota mas tambem para penalidades
         for i in range(populacao):
             ind = np.copy(inicial)
             np.random.shuffle(ind)
@@ -413,9 +418,17 @@ class CalulateRoutesTSP:
 
         #   Inicio das gerações, quando o for é iniciado será buscado os 4 melhores
         #   individuos da população, o restante dos individos serão descartados
+        #### Update
+        # Neste ponto tambem sera armazenao as 3 menores penalidades geradas anteriormente
+        # Para cada novo individuo gerado gerar uma nova rota de visitas e depois aplicar
+        # o mesmo vetor de mutacao nos quatro individuos
+
         for ger in range(geracoes):
             temp_pop = np.copy(new_pop)
             temp_cust = np.copy(custo_rotas)
+
+            if flag_prize_collection:
+                temp_flux = np.copy(0)
 
 
             #        Pegando os 4 melhores individuos da população
@@ -428,6 +441,9 @@ class CalulateRoutesTSP:
 
                 temp_pop = np.delete(temp_pop, tmp_ind, axis=0)
                 temp_cust = np.delete(temp_cust, tmp_ind)
+
+
+
             #        else:
             #            temp_pop = np.delete(temp_pop, tmp_ind, axis=0)
             #            temp_cust = np.delete(temp_cust, tmp_ind)
