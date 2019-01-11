@@ -1,10 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Wed May 23 21:21:37 2018
 @author: killdary
 @version: 0.0.2
+
+Backlog - product
+    - TSP Janela de Tempo
+    - Adaptar TSPLIB para o software e calcular eficiencia
+    - Aplicar em Simulador VRep
+    - Aplica em Robo Real
+    - escrever a discertacao
+
+Em Andamento
+    - TSP Prize Collecting
+        * Gerar Aleatoria cidades Visitadas
+            * quando selecionar cidades diferentes, melhor alternativa seria gerar cidades
+              a cada nova rodada de individuos
+        * Calcular Premios Coletados
+        * Calcular Penalizacoes Sofridas
+        * Submeter cidades visitadas a mutacao do algoritmo
+        * Criar Funcao Objetivo
+        * Mapear Restricoes Formulacao mAtematica
+
+Realizados
+    - Calculo da menor Rota usando GA
+    - Gerar Grafico com Rota
+
 """
+
+
+
 
 import numpy as np
 
@@ -13,12 +40,17 @@ import matplotlib.pyplot as plt
 
 class CalulateRoutesTSP:
 
+
+    # TSP Prize Collecting
+
     """
     Desenvolvimento do TSP para 'Prize Collect(PC)'
     methods -
+        amarrar uma cidade como sendo o deposito
         calculo do premio e selecao de cidades
         calculo penalidade
         calculo funcao objetivo
+
     """
     @staticmethod
     def prize_calculation(prize_min, lst_prizes_true):
@@ -30,51 +62,86 @@ class CalulateRoutesTSP:
         """
         # pegando o numero de cidade
         lst_prizes = np.asarray(lst_prizes_true)
-
         size = lst_prizes.shape[0]
 
         # media dos premios das cidades
         mean_prize = lst_prizes.mean()
 
         # range das cidades a serem visitadas, essas cidades devem vir sem a cidade deposito
-        citys = np.arange(0,size)
+        # lista de cidades
+        citys = np.arange(0, size)
 
         # numero de cidades a serem selecionadas para se aproximar da rota
+        # total de cidades dividido pela média dos premios retorna um número aproximado
+        # de cidades a serem visitadas para atingir o prêmio mínimo
         number_city_select = int(round(len(citys)/mean_prize))
 
         # fluxo de cidade que serão visitadas selecionadas aleatoriamente
-        flux_citys = np.random.choice(citys,number_city_select)
+        flux_citys = np.random.choice(citys, number_city_select)
         citys = np.delete(citys, flux_citys)
 
         while True:
+            # eh realizado um calculo dos premios em cima das cidades visitadas
             prize = lst_prizes.take(flux_citys).sum()
 
+            # Caso p premio ainda seja menor que o premio minimo eh selecionada mais uma cidade
+            # aleatoria para compor as cidades visitadas
             if prize < prize_min:
                 new_city = np.random.choice(citys, 1)
                 flux_citys = np.append(flux_citys, new_city)
                 citys = np.delete(citys, new_city)
 
+            # Caso o premio seja maior ou igual ao premio minimo o while eh encerrado
             elif prize_min <= prize:
                 break
 
+        # Depois de selecionar as cidades visitadas é gerado um vetor de zerose nas posicoes correspondetes
+        # as cidades visitadas é colocado um valor 1, isso é realizado pelo metodo put do numpy
         citys_visited = np.zeros(size)
         np.put(citys_visited, flux_citys, 1)
 
         # flux_citys = np.append(flux_citys, np.zeros(size-flux_citys.shape[0]))
 
+        # resumidadmente o fluxo de cidades sao as cidades visitadas, prize sao os premios e a citys_visited
+        # é um vetor de zeros com as cidades visitadas marcadas com o valor 1
         return flux_citys, prize, citys_visited
-
 
     """ metodo que realiza o calculo da penalidade de uma rota
         para realizar o calculo é necessario passar o array com o status de visita de todas
         as cidades        
     """
     def penalty_calculation(self, citys_visited, penaltys):
+        '''
+        Metodo responsavel por calcular as penalidades por nao visitar determinadas cidades
+        :param citys_visited: vetor de zeros com as posicoes das cidades visitadas trocado seu valor por 1
+        :param penaltys: vetor com as penalidades das cidades nao visitadas
+        :return:
+        '''
+        # selecinada as cidades que tem o valor igual a 0, ou seja, nao visitadas
         city_not_visited = np.where(citys_visited == 0)
+        # soma das penalidades das cidades nao visitadas
         sum_penalty = penaltys.take(city_not_visited).sum()
         return sum_penalty
 
+    ''' funcao objetivo
+    '''
+    def goal_function_price_collecting(self, score_distance, score_penalty):
+        '''
+        Funcao objetivo basta somar a soma das distancias com a soma das penalidades
+        :param score_distance: valor da distancia total percorrida por um caixeiro
+        :param score_penalty: valor da soma de todas as penalidades das cidades nao visitadas
+        :return: valor do score do TSPPC
+        '''
+        return score_distance + score_penalty
 
+    '''endregion'''
+
+    '''
+    Metodos gerais da biblioteca:
+        _mede_custo: medir custo da rota em distancia
+        _matriz_distancia: criar a matriz de distancia euclidiana das cidades
+        plota_rotas: criar o grafico da rota 
+    '''
     @staticmethod
     def plota_rotas(cidades, rota, size=8, font_size=20):
         """
@@ -189,6 +256,84 @@ class CalulateRoutesTSP:
 
         return new_pop
 
+    def percorre_rota(self, rota, combustivel):
+        rota = rota.astype(int)
+        distancia_percorrida = 0
+        combustivel_restante = combustivel
+        caminho_percorrigo = [rota[0]]
+        last_route = rota[0]
+        for x in range(1, len(rota)):
+            distancia_percorrida = distancia_percorrida + self._distancias[last_route, rota[x]]
+            combustivel_restante -= self._distancias[rota[x - 1], rota[x]]
+            caminho_percorrigo.append(rota[x])
+            last_route = rota[x]
+            if x != (len(rota) - 1) and combustivel_restante <= self._distancias[rota[x], rota[x + 1]]:
+                distancia_percorrida += self._distancias[rota[x], rota[0]]
+                combustivel_restante = combustivel
+                caminho_percorrigo.append(rota[0])
+                last_route = rota[0]
+        #                distancia_percorrida += self._distancias[rota[0], rota[x]]
+        #                combustivel_restante -= self._distancias[rota[0], rota[x]]
+        #                caminho_percorrigo.append(rota[x])
+
+        return distancia_percorrida, caminho_percorrigo
+
+    def tanque_rota(self, rota, tank):
+        route = rota.astype(int)
+        point_recharge = route[0]
+        travelled_distance = 0
+        consum_fuel = float(tank)
+        travelling = [point_recharge]
+        last_town = point_recharge
+
+        _temp_dist1 = 0
+        _temp_dist2 = 0
+        _temp_back = 0
+
+        _temp_results = []
+
+        town_number = 1
+        size_route = route.size
+
+        while (town_number < size_route):
+
+            # for town_number in range(1, len(route)):
+            _temp_dist1 = self._distancias[last_town, route[town_number]]
+            _temp_dist2 = self._distancias[route[town_number], point_recharge]
+            _temp_back = self._distancias[last_town, point_recharge]
+
+            _temp_results.append([_temp_dist1, _temp_dist2, _temp_back, consum_fuel, tank])
+
+            if town_number != len(route) - 1 and \
+                consum_fuel >= (self._distancias[last_town, route[town_number]] +
+                                self._distancias[route[town_number], point_recharge]):
+
+                travelled_distance += self._distancias[last_town, route[town_number]]
+                travelling.append(route[town_number])
+                consum_fuel -= float(self._distancias[last_town, route[town_number]])
+                last_town = route[town_number]
+                town_number += 1
+
+            elif last_town != point_recharge and \
+                    consum_fuel >= self._distancias[last_town, point_recharge]:
+
+                travelled_distance += self._distancias[last_town, point_recharge]
+                travelling.append(point_recharge)
+                consum_fuel = tank
+                last_town = point_recharge
+
+
+            else:
+                print(_temp_dist1, _temp_dist2, _temp_back, consum_fuel)
+                break
+
+        np.savetxt('./limites.txt', np.asarray(_temp_results), delimiter=',', fmt='%.5f')
+
+        return travelled_distance, travelling
+
+    """
+    Metodo principal da Classe que gera as rotas o GA em si
+    """
     def ga(self, generation, population, towns, type='classic', prize_min=0, prizes=''):
         """
         Calculation of the best route using Genetic Algorithm
@@ -199,19 +344,19 @@ class CalulateRoutesTSP:
         :param towns: file with the location of cities on a Cartesian plane
         :return: 2 values (cost best route, the sequence of towns of the route found)
         """
-        #    Carrega os pontos do mapas que deverão ser gerados as rotas
+        # Carrega os pontos do mapas que deverão ser gerados as rotas
         mapa = np.loadtxt(towns)
 
-        # istanciando flag para calculo de coleta de premios
+        # Flag responsavel por habiliar a coleta de Prmio TSP PC
         flag_prize_collection = False
 
         if type == 'prize_colect':
             flag_prize_collection = True
             prize_penalty = np.loadtxt(prizes)
-            lst_prizes = prize_penalty[:,0]
-            lst_penalty = prize_penalty[:,1]
+            lst_prizes = prize_penalty[:, 0]
+            lst_penalty = prize_penalty[:, 1]
 
-
+        # Jogando o mapa como um recurso global da classe
         self.mapa = mapa
 
         #    Calculo da matriz de distancias entre todos os pontos
@@ -226,6 +371,7 @@ class CalulateRoutesTSP:
         new_pop = np.zeros((populacao, size + 1))
         custo_rotas = np.arange(populacao)
 
+        # gerando e buscando dados necessários para o TSPPC
         if flag_prize_collection:
             # gerando premio e rotas iniciais
             premio_rotas = np.arange(populacao)
@@ -259,7 +405,7 @@ class CalulateRoutesTSP:
 
             custo_rotas[i] = self._mede_custo(distancias, ind)
 
-            fluxo ,premio_rotas[i], cidades_visitadas[i] = self.prize_calculation(prize_min,lst_prizes)
+            fluxo, premio_rotas[i], cidades_visitadas[i] = self.prize_calculation(prize_min, lst_prizes)
             penalidade_rotas[i] = self.penalty_calculation(cidades_visitadas[i], lst_penalty)
             fluxo_visitas.append(fluxo)
 
@@ -345,80 +491,6 @@ class CalulateRoutesTSP:
 
         return best_4_cousts[0], best_4_rotes[0]
 
-    def percorre_rota(self, rota, combustivel):
-        rota = rota.astype(int)
-        distancia_percorrida = 0
-        combustivel_restante = combustivel
-        caminho_percorrigo = [rota[0]]
-        last_route = rota[0]
-        for x in range(1, len(rota)):
-            distancia_percorrida = distancia_percorrida + self._distancias[last_route, rota[x]]
-            combustivel_restante -= self._distancias[rota[x - 1], rota[x]]
-            caminho_percorrigo.append(rota[x])
-            last_route = rota[x]
-            if x != (len(rota) - 1) and combustivel_restante <= self._distancias[rota[x], rota[x + 1]]:
-                distancia_percorrida += self._distancias[rota[x], rota[0]]
-                combustivel_restante = combustivel
-                caminho_percorrigo.append(rota[0])
-                last_route = rota[0]
-        #                distancia_percorrida += self._distancias[rota[0], rota[x]]
-        #                combustivel_restante -= self._distancias[rota[0], rota[x]]
-        #                caminho_percorrigo.append(rota[x])
-
-        return distancia_percorrida, caminho_percorrigo
-
-    def tanque_rota(self, rota, tank):
-        route = rota.astype(int)
-        point_recharge = route[0]
-        travelled_distance = 0
-        consum_fuel = float(tank)
-        travelling = [point_recharge]
-        last_town = point_recharge
-
-        _temp_dist1 = 0
-        _temp_dist2 = 0
-        _temp_back = 0
-
-        _temp_results = []
-
-        town_number = 1
-        size_route = route.size
-
-        while (town_number < size_route):
-
-            # for town_number in range(1, len(route)):
-            _temp_dist1 = self._distancias[last_town, route[town_number]]
-            _temp_dist2 = self._distancias[route[town_number], point_recharge]
-            _temp_back = self._distancias[last_town, point_recharge]
-
-            _temp_results.append([_temp_dist1, _temp_dist2, _temp_back, consum_fuel, tank])
-
-            if town_number != len(route) - 1 and \
-                consum_fuel >= (self._distancias[last_town, route[town_number]] +
-                                self._distancias[route[town_number], point_recharge]):
-
-                travelled_distance += self._distancias[last_town, route[town_number]]
-                travelling.append(route[town_number])
-                consum_fuel -= float(self._distancias[last_town, route[town_number]])
-                last_town = route[town_number]
-                town_number += 1
-
-            elif last_town != point_recharge and \
-                    consum_fuel >= self._distancias[last_town, point_recharge]:
-
-                travelled_distance += self._distancias[last_town, point_recharge]
-                travelling.append(point_recharge)
-                consum_fuel = tank
-                last_town = point_recharge
-
-
-            else:
-                print(_temp_dist1, _temp_dist2, _temp_back, consum_fuel)
-                break
-
-        np.savetxt('./limites.txt', np.asarray(_temp_results), delimiter=',', fmt='%.5f')
-
-        return travelled_distance, travelling
 
 if __name__ == "__main__":
     x = CalulateRoutesTSP()
