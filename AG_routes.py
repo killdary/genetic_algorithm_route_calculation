@@ -5,14 +5,12 @@
 Created on Wed May 23 21:21:37 2018
 @author: killdary
 @version: 0.0.2
-
 Backlog - product
     - TSP Janela de Tempo
     - Adaptar TSPLIB para o software e calcular eficiencia
     - Aplicar em Simulador VRep
     - Aplica em Robo Real
     - escrever a discertacao
-
 Em Andamento
     - TSP Prize Collecting
         * Gerar Aleatoria cidades Visitadas
@@ -23,15 +21,10 @@ Em Andamento
         * Submeter cidades visitadas a mutacao do algoritmo
         * Criar Funcao Objetivo
         * Mapear Restricoes Formulacao mAtematica
-
 Realizados
     - Calculo da menor Rota usando GA
     - Gerar Grafico com Rota
-
 """
-
-
-
 
 import numpy as np
 
@@ -39,8 +32,6 @@ import matplotlib.pyplot as plt
 
 
 class CalulateRoutesTSP:
-
-
     # TSP Prize Collecting
 
     """
@@ -50,8 +41,8 @@ class CalulateRoutesTSP:
         calculo do premio e selecao de cidades
         calculo penalidade
         calculo funcao objetivo
-
     """
+
     @staticmethod
     def prize_calculation(prize_min, lst_prizes_true):
         """
@@ -74,7 +65,7 @@ class CalulateRoutesTSP:
         # numero de cidades a serem selecionadas para se aproximar da rota
         # total de cidades dividido pela média dos premios retorna um número aproximado
         # de cidades a serem visitadas para atingir o prêmio mínimo
-        number_city_select = int(round(len(citys)/mean_prize))
+        number_city_select = int(round(len(citys) / mean_prize))
 
         # fluxo de cidade que serão visitadas selecionadas aleatoriamente
         flux_citys = np.random.choice(citys, number_city_select)
@@ -110,6 +101,7 @@ class CalulateRoutesTSP:
         para realizar o calculo é necessario passar o array com o status de visita de todas
         as cidades        
     """
+
     def penalty_calculation(self, citys_visited, penaltys):
         '''
         Metodo responsavel por calcular as penalidades por nao visitar determinadas cidades
@@ -125,6 +117,7 @@ class CalulateRoutesTSP:
 
     ''' funcao objetivo
     '''
+
     def goal_function_price_collecting(self, score_distance, score_penalty):
         '''
         Funcao objetivo basta somar a soma das distancias com a soma das penalidades
@@ -165,13 +158,10 @@ class CalulateRoutesTSP:
                     citys_visited = np.delete(citys_visited, new_city)
                     counts_try = counts_try + 1
 
-
-
         city_not_visited = np.where(citys_status_visit == 0)
         sum_penalty = penaltys.take(city_not_visited).sum()
 
         return citys_status_visit, sum_prize, sum_penalty
-
 
     '''endregion'''
 
@@ -181,6 +171,7 @@ class CalulateRoutesTSP:
         _matriz_distancia: criar a matriz de distancia euclidiana das cidades
         plota_rotas: criar o grafico da rota 
     '''
+
     @staticmethod
     def plota_rotas(cidades, rota, size=8, font_size=20):
         """
@@ -283,7 +274,6 @@ class CalulateRoutesTSP:
                     min_pop = np.append(min_pop, ind)
                     id_pop = np.id_pop(min_pop, i)
 
-
     @staticmethod
     def _generate_population(size_population, ancestral, first_gene):
         new_pop = np.zeros((size_population, ancestral.shape[0] + 2))
@@ -312,7 +302,7 @@ class CalulateRoutesTSP:
                 combustivel_restante = combustivel
                 caminho_percorrigo.append(rota[0])
                 last_route = rota[0]
-        #                distancia_percorrida += self._distancias[rota[0], rota[x]]
+        # distancia_percorrida += self._distancias[rota[0], rota[x]]
         #                combustivel_restante -= self._distancias[rota[0], rota[x]]
         #                caminho_percorrigo.append(rota[x])
 
@@ -345,8 +335,8 @@ class CalulateRoutesTSP:
             _temp_results.append([_temp_dist1, _temp_dist2, _temp_back, consum_fuel, tank])
 
             if town_number != len(route) - 1 and \
-                consum_fuel >= (self._distancias[last_town, route[town_number]] +
-                                self._distancias[route[town_number], point_recharge]):
+                            consum_fuel >= (self._distancias[last_town, route[town_number]] +
+                                                self._distancias[route[town_number], point_recharge]):
 
                 travelled_distance += self._distancias[last_town, route[town_number]]
                 travelling.append(route[town_number])
@@ -355,7 +345,7 @@ class CalulateRoutesTSP:
                 town_number += 1
 
             elif last_town != point_recharge and \
-                    consum_fuel >= self._distancias[last_town, point_recharge]:
+                            consum_fuel >= self._distancias[last_town, point_recharge]:
 
                 travelled_distance += self._distancias[last_town, point_recharge]
                 travelling.append(point_recharge)
@@ -379,7 +369,7 @@ class CalulateRoutesTSP:
 
         while route_insert_points[0] == route_insert_points[1]:
             route_insert_points = np.random.randint(size - 1, size=2)
-        #        Um pequeno tratamento para que os Elementos I e J sejam
+        # Um pequeno tratamento para que os Elementos I e J sejam
         #         próximospois caso sejam próximos poderão gerar indivíduos identicos
         I = route_insert_points.min()
         J = route_insert_points.max()
@@ -388,13 +378,12 @@ class CalulateRoutesTSP:
                 I = I - 1
             else:
                 J = J + 1
-        return  I,J
-
-
+        return I, J
 
     """
     Metodo principal da Classe que gera as rotas o GA em si
     """
+
     def ga(self, generation, population, towns, type='classic', prize_min=0, prizes=''):
         """
         Calculation of the best route using Genetic Algorithm
@@ -447,7 +436,7 @@ class CalulateRoutesTSP:
             best_4_penalty = np.zeros(4)
             best_4_prize = np.zeros(4)
 
-        #    Matriz qprize_penprize_minaltyue armazenará os 4 melhores individuos da população
+        # Matriz qprize_penprize_minaltyue armazenará os 4 melhores individuos da população
         best_4_rotes = np.zeros((4, size + 1))
         best_4_cousts = np.zeros(4)
 
@@ -458,7 +447,6 @@ class CalulateRoutesTSP:
 
         count_best = 0
         best_element = 0
-
 
         # percoreendo a população e gerando os primiros indivíduos
         # a nova populacao eh da nao apenas para a rota mas tambem para penalidades
@@ -477,9 +465,7 @@ class CalulateRoutesTSP:
                 penalidade_rotas[i] = self.penalty_calculation(cidades_visitadas[i], lst_penalty)
                 fluxo_visitas.append(fluxo)
 
-
-
-        #   Inicio das gerações, quando o for é iniciado será buscado os 4 melhores
+        # Inicio das gerações, quando o for é iniciado será buscado os 4 melhores
         #   individuos da população, o restante dos individos serão descartados
         #### Update
         # Neste ponto tambem sera armazenao as 3 menores penalidades geradas anteriormente
@@ -495,8 +481,7 @@ class CalulateRoutesTSP:
                 temp_cidades_visitadas = np.copy(cidades_visitadas)
                 temp_premio_rotas = np.copy(premio_rotas)
 
-
-            #        Pegando os 4 melhores individuos da população
+            # Pegando os 4 melhores individuos da população
             for j in range(4):
                 tmp_ind = np.argmin(temp_cust)
 
@@ -521,13 +506,11 @@ class CalulateRoutesTSP:
                     # deletar valores repetidos
                     indices_valores_repetidos = np.where(temp_penalidade_rotas == best_4_penalty[j])
 
-                    temp_penalidade_rotas = np.delete(temp_penalidade_rotas,indices_valores_repetidos)
+                    temp_penalidade_rotas = np.delete(temp_penalidade_rotas, indices_valores_repetidos)
                     temp_premio_rotas = np.delete(temp_premio_rotas, indices_valores_repetidos)
-                    temp_cidades_visitadas = np.delete(temp_cidades_visitadas,indices_valores_repetidos, axis=0)
+                    temp_cidades_visitadas = np.delete(temp_cidades_visitadas, indices_valores_repetidos, axis=0)
 
-
-
-            #        else:
+            # else:
             #            temp_pop = np.delete(temp_pop, tmp_ind, axis=0)
             #            temp_cust = np.delete(temp_cust, tmp_ind)
 
@@ -537,7 +520,7 @@ class CalulateRoutesTSP:
 
             while route_insert_points[0] == route_insert_points[1]:
                 route_insert_points = np.random.randint(size - 1, size=2)
-            #        Um pequeno tratamento para que os Elementos I e J sejam
+            # Um pequeno tratamento para que os Elementos I e J sejam
             #         próximospois caso sejam próximos poderão gerar indivíduos identicos
             I = route_insert_points.min()
             J = route_insert_points.max()
@@ -547,7 +530,7 @@ class CalulateRoutesTSP:
                 else:
                     J = J + 1
 
-            #        mutacao = np.zeros((4,size))
+            # mutacao = np.zeros((4,size))
             new_pop = np.zeros((populacao, size + 1))
             for j in range(4):
                 init_end_point = best_4_rotes[j, 0]
@@ -572,8 +555,6 @@ class CalulateRoutesTSP:
                 for k in range(4):
                     resultado[k] = np.concatenate([[init_end_point], mutacao[k], [init_end_point]])
 
-
-
                 indice = j * 4
 
                 # a cada rodada serah colocado na nova população, no a nova população sempre iniciará com 16 elementos
@@ -582,7 +563,7 @@ class CalulateRoutesTSP:
 
                 # aqui se tem inicio a geração das mutações dos premios e das penalidades
                 if flag_prize_collection:
-                    mutacao_cidades_visitadas = np.repeat([best_4_cidades_visitadas[j]], 4 , axis=0)
+                    mutacao_cidades_visitadas = np.repeat([best_4_cidades_visitadas[j]], 4, axis=0)
 
                     if I == 0:
                         mutacao_cidades_visitadas[1, :J] = mutacao_cidades_visitadas[1, J - 1::-1]
@@ -594,11 +575,15 @@ class CalulateRoutesTSP:
                     if np.array_equal(mutacao_cidades_visitadas[1], mutacao_cidades_visitadas[2]):
                         np.random.shuffle(mutacao_cidades_visitadas[2])
 
-                    mutacao_cidades_visitadas[3, I], mutacao_cidades_visitadas[3, J] = mutacao_cidades_visitadas[3, J],\
+                    mutacao_cidades_visitadas[3, I], mutacao_cidades_visitadas[3, J] = mutacao_cidades_visitadas[3, J], \
                                                                                        mutacao_cidades_visitadas[3, I]
 
-                    cidades_visitadas[indice:indice + 4] = mutacao_cidades_visitadas
+                    # mutacao_cidades_visitadas[3, 0:25], \
+                    # mutacao_cidades_visitadas[3, 25:] = \
+                    #     mutacao_cidades_visitadas[3, 25:], \
+                    #     mutacao_cidades_visitadas[3, 0:25]
 
+                    cidades_visitadas[indice:indice + 4] = mutacao_cidades_visitadas
 
             x = self._generate_population(populacao - 16, inicial, primeiro_gene)
             new_pop[16:] = x
@@ -607,12 +592,12 @@ class CalulateRoutesTSP:
                 for pr in range(16, populacao):
                     fluxo, premio_rotas[pr], cidades_visitadas[pr] = self.prize_calculation(prize_min, lst_prizes)
                     penalidade_rotas[pr] = self.penalty_calculation(cidades_visitadas[pr], lst_penalty)
-                #     fluxo_visitas.append(fluxo)
+                # fluxo_visitas.append(fluxo)
 
                 penalidade_rotas[16:] = np.zeros(penalidade_rotas[16:].shape[0])
                 for k in range(populacao):
-                    cidades_visitadas[k], premio_rotas[k], penalidade_rotas[k] = self.penalty_prize_calculation(cidades_visitadas[k], prize_min, lst_prizes, lst_penalty)
-
+                    cidades_visitadas[k], premio_rotas[k], penalidade_rotas[k] = self.penalty_prize_calculation(
+                        cidades_visitadas[k], prize_min, lst_prizes, lst_penalty)
 
             custo_rotas = np.zeros(populacao)
             for k in range(new_pop.shape[0]):
@@ -626,18 +611,21 @@ class CalulateRoutesTSP:
                 best_element = best_4_cousts[0]
                 count_best = 0
 
-        return best_4_cousts[0], best_4_rotes[0]
+        if flag_prize_collection:
+            return best_4_cousts[0], best_4_rotes[0], best_4_penalty[0], best_4_cidades_visitadas[0]
+        else:
+            return best_4_cousts[0], best_4_rotes[0]
 
 
 if __name__ == "__main__":
     x = CalulateRoutesTSP()
-    y, z = x.ga(generation=2500,
-                population=50,
-                towns='./pontos.txt',
-                type='prize_colect',
-                prize_min=50,
-                prizes='./prize_penalty.txt')
-    print(y, z)
+    a, b, c, d = x.ga(generation=2500,
+                      population=50,
+                      towns='./pontos.txt',
+                      type='prize_colect',
+                      prize_min=50,
+                      prizes='./prize_penalty.txt')
+    print(a, b, c, d)
 
 
     #
