@@ -163,6 +163,46 @@ class CalulateRoutesTSP:
 
         return citys_status_visit, sum_prize, sum_penalty
 
+    """ a funcao crossover_prizes tem como objetivo executar  cruzamento dos melhores indivíduos 
+        da popula para gerar escolhas de visitas que reduzam as penalidades"""
+    def crossover_prizes(self, best_individual, size_population):
+        size = best_individual.shape[0]
+
+        # inicializando as variaveis responsáveis pelos pontos de cruzamento
+        route_insert_points = np.zeros(2)
+
+        while route_insert_points[0] == route_insert_points[1]:
+            route_insert_points = np.random.randint(size_population - 1, size=2)
+
+        # Um pequeno tratamento para que os Elementos I e J nao sejam próximos
+        # pois caso sejam próximos poderão gerar indivíduos identicos
+        I = route_insert_points.min()
+        J = route_insert_points.max()
+        if I + 1 == J:
+            if J == size - 2:
+                I = I - 1
+            else:
+                J = J + 1
+
+        for i in range(size):
+            main_indivvidual = best_individual[i]
+            remaining_individual = np.delete(best_individual[i])
+
+            # um array de 7 posicoes e criado pra armazenar o os elementos gerados
+            # e o individuo principal do cruzamento
+            result_crossover = np.repeat(np.expand_dims(main_indivvidual, axis=0), 7, axis=0)
+
+            # primeira mutacao -> cruzamento de 1 ponto
+            result_crossover[0,0:I] = remaining_individual[0,0:I]
+            result_crossover[1,I:] = remaining_individual[0,I:]
+            result_crossover[2,I:J] = remaining_individual[0,I:]
+            result_crossover[2,I:J] = remaining_individual[0,I:]
+
+
+            pass
+
+        pass
+
     '''endregion'''
 
     '''
