@@ -663,7 +663,7 @@ if __name__ == "__main__":
                       population=50,
                       towns='./pontos.txt',
                       type='prize_colect',
-                      prize_min=50,
+                      prize_min=150,
                       prizes='./prize_penalty.txt')
     print(a, b, c, d)
 
