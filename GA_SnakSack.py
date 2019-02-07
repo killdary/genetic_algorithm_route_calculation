@@ -120,7 +120,85 @@ class GA_SnakSack:
 
         return list_citys_flux, list_citys_flux_coust, list_citys_flux_value
 
+    '''funcao para remover valores repetidos da ordem da cidade'''
+    @staticmethod
+    def removed_elements_repeat(array_citys):
+        citys_position = np.unique(array_citys, return_index=True)[1]
+        citys_position.sort()
+        new_citys = array_citys.take(citys_position)
+
+        return new_citys
+
+
     def crossover(self, best_individuals, worst_induviduasl, number_population):
+        # como os fluxos terão tamanhos variados sera pego maior valor entre os melhores e o piores para gerar a mutação
+        max_size_best = np.amin(np.array([i.shape[0] for i in best_individuals]))
+        max_size_worst = np.amin(np.array([i.shape[0] for i in worst_induviduasl]))
+
+        size = max_size_best if max_size_best < max_size_worst else max_size_worst
+
+        # inicializando as variaveis responsáveis pelos pontos de cruzamento
+        route_insert_points = np.zeros(2)
+
+        while route_insert_points[0] == route_insert_points[1]:
+            route_insert_points = np.random.randint(size - 1, size=2)
+
+        # Um pequeno tratamento para que os Elementos I e J nao sejam próximos
+        # pois caso sejam próximos poderão gerar indivíduos identicos
+        I = route_insert_points.min()
+        J = route_insert_points.max()
+        if I + 1 == J:
+            if J == size - 2:
+                I = I - 1
+            else:
+                J = J + 1
+
+        result = list()
+
+        for i in range(len(best_individuals)):
+            individual = np.copy(best_individuals[i])
+            individuals_rest = best_individuals
+            best_individuals.remove(i)
+
+            element = np.random.randint(len(best_individuals), size=1)
+            individual_cross = np.copy(best_individuals[element])
+
+            # crossover one point
+            kid_cross_1 = np.concatenate((individual[:I], individual_cross[I:]))
+            kid_cross_1 = self.removed_elements_repeat(kid_cross_1)
+            kid_cross_2 = np.concatenate((individual_cross[:I], individual[I:]))
+            kid_cross_2 = self.removed_elements_repeat(kid_cross_2)
+
+            # crossover two poitns
+            kid_cross_3 = np.concatenate((individual_cross[:I], individual[I:J], individual_cross[J:]))
+            kid_cross_3 = self.removed_elements_repeat(kid_cross_3)
+            kid_cross_4 = np.concatenate((individual[:I], individual_cross[I:J], individual[J:]))
+            kid_cross_4 = self.removed_elements_repeat(kid_cross_4)
+
+            # partial sinusoidal crossover
+            kid_cross_5 = np.copy(individual)
+            kid_cross_5[I:J:2] = individual_cross[I:J:2]
+            kid_cross_5 = self.removed_elements_repeat(kid_cross_5)
+
+            kid_cross_6 = np.copy(individual_cross)
+            kid_cross_6[I:J:2] = individual[I:J:2]
+            kid_cross_6 = self.removed_elements_repeat(kid_cross_6)
+
+            result.append(kid_cross_1)
+            result.append(kid_cross_2)
+            result.append(kid_cross_3)
+            result.append(kid_cross_4)
+            result.append(kid_cross_5)
+            result.append(kid_cross_6)
+
+
+
+
+            pass
+
+
+        # a = [1, 2, 3, 1, 1, 3, 4, 3, 2]
+        # index_sets = [np.argwhere(i == a) for i in np.unique(a)]
         pass
 
     def mutation(self):
@@ -166,7 +244,7 @@ class GA_SnakSack:
         worst_individuals_value = np.zeros(number_best_worst)
 
         for g in range(population):
-
+            # seleção dos melhores e piores indivíduos
             for i in range(number_best_worst):
                 max_i = np.argmax(flux_visited_value)
                 best_individuals.append(flux_visited[max_i])
