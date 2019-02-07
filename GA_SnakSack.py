@@ -6,6 +6,14 @@ Created on Wed Feb 06 21:21:37 2019
 @author: killdary
 @version: 0.0.2
 Backlog - product
+
+
+tarefas a serem realixadas:
+    criar funcao calculo de peso para se aproximar do limite da mochila
+    criar funcao de cruzamento
+    criar funcao de mutacao
+    criar funcao de geracao de populacao
+    
 """
 
 import numpy as np
@@ -17,7 +25,7 @@ class GA_SnakSack:
             individual = np.copy(inicial)
             np.random.shuffle(individual)
 
-            
+
 
             pass
         pass
