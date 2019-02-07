@@ -21,6 +21,12 @@ Em Andamento
         * Submeter cidades visitadas a mutacao do algoritmo
         * Criar Funcao Objetivo
         * Mapear Restricoes Formulacao mAtematica
+
+Urgente Vandilberto
+    - TSP skapsack problem
+        *
+
+
 Realizados
     - Calculo da menor Rota usando GA
     - Gerar Grafico com Rota
@@ -419,6 +425,10 @@ class CalulateRoutesTSP:
             else:
                 J = J + 1
         return I, J
+
+    '''
+        
+    '''
 
     """
     Metodo principal da Classe que gera as rotas o GA em si
