@@ -317,7 +317,7 @@ class GA_SnakSack:
                 individual[I:J] = np.roll(individual[I:J], 1)
 
             result.append(np.copy(individual))
-        
+
         return result
 
     def ga(self, size_generation, size_population, max_weight, towns_list, weight_list, begin_deposit):
@@ -391,9 +391,14 @@ class GA_SnakSack:
 
             pop = self.crossover(best_individuals, worst_individuals, begin_deposit)
 
-            pop_mutation = self.mutation(pop, best_individuals, 20)
+            pop_mutation = self.mutation(pop, best_individuals, size_population - len(pop))
 
-            pass
+            new_pop = pop + pop_mutation
+
+            for i in range(len(new_pop)):
+                new_pop[i] = self.correct_individual(new_pop[i])
+
+
 
         pass
 
