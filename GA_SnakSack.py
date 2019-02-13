@@ -93,9 +93,10 @@ class GA_SnakSack:
 
         count = 0
         while True:
-            weight_individual = self.weights.take(flux_visited).sum()
+            # weight_individual = self.weights.take(flux_visited).sum()
+            coust_individual = self.med_custo(flux_visited)
 
-            if weight_individual > self.max_weight:
+            if coust_individual > self.max_coust:
                 city_remove = np.random.randint(0, flux_visited.shape[0], 1)
                 individual = np.append(individual, flux_visited[city_remove])
                 flux_visited = np.delete(flux_visited, city_remove)
@@ -113,8 +114,8 @@ class GA_SnakSack:
         flux_value = self.prizes.take(flux_visited).sum()
         flux_visited = np.concatenate([self.begin_deposit, flux_visited, self.begin_deposit])
         flux_coust = self.med_custo(flux_visited)
-        flux_weight = weight_individual
-        flux_function_value = flux_value - flux_coust
+        flux_weight = self.weights.take(flux_visited).sum()
+        flux_function_value = flux_coust
 
         return flux_visited, flux_value, flux_coust, flux_weight, flux_function_value
 
@@ -142,9 +143,8 @@ class GA_SnakSack:
 
         return I, J
 
-
     '''metodo que gera uma populacao de rotas com os pesos selecionados'''
-    def generate_population(self, number_population, inicial, max_weight, begin_deposite):
+    def generate_population(self, number_population):
         '''
         metodo que gera uma população inicial para KSTSP
 
@@ -154,16 +154,19 @@ class GA_SnakSack:
         :return:
         '''
 
-        begin_deposite = np.array([begin_deposite])
+        begin_deposite = np.array([self.begin_deposit])
 
         # media de pesos das cidades
         mean_weight = self.weights.mean()
 
-        size = inicial.shape[0]
+        mean_coust = self.distancias.mean()
+
+        size = self.inicial_values.shape[0]
 
         # estabelecendo um número mínimo de cidades que se aproxime do peso
         # maximo suportado pela mochila
-        number_citys_select = int(round(self.max_weight / mean_weight))
+        # number_citys_select = int(round(self.max_weight / mean_weight))
+        number_citys_select = int(round(self.max_coust / mean_coust))
 
         # gerando uma matriz de zeros para cidades visitadas e pouplação
         # population = np.zeros([number_population, size])
@@ -176,7 +179,7 @@ class GA_SnakSack:
         list_citys_flux_function_value = np.zeros(number_population)
 
         for i in range(number_population):
-            individual = np.copy(inicial)
+            individual = np.copy(self.inicial_values)
 
             flux_visited = np.random.choice(individual, number_citys_select)
             flux_visited = self.removed_elements_repeat(flux_visited)
@@ -320,14 +323,42 @@ class GA_SnakSack:
         #     x = np.delete(i,[0, -1])
         #     all_individuals.append(np.copy(x))
 
+        result = list()
+
         for i in best_individuals:
             x = np.delete(i,[0, -1])
             all_individuals.append(np.copy(x))
 
-        # elements = np.random.choice(np.arange(len(all_individuals), np.random.randint(size)))
-        elements = np.random.choice(np.arange(len(all_individuals)), size)
+            list_elements = np.repeat([x], 4, axis=0)
 
-        result = list()
+            I, J = self.generate_points_mutation_crossover(x.size)
+
+            # Swap Mutation
+            list_elements[0, I], list_elements[0,J] = list_elements[0,J], list_elements[0,I]
+
+            # Reverse Mutation
+            list_elements[1,I:J] = list_elements[1,J:I:-1]
+
+            # Scramble Mutation
+            np.random.shuffle(list_elements[2,I:J])
+
+            # Insertion Mutation
+            list_elements[3,I:J] = np.roll(list_elements[3,I:J], 1)
+
+
+
+            result.append(np.concatenate([self.begin_deposit,list_elements[0], self.begin_deposit]))
+            result.append(np.concatenate([self.begin_deposit,list_elements[1], self.begin_deposit]))
+            result.append(np.concatenate([self.begin_deposit,list_elements[2], self.begin_deposit]))
+            result.append(np.concatenate([self.begin_deposit,list_elements[3], self.begin_deposit]))
+
+
+
+
+
+        # elements = np.random.choice(np.arange(len(all_individuals), np.random.randint(size)))
+        elements = np.random.choice(np.arange(len(all_individuals)), (size - 16))
+
 
         for j in range(elements.size):
             i=np.copy(elements[j])
@@ -352,12 +383,14 @@ class GA_SnakSack:
             elif(mutation == 3):
                 individual[I:J] = np.roll(individual[I:J], 1)
 
+
+
             result.append(np.concatenate([self.begin_deposit,np.copy(individual), self.begin_deposit]))
 
         return result
 
-    @staticmethod
-    def plota_rotas(cidades, rota, size=8, font_size=20):
+
+    def plota_rotas(self,cidades, rota, size=8, font_size=20):
         """
         Method to create a chart with the best routes found
         :param cidades: all points of the route
@@ -368,6 +401,9 @@ class GA_SnakSack:
         pos_x = cidades[rota.astype(int), 0]
         pos_y = cidades[rota.astype(int), 1]
 
+        all_x = self.mapa[rota.astype(int), 0]
+        all_y = self.mapa[rota.astype(int), 1]
+
         cid_nome = range(len(pos_x))
 
         plt.figure(num=None,
@@ -377,10 +413,10 @@ class GA_SnakSack:
                    edgecolor='k')
 
         plt.plot(pos_x, pos_y, 'C3', lw=3)
-        plt.scatter(pos_x, pos_y, s=120, marker="s")
+        plt.scatter(all_x, all_y, s=120, marker="s")
 
         for i, txt in enumerate(cid_nome):
-            plt.annotate(txt, (pos_x[i], pos_y[i]), fontsize=font_size)
+            plt.annotate(txt, (all_x[i], all_y[i]), fontsize=font_size)
 
         plt.title('Mapa GA')
         plt.show()
@@ -408,7 +444,8 @@ class GA_SnakSack:
             max_i = np.argmax(flux_visited_function_value)
 
             if best_individuals_function_value[i] < flux_visited_function_value[max_i]:
-                if not np.array_equal(best_individuals[i], flux_visited[max_i]):
+                teste_flag = [np.array_equal(element, flux_visited[max_i]) for element in best_individuals]
+                if True not in teste_flag:
                     best_individuals[i] = flux_visited[max_i]
                     best_individuals_coust[i] = flux_visited_coust[max_i]
                     best_individuals_value[i] = flux_visited_value[max_i]
@@ -427,18 +464,39 @@ class GA_SnakSack:
             if worst_individuals_function_value[i] == 0 or worst_individuals_function_value[i] > \
                     flux_visited_function_value[min_i]:
 
-                if not np.array_equal(worst_individuals[i], flux_visited[min_i]):
+                teste_flag = [np.array_equal(element, flux_visited[max_i]) for element in worst_individuals]
+                if True not in teste_flag:
                     worst_individuals[i] = flux_visited[min_i]
                     worst_individuals_coust[i] = flux_visited_coust[min_i]
                     worst_individuals_weight[i] = flux_visited_weight[min_i]
                     worst_individuals_value[i] = flux_visited_value[min_i]
-                    worst_individuals_function_value[i] = flux_visited_function_value[max_i]
+                    worst_individuals_function_value[i] = flux_visited_function_value[min_i]
 
                 flux_visited.pop(min_i)
                 flux_visited_coust = np.delete(flux_visited_coust, min_i)
                 flux_visited_weight = np.delete(flux_visited_weight, min_i)
                 flux_visited_value = np.delete(flux_visited_value, min_i)
                 flux_visited_function_value = np.delete(flux_visited_function_value, min_i)
+
+
+
+        # for i in range(number_best_worst):
+        #     x = np.copy(best_individuals[i])
+        #     x_coust = self.med_custo(x)
+        #     for j in range(1, x.size-1):
+        #         x_copy = np.copy(x)
+        #         x_copy[j-1], x_copy[j] =  x_copy[j],x_copy[j-1]
+        #         x_copy_coust = self.med_custo(x_copy)
+        #         if x_copy_coust < x_coust:
+        #             x = np.copy(x_copy)
+        #             x_coust = x_copy_coust
+        #
+        #     best_individuals[i] = np.copy(x)
+        #     best_individuals_value[i] = self.prizes.take(x[1:-1]).sum()
+        #     best_individuals_coust[i] = x_coust
+        #     best_individuals_weight[i] = self.weights.take(x[1:-1]).sum()
+        #     best_individuals_function_value[i] = (2*best_individuals_value[i]) - (best_individuals_coust[i]*3) - best_individuals_weight[i]
+
 
         return best_individuals,\
                best_individuals_coust,\
@@ -470,7 +528,9 @@ class GA_SnakSack:
 
         self.prizes = weights[:, 1]
 
-        self.distance_values = self.distance_matrix_calculate(mapa)
+        self.distance_matrix_calculate(mapa)
+
+        self.distance_values = self.distancias
 
         generation = size_generation
         population = size_population
@@ -492,100 +552,112 @@ class GA_SnakSack:
         flux_visited_value, \
         flux_visited_weight, \
         flux_visited_function_value = \
-            self.generate_population(population,
-                                     inicial,
-                                     max_weight,
-                                     begin_deposit)
+            self.generate_population(population)
 
-        best_individuals_weight = np.zeros(number_best_worst)
-        best_individuals_coust = np.zeros(number_best_worst)
-        best_individuals_value = np.zeros(number_best_worst)
-        best_individuals_function_value = np.zeros(number_best_worst)
+        best_individuals_weight = np.copy(flux_visited_weight[0:number_best_worst])
+        best_individuals_coust = np.copy(flux_visited_coust[0:number_best_worst])
+        best_individuals_value = np.copy(flux_visited_value[0:number_best_worst])
+        best_individuals_function_value = np.copy(flux_visited_function_value[0:number_best_worst])
 
-        worst_individuals_weight = np.zeros(number_best_worst)
-        worst_individuals_coust = np.zeros(number_best_worst)
-        worst_individuals_value = np.zeros(number_best_worst)
-        worst_individuals_function_value = np.zeros(number_best_worst)
+        worst_individuals_weight = np.copy(flux_visited_weight[0:number_best_worst])
+        worst_individuals_coust = np.copy(flux_visited_coust[0:number_best_worst])
+        worst_individuals_value = np.copy(flux_visited_value[0:number_best_worst])
+        worst_individuals_function_value = np.copy(flux_visited_function_value[0:number_best_worst])
 
-        best_individuals = [0] * number_best_worst
-        worst_individuals = [0] * number_best_worst
+        best_individuals = flux_visited[0:number_best_worst]
+        worst_individuals = flux_visited[0:number_best_worst]
+
+        best_value_ever = flux_visited_function_value[np.argmin(flux_visited_function_value)]
+        count = 0
         for g in range(generation):
 
-            if g % 10 == 0 and g!= 0:
-                print(g)
-                print(best_individuals_value[0])
+            if best_individuals_function_value[0] == best_value_ever:
+                count += 1
+            elif best_individuals_function_value[0] > best_value_ever:
+                best_value_ever = best_individuals_function_value[0]
+                count = 0
+
+            if count == 400:
+                break
+
+            if g % 50 == 0 and g!= 0:
                 self.plota_rotas(self.mapa, best_individuals[0])
+                print(best_individuals_value[0])
+                print(count)
+
+            if g % 10 == 0:
+                print(g)
 
             # seleção dos melhores e piores indivíduos
 
-            # best_individuals, \
-            # best_individuals_coust, \
-            # best_individuals_value, \
-            # best_individuals_weight, \
-            # best_individuals_function_value, \
-            # worst_individuals, \
-            # worst_individuals_coust, \
-            # worst_individuals_value, \
-            # worst_individuals_weight, \
-            # worst_individuals_function_value = self.function_objective(number_best_worst,
-            #                                                            best_individuals,
-            #                                                            best_individuals_coust,
-            #                                                            best_individuals_value,
-            #                                                            best_individuals_weight,
-            #                                                            best_individuals_function_value,
-            #                                                            worst_individuals,
-            #                                                            worst_individuals_coust,
-            #                                                            worst_individuals_value,
-            #                                                            worst_individuals_weight,
-            #                                                            worst_individuals_function_value,
-            #                                                            flux_visited,
-            #                                                            flux_visited_coust,
-            #                                                            flux_visited_value,
-            #                                                            flux_visited_weight,
-            #                                                            flux_visited_function_value)
+            best_individuals, \
+            best_individuals_coust, \
+            best_individuals_value, \
+            best_individuals_weight, \
+            best_individuals_function_value, \
+            worst_individuals, \
+            worst_individuals_coust, \
+            worst_individuals_value, \
+            worst_individuals_weight, \
+            worst_individuals_function_value = self.function_objective(number_best_worst,
+                                                                       best_individuals,
+                                                                       best_individuals_coust,
+                                                                       best_individuals_value,
+                                                                       best_individuals_weight,
+                                                                       best_individuals_function_value,
+                                                                       worst_individuals,
+                                                                       worst_individuals_coust,
+                                                                       worst_individuals_value,
+                                                                       worst_individuals_weight,
+                                                                       worst_individuals_function_value,
+                                                                       flux_visited,
+                                                                       flux_visited_coust,
+                                                                       flux_visited_value,
+                                                                       flux_visited_weight,
+                                                                       flux_visited_function_value)
 
 
 
-            for i in range(number_best_worst):
-                # pegando os elementos com o maior valor de prêmio
-                max_i = np.argmax(flux_visited_function_value)
-
-                if best_individuals_function_value[i] < flux_visited_function_value[max_i]:
-                    teste_flag = [np.array_equal(element, flux_visited[max_i]) for element in best_individuals]
-                    if True not in teste_flag:
-                        #     print('tem')
-                        # if not np.array_equal(best_individuals[i], flux_visited[max_i]):
-                        best_individuals[i] = flux_visited[max_i]
-                        best_individuals_coust[i] = flux_visited_coust[max_i]
-                        best_individuals_value[i] = flux_visited_value[max_i]
-                        best_individuals_weight[i] = flux_visited_weight[max_i]
-                        best_individuals_function_value[i] = flux_visited_function_value[max_i]
-
-                    flux_visited.pop(max_i)
-                    flux_visited_coust = np.delete(flux_visited_coust, max_i)
-                    flux_visited_weight = np.delete(flux_visited_weight, max_i)
-                    flux_visited_value = np.delete(flux_visited_value, max_i)
-                    flux_visited_function_value = np.delete(flux_visited_function_value, max_i)
-
-                # pegando os valores com os menores valores de prêmios
-                min_i = np.argmin(flux_visited_function_value)
-
-                if worst_individuals_function_value[i] == 0 or worst_individuals_function_value[i] > flux_visited_function_value[min_i]:
-
-                    teste_flag = [np.array_equal(element, flux_visited[min_i]) for element in worst_individuals]
-                    if True not in teste_flag:
-                        # if not np.array_equal(worst_individuals[i], flux_visited[min_i]):
-                        worst_individuals[i] = flux_visited[min_i]
-                        worst_individuals_coust[i] = flux_visited_coust[min_i]
-                        worst_individuals_weight[i] = flux_visited_weight[min_i]
-                        worst_individuals_value[i] = flux_visited_value[min_i]
-                        worst_individuals_function_value[i] = flux_visited_function_value[max_i]
-
-                    flux_visited.pop(min_i)
-                    flux_visited_coust = np.delete(flux_visited_coust, min_i)
-                    flux_visited_weight = np.delete(flux_visited_weight, min_i)
-                    flux_visited_value = np.delete(flux_visited_value, min_i)
-                    flux_visited_function_value = np.delete(flux_visited_function_value, min_i)
+            # for i in range(number_best_worst):
+            #     # pegando os elementos com o maior valor de prêmio
+            #     max_i = np.argmax(flux_visited_function_value)
+            #
+            #     if best_individuals_function_value[i] < flux_visited_function_value[max_i]:
+            #         teste_flag = [np.array_equal(element, flux_visited[max_i]) for element in best_individuals]
+            #         if True not in teste_flag:
+            #             #     print('tem')
+            #             # if not np.array_equal(best_individuals[i], flux_visited[max_i]):
+            #             best_individuals[i] = flux_visited[max_i]
+            #             best_individuals_coust[i] = flux_visited_coust[max_i]
+            #             best_individuals_value[i] = flux_visited_value[max_i]
+            #             best_individuals_weight[i] = flux_visited_weight[max_i]
+            #             best_individuals_function_value[i] = flux_visited_function_value[max_i]
+            #
+            #         flux_visited.pop(max_i)
+            #         flux_visited_coust = np.delete(flux_visited_coust, max_i)
+            #         flux_visited_weight = np.delete(flux_visited_weight, max_i)
+            #         flux_visited_value = np.delete(flux_visited_value, max_i)
+            #         flux_visited_function_value = np.delete(flux_visited_function_value, max_i)
+            #
+            #     # pegando os valores com os menores valores de prêmios
+            #     min_i = np.argmin(flux_visited_function_value)
+            #
+            #     if worst_individuals_function_value[i] == 0 or worst_individuals_function_value[i] > flux_visited_function_value[min_i]:
+            #
+            #         teste_flag = [np.array_equal(element, flux_visited[min_i]) for element in worst_individuals]
+            #         if True not in teste_flag:
+            #             # if not np.array_equal(worst_individuals[i], flux_visited[min_i]):
+            #             worst_individuals[i] = flux_visited[min_i]
+            #             worst_individuals_coust[i] = flux_visited_coust[min_i]
+            #             worst_individuals_weight[i] = flux_visited_weight[min_i]
+            #             worst_individuals_value[i] = flux_visited_value[min_i]
+            #             worst_individuals_function_value[i] = flux_visited_function_value[min_i]
+            #
+            #         flux_visited.pop(min_i)
+            #         flux_visited_coust = np.delete(flux_visited_coust, min_i)
+            #         flux_visited_weight = np.delete(flux_visited_weight, min_i)
+            #         flux_visited_value = np.delete(flux_visited_value, min_i)
+            #         flux_visited_function_value = np.delete(flux_visited_function_value, min_i)
 
 
             pop = self.crossover(best_individuals, worst_individuals, begin_deposit)
@@ -593,9 +665,11 @@ class GA_SnakSack:
             pop = best_individuals + pop
             x=len(pop)
 
-            pop_mutation = self.mutation(pop, best_individuals, population - len(pop))
+            pop_mutation = self.mutation(pop, best_individuals, x)
 
-            new_pop = pop + pop_mutation
+            rest_pop , x1, x2, x3, x4 = self.generate_population(population - (2*x))
+
+            new_pop = pop + pop_mutation + rest_pop
             x = len(new_pop)
 
             flux_visited = list()
@@ -611,53 +685,46 @@ class GA_SnakSack:
                 flux_visited_weight[i] = flux_weight
                 flux_visited_function_value[i] = flux_function_value
 
-        for i in range(number_best_worst):
-            # pegando os elementos com o maior valor de prêmio
-            max_i = np.argmax(flux_visited_function_value)
-
-            if best_individuals_function_value[i] < flux_visited_function_value[max_i]:
-                best_individuals[i] = flux_visited[max_i]
-                best_individuals_coust[i] = flux_visited_coust[max_i]
-                best_individuals_value[i] = flux_visited_value[max_i]
-                best_individuals_weight[i] = flux_visited_weight[max_i]
-                best_individuals_function_value[i] = flux_visited_function_value[max_i]
-
-                flux_visited.pop(max_i)
-                flux_visited_coust = np.delete(flux_visited_coust, max_i)
-                flux_visited_weight = np.delete(flux_visited_weight, max_i)
-                flux_visited_value = np.delete(flux_visited_value, max_i)
-                flux_visited_function_value = np.delete(flux_visited_function_value, max_i)
-
-            # pegando os valores com os menores valores de prêmios
-            min_i = np.argmin(flux_visited_function_value)
-
-            if worst_individuals_function_value[i] == 0 or worst_individuals_function_value[i] > flux_visited_function_value[min_i]:
-                worst_individuals[i] = flux_visited[min_i]
-                worst_individuals_coust[i] = flux_visited_coust[min_i]
-                worst_individuals_weight[i] = flux_visited_weight[min_i]
-                worst_individuals_value[i] = flux_visited_value[min_i]
-                worst_individuals_function_value[i] = flux_visited_function_value[max_i]
-
-                flux_visited.pop(min_i)
-                flux_visited_coust = np.delete(flux_visited_coust, min_i)
-                flux_visited_weight = np.delete(flux_visited_weight, min_i)
-                flux_visited_value = np.delete(flux_visited_value, min_i)
-                flux_visited_function_value = np.delete(flux_visited_function_value, min_i)
+        best_individuals, \
+        best_individuals_coust, \
+        best_individuals_value, \
+        best_individuals_weight, \
+        best_individuals_function_value, \
+        worst_individuals, \
+        worst_individuals_coust, \
+        worst_individuals_value, \
+        worst_individuals_weight, \
+        worst_individuals_function_value = self.function_objective(number_best_worst,
+                                                                   best_individuals,
+                                                                   best_individuals_coust,
+                                                                   best_individuals_value,
+                                                                   best_individuals_weight,
+                                                                   best_individuals_function_value,
+                                                                   worst_individuals,
+                                                                   worst_individuals_coust,
+                                                                   worst_individuals_value,
+                                                                   worst_individuals_weight,
+                                                                   worst_individuals_function_value,
+                                                                   flux_visited,
+                                                                   flux_visited_coust,
+                                                                   flux_visited_value,
+                                                                   flux_visited_weight,
+                                                                   flux_visited_function_value)
 
         return best_individuals, best_individuals_value, best_individuals_coust, best_individuals_weight, best_individuals_function_value
 
 if __name__ == '__main__':
     x = GA_SnakSack()
 
-    a,b,c,d,e = x.ga(size_generation=200,
-         size_population=1500,
+    a,b,c,d,e = x.ga(size_generation=2000,
+         size_population=800,
          max_weight=100,
-         max_coust=100,
+         max_coust=50,
          towns_list='./pontos.txt',
          weight_list='./prize_penalty.txt',
          begin_deposit=0)
 
     for i in range(len(a)):
         x.plota_rotas(x.mapa, a[i])
-        print (b,c,d,e)
+        print (b[i],c[i],d[i],e[i])
 
