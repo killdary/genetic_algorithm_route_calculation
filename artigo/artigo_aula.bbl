@@ -1,0 +1,102 @@
+\begin{thebibliography}{}
+
+\bibitem[BeagleBoard 2017]{BeagleBoard}
+BeagleBoard (2017).
+\newblock Beagleboneblack.
+
+\bibitem[Brown 2016]{orangepi:Eric}
+Brown, E. (2016).
+\newblock \$10 orange pi one pits quad-core cortex-a7 against pi zero.
+
+\bibitem[CASS 2017]{IEEE}
+CASS, S. (2017).
+\newblock The 2017 top programming languages.
+
+\bibitem[Coppin 2004]{book:54924}
+Coppin, B. (2004).
+\newblock {\em Artificial Intelligence Illuminated}.
+\newblock Jones and Bartlett Publishers, 1st ed edition.
+
+\bibitem[de~Almeida 2017]{Tiago:17}
+de~Almeida, T.~A. (2017).
+\newblock M\'etodo do subgradiente para a resolu\c{c}\~ao da relaxa\c{c}\~ao
+  lagrangeana do problema do caixeiro viajante sim\'etrico.
+
+\bibitem[DiCola 2014]{adafruit:Tony}
+DiCola, T. (2014).
+\newblock Power usage.
+
+\bibitem[Goldberg 1989]{book:1176457}
+Goldberg, D.~E. (1989).
+\newblock {\em Genetic Algorithms in Search, Optimization, and Machine
+  Learning}.
+\newblock Addison-Wesley Professional, 1 edition.
+
+\bibitem[Golden et~al. 1980]{doi:10.1287/opre.28.3.694}
+Golden, B., Bodin, L., Doyle, T., and W.~Stewart, J. (1980).
+\newblock Approximate traveling salesman algorithms.
+\newblock {\em Operations Research}, 28(3-part-ii):694--711.
+
+\bibitem[Google 2017]{Google:17}
+Google (2017).
+\newblock Just press go: designing a self-driving vehicle.
+
+\bibitem[Jones et~al. 01  ]{Numpy}
+Jones, E., Oliphant, T., Peterson, P., et~al. (2001--).
+\newblock {SciPy}: Open source scientific tools for {Python}.
+\newblock [Online; accessed 2017-12-21].
+
+\bibitem[Kramer 2017]{book:1613056}
+Kramer, O. (2017).
+\newblock {\em Genetic Algorithm Essentials}.
+\newblock Springer.
+
+\bibitem[Mitchell 2017]{allaboutcircuits:Robin}
+Mitchell, R. (2017).
+\newblock Battle of the sbcs: Beaglebone black, raspberry pi 3, and asus tinker
+  board.
+
+\bibitem[NASA 2017]{Nasa:17}
+NASA (2017).
+\newblock Curiosity overview.
+
+\bibitem[Orangepi 2017]{orangepi:Orange}
+Orangepi (2017).
+\newblock orange pi one-orangepi.
+
+\bibitem[Python 2017]{Python}
+Python (2017).
+\newblock Python.
+
+\bibitem[Raspberry 2017]{raspberry}
+Raspberry (2017).
+\newblock Raspberry pi - teach, learn, and make with raspberry pi.
+
+\bibitem[ROBOCUP 2017]{ROBOCUP:17}
+ROBOCUP (2017).
+\newblock Robocup about.
+
+\bibitem[Singh and Lodhi 2013]{Singh2013StudyOV}
+Singh, S. and Lodhi, E.~A. (2013).
+\newblock Study of variation in tsp using genetic algorithm and its operator
+  comparison.
+
+\bibitem[Tabile et~al. 2011]{TABILE2011}
+Tabile, R.~A., Godoy, E.~P., Pereira, R. R.~D., Tangerino, G.~T., Porto, A.
+  J.~V., and Inamasu, R.~Y. (2011).
+\newblock {Design and development of the architecture of an agricultural mobile
+  robot}.
+\newblock {\em {Engenharia Agr\'icola}}, 31:130 -- 142.
+
+\bibitem[Vicente~Santos et~al. 2017]{article}
+Vicente~Santos, A., De~G\'oes, E., Miranda, F., Freitas, G., Almir De~Sena, J.,
+  Robinson, N., Dos~Reis, S., Eduardo, P., Panta, G., Carvalho~Ferreira, R.,
+  and Curty~Cerqueira, R. (2017).
+\newblock Rob\^{o} ambiental h\'ibrido: um novo conceito em locomo\c{c}\~ao e
+  monitoramento de \'areas in\'ospitas na floresta amaz\^onica.
+
+\bibitem[Wikipedia 2017]{Wikipedia:17}
+Wikipedia (2017).
+\newblock Wikipedia.
+
+\end{thebibliography}

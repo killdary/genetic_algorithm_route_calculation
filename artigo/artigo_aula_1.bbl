@@ -1,0 +1,64 @@
+\begin{thebibliography}{}
+
+\bibitem[Nas ]{Nasa:17}
+Curiosity overview.
+
+\bibitem[Goo ]{Google:17}
+Just press go: designing a self-driving vehicle.
+
+\bibitem[Tia ]{Tiago:06}
+M\'atodo do subgradiente para a resolução da relaxação lagrangeana do
+  problema do caixeiro viajante simétrico.
+
+\bibitem[ROB ]{ROBOCUP:17}
+Robocup about.
+
+\bibitem[Wik ]{Wikipedia:17}
+Travelling salesman problem.
+
+\bibitem[Boulic and Renault 1991]{boulic:91}
+Boulic, R. and Renault, O. (1991).
+\newblock 3d hierarchies for animation.
+\newblock In Magnenat-Thalmann, N. and Thalmann, D., editors, {\em New Trends
+  in Animation and Visualization}. John Wiley {\&} Sons ltd.
+
+\bibitem[Coppin 2004]{book:54924}
+Coppin, B. (2004).
+\newblock {\em Artificial Intelligence Illuminated}.
+\newblock Jones and Bartlett Publishers, 1st ed edition.
+
+\bibitem[Goldberg 1989]{book:1176457}
+Goldberg, D.~E. (1989).
+\newblock {\em Genetic Algorithms in Search, Optimization, and Machine
+  Learning}.
+\newblock Addison-Wesley Professional, 1 edition.
+
+\bibitem[Golden et~al. 1980]{doi:10.1287/opre.28.3.694}
+Golden, B., Bodin, L., Doyle, T., and W.~Stewart, J. (1980).
+\newblock Approximate traveling salesman algorithms.
+\newblock {\em Operations Research}, 28(3-part-ii):694--711.
+
+\bibitem[Knuth 1984]{knuth:84}
+Knuth, D.~E. (1984).
+\newblock {\em The {\TeX} Book}.
+\newblock Addison-Wesley, 15th edition.
+
+\bibitem[Singh and Lodhi 2013]{Singh2013StudyOV}
+Singh, S. and Lodhi, E.~A. (2013).
+\newblock Study of variation in tsp using genetic algorithm and its operator
+  comparison.
+
+\bibitem[Smith and Jones 1999]{smith:99}
+Smith, A. and Jones, B. (1999).
+\newblock On the complexity of computing.
+\newblock In Smith-Jones, A.~B., editor, {\em Advances in Computer Science},
+  pages 555--566. Publishing Press.
+
+\bibitem[Vicente~Santos et~al. 2017]{article}
+Vicente~Santos, A., De~Góes, E., Miranda, F., Freitas, G., Almir De~Sena, J.,
+  Robinson, N., Dos~Reis, S., Eduardo, P., Panta, G., Carvalho~Ferreira, R.,
+  and Curty~Cerqueira, R. (2017).
+\newblock Robô ambiental híbrido: um novo conceito em locomoção e
+  monitoramento de áreas inóspitas na floresta amazônica.
+
+\end{thebibliography}
