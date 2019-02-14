@@ -46,6 +46,11 @@ Kramer, O. (2017).
 \newblock {\em Genetic Algorithm Essentials}.
 \newblock Springer.
 
+\bibitem[Martello and Toth 1990]{Martello:1990:KPA:98124}
+Martello, S. and Toth, P. (1990).
+\newblock {\em Knapsack Problems: Algorithms and Computer Implementations}.
+\newblock John Wiley \& Sons, Inc., New York, NY, USA.
+
 \bibitem[Mitchell 2017]{allaboutcircuits:Robin}
 Mitchell, R. (2017).
 \newblock Battle of the sbcs: Beaglebone black, raspberry pi 3, and asus tinker
@@ -58,6 +63,11 @@ NASA (2017).
 \bibitem[Orangepi 2017]{orangepi:Orange}
 Orangepi (2017).
 \newblock orange pi one-orangepi.
+
+\bibitem[Prof. Hans~Kellerer 2004]{book:946517}
+Prof. Hans~Kellerer, Prof. Ulrich~Pferschy, P. D. P.~a. (2004).
+\newblock {\em Knapsack Problems}.
+\newblock Springer-Verlag Berlin Heidelberg, 1 edition.
 
 \bibitem[Python 2019]{Python}
 Python (2019).
@@ -89,5 +99,9 @@ Vicente~Santos, A., De~G\'oes, E., Miranda, F., Freitas, G., Almir De~Sena, J.,
   and Curty~Cerqueira, R. (2017).
 \newblock Rob\^{o} ambiental h\'ibrido: um novo conceito em locomo\c{c}\~ao e
   monitoramento de \'areas in\'ospitas na floresta amaz\^onica.
+
+\bibitem[Wikipedia 2019]{Wikipedia:19}
+Wikipedia (2019).
+\newblock Wikipedia.
 
 \end{thebibliography}

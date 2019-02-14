@@ -1,0 +1,621 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.2.13)  13 FEB 2019 23:18
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**artigo_qualificacao.tex
+(./artigo_qualificacao.tex
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 7 language(s) loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (./sbc-template.sty
+Package: sbc-template 2001/06/09
+
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count87
+\Gm@cntv=\count88
+\c@Gm@tempcnt=\count89
+\Gm@bindingoffset=\dimen103
+\Gm@wd@mp=\dimen104
+\Gm@odd@mp=\dimen105
+\Gm@even@mp=\dimen106
+\Gm@layoutwidth=\dimen107
+\Gm@layoutheight=\dimen108
+\Gm@layouthoffset=\dimen109
+\Gm@layoutvoffset=\dimen110
+\Gm@dimlist=\toks15
+)
+(./caption2.sty
+Package: caption2 2002/08/03 v2.1 Customising captions (AS)
+\captionmargin=\dimen111
+\captionwidth=\dimen112
+\captionindent=\dimen113
+Package caption2 Info: Running in caption2 v2.0 compatibility mode on input lin
+e 147.
+\captionlinewidth=\dimen114
+) (/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+\c@instn=\count90
+
+(/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
+\ttl@box=\box26
+\beforetitleunit=\skip43
+\aftertitleunit=\skip44
+\ttl@plus=\dimen115
+\ttl@minus=\dimen116
+\ttl@toksa=\toks16
+\titlewidth=\dimen117
+\titlewidthlast=\dimen118
+\titlewidthfirst=\dimen119
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen120
+\Gin@req@width=\dimen121
+)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2018/01/08 v1.21 mathematical typesetting tools
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count91
+\calc@Bcount=\count92
+\calc@Adimen=\dimen122
+\calc@Bdimen=\dimen123
+\calc@Askip=\skip45
+\calc@Bskip=\skip46
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count93
+\calc@Cskip=\skip47
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip48
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen124
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen125
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count94
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count95
+\leftroot@=\count96
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count97
+\DOTSCASE@=\count98
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box27
+\strutbox@=\box28
+\big@size=\dimen126
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count99
+\c@MaxMatrixCols=\count100
+\dotsspace@=\muskip11
+\c@parentequation=\count101
+\dspbrk@lvl=\count102
+\tag@help=\toks18
+\row@=\count103
+\column@=\count104
+\maxfields@=\count105
+\andhelp@=\toks19
+\eqnshift@=\dimen127
+\alignsep@=\dimen128
+\tagshift@=\dimen129
+\tagwidth@=\dimen130
+\totwidth@=\dimen131
+\lineht@=\dimen132
+\@envbody=\toks20
+\multlinegap=\skip49
+\multlinetaggap=\skip50
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count106
+\l_MT_multwidth_dim=\dimen133
+\origjot=\skip51
+\l_MT_shortvdotswithinadjustabove_dim=\dimen134
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen135
+\l_MT_above_intertext_sep=\dimen136
+\l_MT_below_intertext_sep=\dimen137
+\l_MT_above_shortintertext_sep=\dimen138
+\l_MT_below_shortintertext_sep=\dimen139
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2017/07/18 v5.2 algorithms environments
+\c@AlgoLine=\count107
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\algocf@hangindent=\skip52
+
+(/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count108
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\skiptotal=\skip53
+\skiplinenumber=\skip54
+\skiprule=\skip55
+\skiphlne=\skip56
+\skiptext=\skip57
+\skiplength=\skip58
+\algomargin=\skip59
+\skipalgocfslide=\skip60
+\algowidth=\dimen140
+\inoutsize=\dimen141
+\inoutindent=\dimen142
+\interspacetitleruled=\dimen143
+\interspacealgoruled=\dimen144
+\interspacetitleboxruled=\dimen145
+\algocf@ruledwidth=\skip61
+\algocf@inoutbox=\box29
+\algocf@inputbox=\box30
+\AlCapSkip=\skip62
+\AlCapHSkip=\skip63
+\algoskipindent=\skip64
+\algocf@nlbox=\box31
+\algocf@hangingbox=\box32
+\algocf@untilbox=\box33
+\algocf@skipuntil=\skip65
+\algocf@capbox=\box34
+\algocf@lcaptionbox=\skip66
+\algoheightruledefault=\skip67
+\algoheightrule=\skip68
+\algotitleheightruledefault=\skip69
+\algotitleheightrule=\skip70
+\c@algocfline=\count109
+\c@algocfproc=\count110
+\c@algocf=\count111
+\algocf@algoframe=\box35
+\algocf@algobox=\box36
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count112
+\float@exts=\toks22
+\float@box=\box37
+\@float@everytoks=\toks23
+\@floatcapt=\box38
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2015/03/17 v1.2c Input encoding file
+\inpenc@prehook=\toks24
+\inpenc@posthook=\toks25
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
+File: latin1.def 2015/03/17 v1.2c Input encoding file
+))
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count113
+\lst@gtempboxa=\box39
+\lst@token=\toks26
+\lst@length=\count114
+\lst@currlwidth=\dimen146
+\lst@column=\count115
+\lst@pos=\count116
+\lst@lostspace=\dimen147
+\lst@width=\dimen148
+\lst@newlines=\count117
+\lst@lineno=\count118
+\lst@maxwidth=\dimen149
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count119
+\lst@skipnumbers=\count120
+\lst@framebox=\box40
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(./artigo_qualificacao.aux)
+\openout1 = `artigo_qualificacao.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 53.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
+* v-part:(T,H,B)=(99.58464pt, 674.33032pt, 71.13188pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=426.79135pt
+* \textheight=674.33032pt
+* \oddsidemargin=13.08827pt
+* \evensidemargin=13.08827pt
+* \topmargin=-9.68535pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count121
+\scratchdimen=\dimen150
+\scratchbox=\box41
+\nofMPsegments=\count122
+\nofMParguments=\count123
+\everyMPshowfont=\toks27
+\MPscratchCnt=\count124
+\MPscratchDim=\dimen151
+\MPnumerator=\count125
+\makeMPintoPDFobject=\count126
+\everyMPtoPDFconversion=\toks28
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/01/21 v0.26 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\c@lstlisting=\count127
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 55.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 57.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 73.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 106.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 106.
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
+[]\OT1/ptm/m/n/12 Desta forma, a formula[][]ao de Programa[][]ao Lin-ear In-tei
+ra para o
+ []
+
+[3]
+
+LaTeX Warning: Citation `Tiago:17' on page 4 undefined on input line 165.
+
+[4]
+
+LaTeX Warning: Citation `Tiago:17' on page 5 undefined on input line 203.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--204
+[]\OT1/ptm/m/n/12 Desta forma, a formula[][]ao matem[]atica para o
+ []
+
+
+Underfull \hbox (badness 1694) in paragraph at lines 221--224
+\OT1/ptm/m/n/12 da so-bre-viv[]encia e reprodu[][]ao dos in-div[]^^Pduos mais a
+p-tos, pro-posto por Charles
+ []
+
+[5]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 236.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 257.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 257.
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--261
+[]\OT1/ptm/b/n/12 BeagleBone
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--261
+[]\OT1/ptm/b/n/12 Orange Pi
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--262
+[]\OT1/ptm/m/n/12 ARM Cor-tex
+ []
+
+
+Underfull \hbox (badness 1377) in paragraph at lines 262--262
+[]\OT1/ptm/m/n/12 ARM Cortex-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--262
+[]\OT1/ptm/m/n/12 ARM
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--262
+\OT1/ptm/m/n/12 1176JZF-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--262
+[]\OT1/ptm/m/n/12 ARM H3
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
+[]\OT1/ptm/m/n/12 2 GB on-
+ []
+
+
+Overfull \hbox (2.05943pt too wide) in paragraph at lines 266--266
+[]\OT1/ptm/b/n/12 Alimenta[][]ao| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 266--266
+[]\OT1/ptm/m/n/12 210-460 mA
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--267
+[]\OT1/ptm/b/n/12 Quantidade
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+Underfull \hbox (badness 3838) in paragraph at lines 304--305
+[]\OT1/ptm/m/n/12 A base do de-sen-volvi-mento deste ar-tigo foi o al-go-ritmo 
+pro-posto por
+ []
+
+[7] [8]
+<Time.png, id=41, 803.0pt x 569.12625pt>
+File: Time.png Graphic file (type png)
+<use Time.png>
+Package pdftex.def Info: Time.png  used on input line 352.
+(pdftex.def)             Requested size: 298.75264pt x 211.74577pt.
+<RAM.png, id=43, 803.0pt x 519.9425pt>
+File: RAM.png Graphic file (type png)
+<use RAM.png>
+Package pdftex.def Info: RAM.png  used on input line 362.
+(pdftex.def)             Requested size: 298.75264pt x 193.44676pt.
+ [9 <./Time.png>]
+<CPU.png, id=48, 803.0pt x 519.9425pt>
+File: CPU.png Graphic file (type png)
+<use CPU.png>
+Package pdftex.def Info: CPU.png  used on input line 372.
+(pdftex.def)             Requested size: 298.75264pt x 193.44676pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 384--384
+[]\OT1/ptm/b/n/12 BeagleBone
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 384--384
+[]\OT1/ptm/b/n/12 Orange Pi
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 385--385
+[]\OT1/ptm/b/n/12 Tempo
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 385--385
+\OT1/ptm/b/n/12 Execu[][]ao
+ []
+
+
+Underfull \vbox (badness 1735) has occurred while \output is active []
+
+ [10 <./RAM.png> <./CPU.png>] (./artigo_qualificacao.bbl [11]) [12]
+(./artigo_qualificacao.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 6556 strings out of 494847
+ 95780 string characters out of 6179080
+ 202050 words of memory out of 5000000
+ 9755 multiletter control sequences out of 15000+600000
+ 24574 words of font info for 52 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 41i,16n,40p,1093b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
+mri8a.pfb>
+Output written on artigo_qualificacao.pdf (12 pages, 211326 bytes).
+PDF statistics:
+ 103 PDF objects out of 1000 (max. 8388607)
+ 69 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+

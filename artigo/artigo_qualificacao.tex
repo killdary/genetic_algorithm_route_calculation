@@ -55,11 +55,8 @@
 \maketitle
 
 \begin{abstract}
-	This meta-paper describes the style to be used in articles and short papers
-	for SBC conferences. For papers in English, you should add just an abstract
-	while for the papers in Portuguese, we also ask for an abstract in
-	Portuguese (``resumo''). In both cases, abstracts should not have more than
-	10 lines and must be in the first page of the paper.
+	Route planning is becoming a daily task for activities that require the help of robots, such as robotic manipulators on assembly lines and transport robots in industries.
+	The great challenge of these robots is to run a better route within their energy limitations. This paper presents the study and development of an application for the planning of beasted routes in the Traveling Salasmen Problem (TSP) combined with the Knapsack Problem (KP) using genetic algorithm (GA). 	
 \end{abstract}
 
 \begin{resumo} 
@@ -68,7 +65,7 @@
 	em linhas de montagem e robôs de transporte em indústrias.
 	O grande desafio desses robôs é executar uma melhor rota dentro das 
 	suas limitações energéticas. Este artigo apresenta o estudo e desenvolvimento 
-	de uma aplicação para o planejamento de rotas beaseados no Problema do Caixeiro Viajante(PVC) 
+	de uma aplicação para o planejamento de rotas baseados no Problema do Caixeiro Viajante(PVC) 
 	combinado ao Problema da Mochila(PM) por meio de algorítmo genético(AG).
 \end{resumo}
 
@@ -95,12 +92,11 @@ Para uma melhor representação do problema de roteirização de robôs com restriçõe
 O Problema do Caixeiro Viajante (PCV) tem sido muito utilizado no experimento
 de diversos métodos de otimização por ser, principalmente, um problema de fácil
 descrição e compreensão, mas de grande dificuldade de solução, uma vez que é
-NP(Non-Deterministic Polynomial time). O PCV determina que um vendedor tem N
+NP-difícil(Non-Deterministic Polynomial time). O PCV determina que um vendedor tem N
 cidades no qual o mesmo deveria visitar todas as cidades, sem repetir nenhuma, e
 voltar para a cidade de partida de modo que o custo da viagem seja mínimo \cite{Singh2013StudyOV}. O
 cálculo de rotas mínimas em robôs se assemelha ao PCV, sendo o robô o vendedor, as
-cidades os pontos objetivos que o robô deve visitar e as arestas a distância que o robô 
-otimização combinatória, no qual o número de soluções possíveis é representado na equação \ref{fat}.
+cidades os pontos objetivos que o robô deve visitar e as arestas a distância que o robô percorrerá. O PCV é um problema de otimização combinatória, no qual o número de soluções possíveis é representado na equação \ref{fat}.
 
 \begin{equation}\label{fat}
 R(n)=(n-1)!
@@ -183,10 +179,41 @@ min \frac{1}{2}\sum_{j=1}^{n}\sum_{j=1}^{n}c_{ij}x_{ij}
 \begin{equation}\label{eq:15}
 x_j = 0 \text{ ou } x_j = 1  \;  \;  \text{,para todo $j \varepsilon  E$}
 \end{equation}
-onde $J(j)$ é o conjunto de todos os arcos, não direcionados, ligados ao nó $j$ e $E(S)$ é o subconjunto de todos os arcos que ligam as cidades em qualquer conjunto S não vazio que contenha todas as cidades\cite{Wikipedia:17}.
+onde $J(j)$ é o conjunto de todos os arcos, não direcionados, ligados ao nó $j$ e $E(S)$ é o subconjunto de todos os arcos que ligam as cidades em qualquer conjunto S não vazio que contenha todas as cidades\cite{Wikipedia:19}.
 
-\subsection{Problema da Mochila} \label{sec:PM}
+\subsection{Problema da Mochila (PM)} \label{sec:PM}
+O PM é um problema de programação linear inteira, classificado como
+NP-hard. O PM consiste de uma mochila com capacidade limitada, dentro dessa mochila deve ser colocado uma lista de itens, cada um com seu peso e valor, de modo que seja agrupado um conjunto de itens na bolsa que sua soma de peso não ultrapassem a capacidade da mochila e a soma dos valores seja a maior  possível\cite{Martello:1990:KPA:98124}. O cálculo da rota de um robô se assemelha ao PM, sendo o robô a mochila, a capacidade da mochila as restrições impostas ao robô, como peso máximo ou energia disponível, e os itens a serem colocados na mochilas são os pontos as serem visitados. 
 
+O PM possui diversas variações, porém um robô que tem sua rota com base no PCV só deverá passar por um ponto uma única vez, sendo assim a o PM binário é a representação dp PM que mais aderente ao problema.
+
+ 
+\subsubsection{PM binário e sua Formulação Matemática}
+A variação PM binária consiste de um conjunto de itens $N$, no qual consiste de uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, só existe apenas 1 item de cada tipo, e a o valor da capacidade da mochila sendo $C$. O objetivo é selecionar um subset de N no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. A lista de itens é composta por um vetor $X[x_{j}]$, no qual
+
+\begin{equation}\label{eq:16}
+x_{j} =
+\begin{cases} 
+1 &\text{, se: o item } x_{j} \in \text{rota}\\
+0 &\text{, se: o item } x_{j} \notin \text{rota}
+\end{cases}
+\end{equation}
+
+Desta forma, a formulação matemática para o problema\cite{book:946517}\cite{Martello:1990:KPA:98124} pode ser descrita como:
+r eliminados. O problema pode então ser formulado como \cite{Tiago:17}:
+
+\begin{equation}\label{eq:17}
+max \sum_{j=1}^{n}\sum_{j=1}^{n}p_{j}x_{j}
+\end{equation}
+
+\begin{equation}\label{eq:18}
+s.t.\sum_{j=1}^{n}w_{j}x_{j} \leq  C
+\end{equation}
+
+
+\begin{equation}\label{eq:19}
+x_j \in \left \{  1,2 \right \}, j=1,...,n.
+\end{equation}
 
 \section{Fundamentação Teórica}
 Dentre as técnicas aplicadas ao PCV foi escolhido o algoritmo genético(AG) aplicado a 4 plataformas embarcadas. Após fundamentar o funcionamento básico do AG será abordado as especificações técnica de cada plataforma.

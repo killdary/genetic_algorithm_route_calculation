@@ -18,7 +18,6 @@ tarefas a serem realixadas:
 
 import numpy as np
 import matplotlib.pyplot as plt
-from docutils.nodes import citation
 
 
 class GA_SnakSack:
@@ -97,13 +96,14 @@ class GA_SnakSack:
                 flux_visited = np.delete(flux_visited, city_remove)
                 count += 1
 
-            elif count > 1 or individual.size ==0:
-                break
+            # elif count > 1 or individual.size ==0:
+            #     break
             else:
                 city_add = np.random.randint(0, individual.shape[0], 1)
                 teste = individual[city_add]
                 flux_visited = np.append(flux_visited, teste)
                 individual = np.delete(individual, city_add)
+                break
 
         flux_value = self.prizes.take(flux_visited).sum()
         flux_visited = np.concatenate([self.begin_deposit, flux_visited, self.begin_deposit])
@@ -160,7 +160,7 @@ class GA_SnakSack:
         # estabelecendo um número mínimo de cidades que se aproxime do peso
         # maximo suportado pela mochila
         # number_citys_select = int(round(self.max_weight / mean_weight))
-        number_citys_select = int(round(self.max_coust / mean_coust))
+        number_citys_select = size
 
         # gerando uma matriz de zeros para cidades visitadas e pouplação
         # population = np.zeros([number_population, size])
@@ -239,6 +239,30 @@ class GA_SnakSack:
                 index_worst = i
 
         individual[index_worst], individual[index_worst2] = individual[index_worst2], individual[index_worst]
+
+        return individual
+
+    def get_worst_gene_WGWNNM(self, individual):
+        value_worst = 0
+        index_worst = 0
+        for i in range(1, individual.size -2):
+            value = self.med_custo(individual[i-1:i]) + self.med_custo(individual[i:i+2])
+            if value > value_worst:
+                value_worst = value
+                index_worst = i
+
+        minor = 100
+        for i in np.arange(individual.size):
+            if i != 0 and i != index_worst and i != (individual.size -1):
+                value = self.med_custo(np.array([individual[index_worst], individual[i]]))
+                if minor > value:
+                    minor = value
+                    minor_i = i
+
+        x = minor_i+ (-1 if np.random.randint(2,size=1) == 0 else 1)
+        # x = minor_i if x < individual.size else x - 2
+
+        individual[index_worst], individual[x] = individual[x], individual[index_worst]
 
         return individual
 
@@ -348,14 +372,14 @@ class GA_SnakSack:
         #     all_individuals.append(np.copy(x))
 
         result = list()
-        number_mutation = round(size/(6*4))
+        number_mutation = round(size/(4*4))
 
         for a in range(number_mutation):
             for i in best_individuals:
                 x = np.delete(i,[0, i.size-1])
                 all_individuals.append(np.copy(x))
 
-                list_elements = np.repeat([x], 6, axis=0)
+                list_elements = np.repeat([x], 4, axis=0)
 
                 I, J = self.generate_points_mutation_crossover(x.size)
 
@@ -371,18 +395,30 @@ class GA_SnakSack:
                 # Insertion Mutation
                 list_elements[3,I:J] = np.roll(list_elements[3,I:J], 1)
 
-                # Worst gene with random gene mutation (WGWRGM)
-                list_elements[4] = self.get_worst_gene_WGWRGM(list_elements[4])
-
-                # Worst gene with worst gene mutation (WGWWGM)
-                list_elements[5] = self.get_worst_gene_WGWWGM(list_elements[5])
 
                 result.append(np.concatenate([self.begin_deposit,list_elements[0], self.begin_deposit]))
                 result.append(np.concatenate([self.begin_deposit,list_elements[1], self.begin_deposit]))
                 result.append(np.concatenate([self.begin_deposit,list_elements[2], self.begin_deposit]))
                 result.append(np.concatenate([self.begin_deposit,list_elements[3], self.begin_deposit]))
-                result.append(np.concatenate([self.begin_deposit,list_elements[4], self.begin_deposit]))
-                result.append(np.concatenate([self.begin_deposit,list_elements[5], self.begin_deposit]))
+
+
+        x = np.delete(i,[0, i.size-1])
+        all_individuals.append(np.copy(x))
+
+        list_elements = np.repeat([x], 3, axis=0)
+
+        # Worst gene with random gene mutation (WGWRGM)
+        list_elements[0] = self.get_worst_gene_WGWRGM(list_elements[0])
+
+        # Worst gene with worst gene mutation (WGWWGM)
+        list_elements[1] = self.get_worst_gene_WGWWGM(list_elements[1])
+
+        # Worst gene with nearest neighbor mutation (WGWNNM)
+        list_elements[2] = self.get_worst_gene_WGWNNM(list_elements[2])
+
+        result.append(np.concatenate([self.begin_deposit, list_elements[0], self.begin_deposit]))
+        result.append(np.concatenate([self.begin_deposit, list_elements[1], self.begin_deposit]))
+        result.append(np.concatenate([self.begin_deposit, list_elements[2], self.begin_deposit]))
 
         # elements = np.random.choice(np.arange(len(all_individuals), np.random.randint(size)))
         if (size - len(result)) > 0:
@@ -391,7 +427,7 @@ class GA_SnakSack:
             for j in range(elements.size):
                 i = np.copy(elements[j])
                 individual = np.copy(all_individuals[i])
-                mutation = np.random.randint(5, size=1)[0]
+                mutation = np.random.randint(7, size=1)[0]
 
                 I, J = self.generate_points_mutation_crossover(individual.size)
 
@@ -413,6 +449,12 @@ class GA_SnakSack:
 
                 elif(mutation == 4):
                     individual = self.get_worst_gene_WGWRGM(individual)
+
+                elif(mutation == 5):
+                    individual = self.get_worst_gene_WGWWGM(individual)
+
+                elif(mutation == 6):
+                    individual = self.get_worst_gene_WGWNNM(individual)
 
                 result.append(np.concatenate([self.begin_deposit,np.copy(individual), self.begin_deposit]))
 
@@ -473,8 +515,11 @@ class GA_SnakSack:
             max_i = np.argmax(flux_visited_function_value)
 
             if best_individuals_function_value[i] < flux_visited_function_value[max_i]:
-                teste_flag = [np.array_equal(element, flux_visited[max_i]) for element in best_individuals]
-                if True not in teste_flag:
+                # for j in range(4):
+                #     if np.array_equal(best_individuals[j], flux_visited[max_i]):
+                #         print('')
+                flag_possui = [np.array_equal(element, flux_visited[max_i]) for element in best_individuals]
+                if True not in flag_possui:
                     best_individuals[i] = flux_visited[max_i]
                     best_individuals_coust[i] = flux_visited_coust[max_i]
                     best_individuals_value[i] = flux_visited_value[max_i]
@@ -493,8 +538,8 @@ class GA_SnakSack:
             if worst_individuals_function_value[i] == 0 or worst_individuals_function_value[i] > \
                     flux_visited_function_value[min_i]:
 
-                teste_flag = [np.array_equal(element, flux_visited[max_i]) for element in worst_individuals]
-                if True not in teste_flag:
+                flag_possui = [np.array_equal(element, flux_visited[max_i]) for element in worst_individuals]
+                if True not in flag_possui:
                     worst_individuals[i] = flux_visited[min_i]
                     worst_individuals_coust[i] = flux_visited_coust[min_i]
                     worst_individuals_weight[i] = flux_visited_weight[min_i]
@@ -590,9 +635,9 @@ class GA_SnakSack:
                 break
 
             if g % 50 == 0 and g!= 0:
-                print(best_individuals_value[0])
-                print(best_individuals_coust[0])
-                print(best_individuals_function_value[0])
+                print(best_individuals_value)
+                print(best_individuals_coust)
+                print(best_individuals_function_value)
                 print(count)
                 # self.plota_rotas(self.mapa, best_individuals[0])
 
@@ -654,6 +699,12 @@ class GA_SnakSack:
                 flux_visited_weight[i] = flux_weight
                 flux_visited_function_value[i] = flux_function_value
 
+
+
+        print(best_individuals_value)
+        print(best_individuals_coust)
+        print(best_individuals_function_value)
+
         best_individuals, \
         best_individuals_coust, \
         best_individuals_value, \
@@ -686,12 +737,12 @@ if __name__ == '__main__':
     x = GA_SnakSack()
 
     a,b,c,d,e = x.ga(size_generation=2000,
-                     size_population=400,
-                     num_generation_limit = 200,
+                     size_population=900,
+                     num_generation_limit = 400,
                      max_weight=100,
-                     max_coust=200,
-                     towns_list='./novas_cidades_2.txt',
-                     weight_list='./novos_premios_2.txt',
+                     max_coust=100,
+                     towns_list='./novas_cidades_3.txt',
+                     weight_list='./novos_premios_3.txt',
                      begin_deposit=0)
 
     for i in range(len(a)):

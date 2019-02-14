@@ -1,4 +1,6 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: artigo_qualificacao.aux
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: artigo_qualificacao.aux
 The style file: sbc.bst
 Database file #1: sbc-template.bib
 Warning--entry type for "Nasa:17" isn't style-file defined
@@ -7,6 +9,8 @@ Warning--entry type for "ROBOCUP:17" isn't style-file defined
 --line 45 of file sbc-template.bib
 Warning--entry type for "Google:19" isn't style-file defined
 --line 53 of file sbc-template.bib
+Warning--entry type for "Wikipedia:19" isn't style-file defined
+--line 69 of file sbc-template.bib
 Warning--entry type for "raspberry" isn't style-file defined
 --line 160 of file sbc-template.bib
 Warning--entry type for "orangepi:Orange" isn't style-file defined
@@ -26,8 +30,48 @@ Warning--entry type for "IEEE" isn't style-file defined
 A bad cross reference---entry "TABILE2011"
 refers to entry "10.1590/S0100-69162011000100013", which doesn't exist
 Warning--I didn't find a database entry for "Tiago:17"
-Warning--I didn't find a database entry for "Wikipedia:17"
 Warning--I didn't find a database entry for "10.1590/S0100-69162011000100013"
 Warning--empty booktitle in Singh2013StudyOV
 Warning--empty journal in article
+You've used 22 entries,
+            1935 wiz_defined-function locations,
+            579 strings with 6203 characters,
+and the built_in function-call counts, 6517 in all, are:
+= -- 621
+> -- 275
+< -- 18
++ -- 92
+- -- 90
+* -- 485
+:= -- 1241
+add.period$ -- 52
+call.type$ -- 22
+change.case$ -- 152
+chr.to.int$ -- 22
+cite$ -- 24
+duplicate$ -- 258
+empty$ -- 419
+format.name$ -- 116
+if$ -- 1215
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 14
+newline$ -- 99
+num.names$ -- 66
+pop$ -- 137
+preamble$ -- 1
+purify$ -- 154
+quote$ -- 0
+skip$ -- 208
+stack$ -- 0
+substring$ -- 314
+swap$ -- 7
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 122
+warning$ -- 2
+while$ -- 46
+width$ -- 0
+write$ -- 244
 (There was 1 error message)
