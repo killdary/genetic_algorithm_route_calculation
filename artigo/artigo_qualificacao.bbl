@@ -17,6 +17,11 @@ Coppin, B. (2004).
 \newblock {\em Artificial Intelligence Illuminated}.
 \newblock Jones and Bartlett Publishers, 1st ed edition.
 
+\bibitem[de~Almeida 2019]{Tiago:19}
+de~Almeida, T.~A. (2019).
+\newblock M\'etodo do subgradiente para a resolu\c{c}\~ao da relaxa\c{c}\~ao
+  lagrangeana do problema do caixeiro viajante sim\'etrico.
+
 \bibitem[DiCola 2014]{adafruit:Tony}
 DiCola, T. (2014).
 \newblock Power usage.

@@ -162,7 +162,7 @@ O PCVS possui a direção da arestas é irrelevante já que $c_{ij} = c_{ji}$. Uma v
 \begin{equation}\label{fat2}
 R(n)=\frac{(n-1)!}{2}
 \end{equation}
-de modo que o número de resposta é a metade da formulação (\ref{fat}). De modo semelhante ao assimétrico, os sub-circuitos devem ser eliminados. O problema pode então ser formulado como \cite{Tiago:17}:
+de modo que o número de resposta é a metade da formulação (\ref{fat}). De modo semelhante ao assimétrico, os sub-circuitos devem ser eliminados. O problema pode então ser formulado como \cite{Tiago:19}:
 
 \begin{equation}\label{eq:12}
 min \frac{1}{2}\sum_{j=1}^{n}\sum_{j=1}^{n}c_{ij}x_{ij}
@@ -189,38 +189,128 @@ O PM possui diversas variações, porém um robô que tem sua rota com base no PCV s
 
  
 \subsubsection{PM binário e sua Formulação Matemática}
-A variação PM binária consiste de um conjunto de itens $N$, no qual consiste de uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, só existe apenas 1 item de cada tipo, e a o valor da capacidade da mochila sendo $C$. O objetivo é selecionar um subset de $N$ no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. A lista de itens é composta por um vetor $X[x_{j}]$, no qual
+A variação PM binária consiste de um conjunto de itens $N$, que é formado por uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, cada item é de um tipo único, e o valor da capacidade da mochila sendo $C$. O objetivo é selecionar um subset de $N$ no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. A lista de itens é composta por um vetor $Y[y_{j}]$, no qual
 
 \begin{equation}\label{eq:16}
-x_{j} =
+y_{i} =
 \begin{cases} 
-1 &\text{, se: o item } x_{j} \in \text{rota}\\
-0 &\text{, se: o item } x_{j} \notin \text{rota}
+1 &\text{, se: o item } y_{i} \in \text{rota}\\
+0 &\text{, se: o item } y_{i} \notin \text{rota}
 \end{cases}
 \end{equation}
 
 Desta forma, a formulação matemática para o problema\cite{book:946517}\cite{Martello:1990:KPA:98124} pode ser descrita como:
-r eliminados. O problema pode então ser formulado como \cite{Tiago:17}:
+r eliminados. O problema pode então ser formulado como \cite{Tiago:19}:
 
 \begin{equation}\label{eq:17}
-max \sum_{j=1}^{n}\sum_{j=1}^{n}p_{j}x_{j}
+max \sum_{i=1}^{n}\sum_{i=1}^{n}p_{i}y_{i}
 \end{equation}
 
 \begin{equation}\label{eq:18}
-s.t.\sum_{j=1}^{n}w_{j}x_{j} \leq  C
+s.t.\sum_{i=1}^{n}w_{i}y_{i} \leq  C
 \end{equation}
 
 
 \begin{equation}\label{eq:19}
-x_j \in \left \{  0,1 \right \}, j=1,...,m.
+y_i \in \left \{  0,1 \right \} \qquad i=1,...,m.
 \end{equation}
 
 
-A restrição (\ref{eq:18}) garante que a capacidade da mochila não será ultrapassada. A restrição \ref{eq:19} só assume valor 1 ou 0.A equação \ref{eq:17} garante o maior valor possível na mochila.
+A restrição (\ref{eq:18}) garante que a capacidade da mochila não será ultrapassada. A restrição (\ref{eq:19}) só assume valor $1$ ou $0$. A equação (\ref{eq:17}) garante o maior valor possível na mochila.
 
-\section{Fundamentação Teórica}
-Dentre as técnicas aplicadas ao PCV foi escolhido o algoritmo genético(AG) aplicado a 4 plataformas embarcadas. Após fundamentar o funcionamento básico do AG será abordado as especificações técnica de cada plataforma.
-\subsection{Algoritmo Genético}
+\subsection{Problema do Caxeiro Viajante Combinado ao Problema da Mocila (PCVPM)}\label{PCVPM}
+
+Nesta seção, o objetivo deste artigo, a saber, o Problema do Caixeiro Viajante com Problema de Mochila (PCVPM).
+Pode-se dizer que esse problema é a junção do PCV Simétrico com o PM binário, de modo que, para 
+formulá-lo, foi decidido que devem ser mantidas as principais características de cada um
+dos dois problemas componentes:
+\begin{enumerate}
+	\item Cidades visitadas geram prêmios.
+	\item É necessário atender uma quantidade de cidades que proporcione a soma do custo entre cidades não ultrapasse o custo máximo estabelecido.
+\end{enumerate}
+
+Obviamente, a primeira caracterísitca é relativa ao PM, enquanto a segunda é uma combinação entre PCV e PM, no qual o peso do item a ser posto na mochila foi substituído pelo
+custo de visitação entre as cidades. Observe que, dessa forma, nem todos as cidades precisam ser
+visitadas.  O problema consiste em minimizar a soma dos custos de viagem, no qual sua rota é formada
+por clientes suficientes para percorrer uma distância menor ou igual a distância preestabelecida,
+maximizando os prêmios coletados a cada cliente visitado, de modo que as cidades inclusas na rota sejam visitadas uma única vez.
+
+Mais precisamente, consideremos um grafo $G(N, A)$, onde $N$ representa o conjunto $(|N|=n)$ e $A$ o conjunto de arestas. Seja, uma matriz simétrica com custos ou distâncias mínimas entre os nós da rede considerando ainda que $c_{ij} = +\infty \forall i \in N$. As cidades $x_{i}$ que compõe o conjunto $N$ possuem um prêmio $p_i$. O custo máximo percorrido seja $C$ .A matriz $X[x_{ij}]$ é composta pelas variáveis de decisão do problema:
+
+\begin{equation}
+x_{ij} =
+	\begin{cases} 
+		1 &\text{, se: o arco } x_{ij} \in \text{rota}\\
+		0 &\text{, se: o arco } x_{ij} \notin \text{rota}
+	\end{cases}
+\end{equation}
+
+
+
+\begin{equation}
+x_{i} =
+	\begin{cases} 
+		1 &\text{, se: a cidade } x_{i} \in \text{rota}\\
+		0 &\text{, se: a cidade } x_{i} \notin \text{rota}
+	\end{cases}
+\end{equation}
+
+Desta forma, a formulação de Programação Linear Inteira para o problema pode ser escrita como:
+
+
+\begin{equation}\label{eq:obj_PCVPM}
+max. f(x) = \alpha_P\sum_{i=0}^{n}p_{i}x_{i} - \beta_D \sum_{i=1}^{n}\sum_{j=1}^{n}c_{ij}x_{ij}
+\end{equation}
+
+sujeito as restrições:
+	
+	\begin{equation}\label{eq:PCVPM_rest1}
+	\sum_{j=2}^{n}x_{1j} = 1 
+	\end{equation}
+	
+	\begin{equation}\label{eq:PCVPM_rest2}
+	\sum_{k=1}^{n-1}x_{in} = 1 
+	\end{equation}
+	
+	\begin{equation}\label{eq:PCVPM_rest3}
+	\sum_{i=1}^{n-1}x_{ni} = 0 
+	\end{equation}
+
+sobre a quantidade de visitações:
+
+
+\begin{equation}\label{eq:PCVPM_vis1}
+\sum_{i=1}^{n}x_{ij} \qquad j=1,2,\dots,n
+\end{equation}
+\begin{equation}\label{eq:PCVPM_vis2}
+\sum_{j=1}^{n}x_{ij} \qquad i=1,2,\dots,n
+\end{equation}
+
+sobre a distância máxima a ser percorrida:
+
+\begin{equation}\label{eq:PCVPM_Max_dist}
+ \sum_{i=1}^{n}\sum_{j=1}^{n}c_{ij}x_{ij} \leq C_T
+\end{equation}
+
+sobre a aliminação de subrotas:
+
+\begin{equation}\label{eq:PCVPM_sub1}
+ 1 \leq u_i \leq n \qquad\forall i \in T
+\end{equation}
+
+
+\begin{equation}\label{eq:PCVPM_sub2}
+i_i - u_j + 1 \leq (1 + -x_{ij})n \qquad  2\leq i \neq j \leq n
+\end{equation}
+
+
+onde $n$ é o tamanho do conjunto de cidades a serem visitadas, $T$ é conjuntos de cidades que comõe uma rota viável, $c_{ij}$ é o custode movimentação entre uma cidade e outra, $p_i$ é o prêmio da $i$-ésima cidade, $\alpha_P$ e $\beta_D$ são os pesos na fução objetivo relacionados a maximização da premiação e minimização do custo
+
+Neste problema as equações (\ref{eq:PCVPM_rest1}) e (\ref{eq:PCVPM_rest2}) são restrições sobre o ponto inicial e final que devem ser inclusos na rota, a restição (\ref{eq:PCVPM_rest3}) impõe que nenhum ponto apos chegar ao ponto final seja visitado, (\ref{eq:PCVPM_vis1}) e (\ref{eq:PCVPM_vis2}) restringe que cada ponto seja visitado apenas uma única vez, a equação (\ref{eq:PCVPM_Max_dist}) limita a distância máxoma percorrida a $C_{T}$, subrotas são impedidas de ser geradas pelas equações (\ref{eq:PCVPM_sub1}) e (\ref{eq:PCVPM_sub2}).
+
+O resultaddesta otimização será um conjunto de vertices ordenados a serem visitados pelo agente.
+
+\section{Algoritmo Genético}
 Os Algoritmos Genéticos (AGs) são técnicas de otimização inspirados no
 princípio da sobrevivência e reprodução dos indivíduos mais aptos, proposto por
 Charles Darwin\cite{book:54924}\cite{book:1176457}.
@@ -245,11 +335,28 @@ O algoritmo \ref{algoritmo1} mostra o pseudocódigo do AG básico. No início, um c
 			seleção\;
 		}população completa\;
 		atualização
+		teste de Parada
 	}finalização
 	\caption{Algorítimo Genético}
 \end{algorithm}
 
 O principal ciclo geracional do Algoritmo Genético gera uma nova prole de  soluções candidatas, através do cruzamento e  da mutação, até a população estar completa.
+
+\subsection{Implementação}
+A ferramenta utilizada para realizar a implementação foi a linguagem $Python$. O Python ocupa o primeiro lugar no \textit{ranking spectrun da IEEE}\cite{IEEE} em linguagens de cálculos científicos, já  possui funções nativas  de cálculos semelhantes ao Matlab, porém as mesmas ainda se demonstraram insuficientes para adaptar com precisão de tempo o algoritmo escolhido, para resolver este problema foi utilizado o pacote Numpy, que é pacote cientifico da linguagem \cite{Numpy}.
+
+Para atender às necessidades de um sistema baseado em AG's, tem-se como principais requisitos do sistema, a passagem de parâmetros: número de gerações, tamanho da população, tamanho de geração sem alteração no melhor indivíduo, peso máximoa ser percorrido, arquivo com pontos a serm visitados, arquivo com premiacoes de cada cidade e o ponto inicial. O programa foi criado projetado para ser executado através da linha de comando, para uma flexidade maior na mudanças dos parâmetros, aceitando a sintaxe:
+
+\begin{algorithm}
+
+PCVPM\_GA.py  [size\_generation] [size\_population] [num\_generation\_limit] [max\_coust] [towns\_list] [weight\_list] [begin\_deposit]
+	\caption{Execução em linha de comando do algorítmo}
+\end{algorithm}
+
+A linguagem Python também foi escolhida pela possibilidade de ser embarcada em um computador de placa única ARM (\textit{single-board computer} - SBC)  é um computador completo construído em uma única placa de circuito , com microprocessador ARM, memória, entrada/saída (E/S) e outros recursos necessários para um computador funcional\cite{allaboutcircuits:Robin}.
+
+
+
 
 \subsection{ARM SBCs}
 Um computador de placa única ARM (\textit{single-board computer} - SBC) é um computador completo construído em uma única placa de circuito , com microprocessador ARM, memória, entrada/saída (E/S) e outros recursos necessários para um computador funcional. Os computadores de placa única foram feitos como sistemas de demonstração ou desenvolvimento, para sistemas educacionais ou para uso como controladores de computador incorporados. Muitos tipos de computadores domésticos ou computadores portáteis integram todas as suas funções em uma única placa de circuito impresso. Estes dispositivos ganharam grande visibilidade em 2012 quando foi lançado pela \textit{Raspberry Pi Foundation} o SBC \textit{Raspberry Pi}, o intuito da fundação era disseminar o ensino de Ciência da Computação nas escolas, porém a placa demonstrou ser uma ótima alternativa para desenvolvimento dos mais diversos projetos na industria e na área acadêmica. Desde então diversos SBC's foram lançados para as mais diversas funcionalidades\cite{allaboutcircuits:Robin}.
