@@ -189,7 +189,7 @@ O PM possui diversas variações, porém um robô que tem sua rota com base no PCV s
 
  
 \subsubsection{PM binário e sua Formulação Matemática}
-A variação PM binária consiste de um conjunto de itens $N$, no qual consiste de uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, só existe apenas 1 item de cada tipo, e a o valor da capacidade da mochila sendo $C$. O objetivo é selecionar um subset de N no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. A lista de itens é composta por um vetor $X[x_{j}]$, no qual
+A variação PM binária consiste de um conjunto de itens $N$, no qual consiste de uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, só existe apenas 1 item de cada tipo, e a o valor da capacidade da mochila sendo $C$. O objetivo é selecionar um subset de $N$ no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. A lista de itens é composta por um vetor $X[x_{j}]$, no qual
 
 \begin{equation}\label{eq:16}
 x_{j} =
@@ -212,8 +212,11 @@ s.t.\sum_{j=1}^{n}w_{j}x_{j} \leq  C
 
 
 \begin{equation}\label{eq:19}
-x_j \in \left \{  1,2 \right \}, j=1,...,n.
+x_j \in \left \{  0,1 \right \}, j=1,...,m.
 \end{equation}
+
+
+A restrição (\ref{eq:18}) garante que a capacidade da mochila não será ultrapassada. A restrição \ref{eq:19} só assume valor 1 ou 0.A equação \ref{eq:17} garante o maior valor possível na mochila.
 
 \section{Fundamentação Teórica}
 Dentre as técnicas aplicadas ao PCV foi escolhido o algoritmo genético(AG) aplicado a 4 plataformas embarcadas. Após fundamentar o funcionamento básico do AG será abordado as especificações técnica de cada plataforma.
