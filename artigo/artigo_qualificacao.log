@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.11.26)  14 FEB 2019 13:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.11.26)  14 FEB 2019 19:39
 entering extended mode
 **./artigo_qualificacao.tex
 (artigo_qualificacao.tex
@@ -463,146 +463,103 @@ tos, pro-posto por Charles
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 329.
-[7]
-Underfull \hbox (badness 3838) in paragraph at lines 358--359
-[]\OT1/ptm/m/n/12 A base do de-sen-volvi-mento deste ar-tigo foi o al-go-ritmo 
-pro-posto por
- []
 
-[8]
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 369.
+LaTeX Warning: Citation `article:Hussain' on page 7 undefined on input line 345
+.
 
- ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
+
+Underfull \vbox (badness 2096) has occurred while \output is active []
+
+ [7]
+<pontos_2.png, id=36, 373.395pt x 252.945pt>
+File: pontos_2.png Graphic file (type png)
+<use pontos_2.png>
+Package pdftex.def Info: pontos_2.png  used on input line 367. on input line 36
+7.
+Package pdftex.def Info: Requested size: 128.0387pt x 86.73349pt on input line 
+367.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 368.
+
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 369.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 368.
+<rota_2.png, id=38, 487.8225pt x 480.5955pt>
+File: rota_2.png Graphic file (type png)
+<use rota_2.png>
+Package pdftex.def Info: rota_2.png  used on input line 377. on input line 377.
 
-Underfull \hbox (badness 10000) in paragraph at lines 373--373
-[]\OT1/ptm/b/n/12 BeagleBone
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 373--373
-[]\OT1/ptm/b/n/12 Orange Pi
- []
+Package pdftex.def Info: Requested size: 128.0387pt x 126.13988pt on input line
+ 377.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 374--374
-[]\OT1/ptm/m/n/12 ARM Cor-tex
- []
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8 <./pontos_2.png>]
+<rota_c_2.png, id=44, 487.8225pt x 480.5955pt>
+File: rota_c_2.png Graphic file (type png)
+<use rota_c_2.png>
+Package pdftex.def Info: rota_c_2.png  used on input line 390. on input line 39
+0.
+Package pdftex.def Info: Requested size: 128.0387pt x 126.13988pt on input line
+ 390.
+<pontos_3.png, id=45, 383.4325pt x 252.945pt>
+File: pontos_3.png Graphic file (type png)
+<use pontos_3.png>
+Package pdftex.def Info: pontos_3.png  used on input line 404. on input line 40
+4.
+Package pdftex.def Info: Requested size: 170.71393pt x 112.62pt on input line 4
+04.
+<rota_3.png, id=46, 496.85625pt x 480.5955pt>
+File: rota_3.png Graphic file (type png)
+<use rota_3.png>
+Package pdftex.def Info: rota_3.png  used on input line 413. on input line 413.
+
+Package pdftex.def Info: Requested size: 128.0387pt x 123.84456pt on input line
+ 413.
 
 
-Underfull \hbox (badness 1377) in paragraph at lines 374--374
-[]\OT1/ptm/m/n/12 ARM Cortex-
- []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
+[9 <./rota_2.png> <./rota_c_2.png> <./pontos_3.png>]
+<rota_c_3.png, id=53, 496.85625pt x 480.5955pt>
+File: rota_c_3.png Graphic file (type png)
+<use rota_c_3.png>
+Package pdftex.def Info: rota_c_3.png  used on input line 426. on input line 42
+6.
+Package pdftex.def Info: Requested size: 128.0387pt x 123.84456pt on input line
+ 426.
+ (artigo_qualificacao.bbl
+[10 <./rota_3.png> <./rota_c_3.png>]) [11] (artigo_qualificacao.aux)
 
-Underfull \hbox (badness 10000) in paragraph at lines 374--374
-[]\OT1/ptm/m/n/12 ARM
- []
+LaTeX Warning: There were undefined references.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 374--374
-\OT1/ptm/m/n/12 1176JZF-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 374--374
-[]\OT1/ptm/m/n/12 ARM H3
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 377--377
-[]\OT1/ptm/m/n/12 2 GB on-
- []
-
-
-Overfull \hbox (2.05943pt too wide) in paragraph at lines 378--378
-[]\OT1/ptm/b/n/12 Alimenta[][]ao| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 378--378
-[]\OT1/ptm/m/n/12 210-460 mA
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 379--379
-[]\OT1/ptm/b/n/12 Quantidade
- []
-
-[9]
-Underfull \hbox (badness 3838) in paragraph at lines 416--417
-[]\OT1/ptm/m/n/12 A base do de-sen-volvi-mento deste ar-tigo foi o al-go-ritmo 
-pro-posto por
- []
-
-[10]
-<Time.png, id=46, 803.0pt x 569.12625pt>
-File: Time.png Graphic file (type png)
-<use Time.png>
-Package pdftex.def Info: Time.png  used on input line 464. on input line 464.
-Package pdftex.def Info: Requested size: 298.75264pt x 211.74577pt on input lin
-e 464.
-<RAM.png, id=48, 803.0pt x 519.9425pt>
-File: RAM.png Graphic file (type png)
-<use RAM.png>
-Package pdftex.def Info: RAM.png  used on input line 474. on input line 474.
-Package pdftex.def Info: Requested size: 298.75264pt x 193.44676pt on input lin
-e 474.
-<CPU.png, id=49, 803.0pt x 519.9425pt>
-File: CPU.png Graphic file (type png)
-<use CPU.png>
-Package pdftex.def Info: CPU.png  used on input line 484. on input line 484.
-Package pdftex.def Info: Requested size: 298.75264pt x 193.44676pt on input lin
-e 484.
-
-Underfull \hbox (badness 10000) in paragraph at lines 496--496
-[]\OT1/ptm/b/n/12 BeagleBone
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 496--496
-[]\OT1/ptm/b/n/12 Orange Pi
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 497--497
-[]\OT1/ptm/b/n/12 Tempo
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 497--497
-\OT1/ptm/b/n/12 Execu[][]ao
- []
-
-[11] (artigo_qualificacao.bbl [12 <./Time.png>] [13 <./RAM.png> <./CPU.png>])
-[14] (artigo_qualificacao.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 6559 strings out of 493312
- 96827 string characters out of 3138877
- 206139 words of memory out of 3000000
- 9981 multiletter control sequences out of 15000+200000
+ 6565 strings out of 493312
+ 97015 string characters out of 3138877
+ 204139 words of memory out of 3000000
+ 9984 multiletter control sequences out of 15000+200000
  24574 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,16n,40p,1095b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/ba
-se/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courie
-r/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/
-utmri8a.pfb>
-Output written on artigo_qualificacao.pdf (14 pages, 235297 bytes).
+ 41i,16n,40p,877b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy
+10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files
+/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/tim
+es/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on artigo_qualificacao.pdf (11 pages, 231321 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
+ 104 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

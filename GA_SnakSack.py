@@ -88,7 +88,8 @@ class GA_SnakSack:
         count = 0
         while True:
             # weight_individual = self.weights.take(flux_visited).sum()
-            coust_individual = self.med_custo(flux_visited)
+            coust_individual = self.med_custo(np.concatenate([self.begin_deposit, flux_visited, self.begin_deposit]))
+            # coust_individual = self.med_custo(flux_visited)
 
             if coust_individual > self.max_coust:
                 city_remove = np.random.randint(0, flux_visited.shape[0], 1)
@@ -96,14 +97,14 @@ class GA_SnakSack:
                 flux_visited = np.delete(flux_visited, city_remove)
                 count += 1
 
-            # elif count > 1 or individual.size ==0:
-            #     break
+            elif count > 1 or individual.size == 0:
+                break
             else:
                 city_add = np.random.randint(0, individual.shape[0], 1)
                 teste = individual[city_add]
                 flux_visited = np.append(flux_visited, teste)
                 individual = np.delete(individual, city_add)
-                break
+                # break
 
         flux_value = self.prizes.take(flux_visited).sum()
         flux_visited = np.concatenate([self.begin_deposit, flux_visited, self.begin_deposit])
@@ -115,7 +116,8 @@ class GA_SnakSack:
 
     @staticmethod
     def generate_points_mutation_crossover(size):
-        if size != 2:
+
+        if size > 2:
             # inicializando as variaveis responsáveis pelos pontos de cruzamento
             route_insert_points = np.zeros(2)
 
@@ -175,7 +177,7 @@ class GA_SnakSack:
         for i in range(number_population):
             individual = np.copy(self.inicial_values)
 
-            flux_visited = np.random.choice(individual, number_citys_select)
+            flux_visited = np.random.choice(individual, number_citys_select, replace=False)
             flux_visited = self.removed_elements_repeat(flux_visited)
 
             flux_visited, \
@@ -422,7 +424,7 @@ class GA_SnakSack:
 
         # elements = np.random.choice(np.arange(len(all_individuals), np.random.randint(size)))
         if (size - len(result)) > 0:
-            elements = np.random.choice(np.arange(len(all_individuals)), (size - len(result)))
+            elements = np.random.choice(np.arange(len(all_individuals)), (size - len(result)), replace=False)
 
             for j in range(elements.size):
                 i = np.copy(elements[j])
@@ -737,15 +739,16 @@ if __name__ == '__main__':
     x = GA_SnakSack()
 
     a,b,c,d,e = x.ga(size_generation=2000,
-                     size_population=900,
-                     num_generation_limit = 400,
+                     size_population=300,
+                     num_generation_limit = 100,
                      max_weight=100,
-                     max_coust=100,
-                     towns_list='./novas_cidades_3.txt',
-                     weight_list='./novos_premios_3.txt',
+                     max_coust=9,
+                     towns_list='./novas_cidades.txt',
+                     weight_list='./novos_premios.txt',
                      begin_deposit=0)
 
     for i in range(len(a)):
         x.plota_rotas(x.mapa, a[i])
         print (b[i],c[i],d[i],e[i])
 
+    input()

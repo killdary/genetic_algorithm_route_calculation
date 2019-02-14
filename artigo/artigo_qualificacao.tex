@@ -340,177 +340,102 @@ O algoritmo \ref{algoritmo1} mostra o pseudocódigo do AG básico. No início, um c
 	\caption{Algorítimo Genético}
 \end{algorithm}
 
-O principal ciclo geracional do Algoritmo Genético gera uma nova prole de  soluções candidatas, através do cruzamento e  da mutação, até a população estar completa.
+O principal ciclo geracional do Algoritmo Genético gera uma nova prole de soluções candidatas, através do cruzamento e  da mutação, até a população estar completa.
 
-\subsection{Implementação}
-A ferramenta utilizada para realizar a implementação foi a linguagem $Python$. O Python ocupa o primeiro lugar no \textit{ranking spectrun da IEEE}\cite{IEEE} em linguagens de cálculos científicos, já  possui funções nativas  de cálculos semelhantes ao Matlab, porém as mesmas ainda se demonstraram insuficientes para adaptar com precisão de tempo o algoritmo escolhido, para resolver este problema foi utilizado o pacote Numpy, que é pacote cientifico da linguagem \cite{Numpy}.
-
-Para atender às necessidades de um sistema baseado em AG's, tem-se como principais requisitos do sistema, a passagem de parâmetros: número de gerações, tamanho da população, tamanho de geração sem alteração no melhor indivíduo, peso máximoa ser percorrido, arquivo com pontos a serm visitados, arquivo com premiacoes de cada cidade e o ponto inicial. O programa foi criado projetado para ser executado através da linha de comando, para uma flexidade maior na mudanças dos parâmetros, aceitando a sintaxe:
-
-\begin{algorithm}
-
-PCVPM\_GA.py  [size\_generation] [size\_population] [num\_generation\_limit] [max\_coust] [towns\_list] [weight\_list] [begin\_deposit]
-	\caption{Execução em linha de comando do algorítmo}
-\end{algorithm}
-
-A linguagem Python também foi escolhida pela possibilidade de ser embarcada em um computador de placa única ARM (\textit{single-board computer} - SBC)  é um computador completo construído em uma única placa de circuito , com microprocessador ARM, memória, entrada/saída (E/S) e outros recursos necessários para um computador funcional\cite{allaboutcircuits:Robin}.
-
-
-
-
-\subsection{ARM SBCs}
-Um computador de placa única ARM (\textit{single-board computer} - SBC) é um computador completo construído em uma única placa de circuito , com microprocessador ARM, memória, entrada/saída (E/S) e outros recursos necessários para um computador funcional. Os computadores de placa única foram feitos como sistemas de demonstração ou desenvolvimento, para sistemas educacionais ou para uso como controladores de computador incorporados. Muitos tipos de computadores domésticos ou computadores portáteis integram todas as suas funções em uma única placa de circuito impresso. Estes dispositivos ganharam grande visibilidade em 2012 quando foi lançado pela \textit{Raspberry Pi Foundation} o SBC \textit{Raspberry Pi}, o intuito da fundação era disseminar o ensino de Ciência da Computação nas escolas, porém a placa demonstrou ser uma ótima alternativa para desenvolvimento dos mais diversos projetos na industria e na área acadêmica. Desde então diversos SBC's foram lançados para as mais diversas funcionalidades\cite{allaboutcircuits:Robin}.
-
-A tabela \ref{tabela:BBB} faz uma comparação das especificações das placas utilizadas neste estudo:
-
-\begin{table}[H]
-	\caption{Características BeagleBone Black }
-	\begin{center}
-		\begin{tabular}{ | p{2.2cm} | p{2.5cm}| p{2.5cm}| p{2.5cm}| p{2.5cm}|}
-			\hline
-			 &\textbf{BeagleBone Black}&\textbf{Raspberry Pi 3}&\textbf{Raspberry Pi A+}&\textbf{Orange Pi One}\\ \hline
-			\textbf{Processador}  &ARM Cortex A8 &ARM Cortex-A53 64-bit&ARM 1176JZF-S&ARM H3 Quad-core\\ \hline
-			\textbf{Clock}  &1 GHz&1 GHz&700 MHz&1 GHz\\ \hline
-			\textbf{Ram}  &	512 MB&1 GB &256 Mb&512 MB\\ \hline
-			\textbf{Storage}  &2 GB on-board eMMC, MicroSD&MicroSD&MicroSD&MicroSD\\ \hline
-			\textbf{Alimentação}  &210-460 mA @ 5V&	800 mA @ 5V&200 mA  @ 5V&300 mA  @ 5V\\ \hline
-			\textbf{Quantidade de GPIO}  &92&40&40&40\\ \hline
-			\textbf{Preço}  &US\$45.00&US\$35.00&US\$20.00&US\$10.00\\ 
-			\hline
-		\end{tabular}
-	\end{center}
-	\label{tabela:BBB}
-\end{table}\cite{raspberry}\cite{orangepi:Orange}\cite{orangepi:Eric}\cite{adafruit:Tony}
-
-Os dados acima foram levantados na data 2017-12-22.
-
-\section{Método de Implementação}
-
-A  metodologia de desenvolvimento segue as seguintes etapas:
-\begin{itemize}
-	\item Definição do ambiente de testes;
-	\item Adaptação Algorítimo Genético para Python 3.6:
-		\subitem Multiplataforma;
-		\subitem Similaridade com Matlab;
-		\subitem Vasta utilização em \textit{data science} segundo a IEEE\cite{IEEE};
-	\item Portabilização para as plataformas;
-	\item Critérios de execução:
-		\subitem tempo limite;
-		\subitem consumo de RAM;
-		\subitem consumo de CPU;
-	\item Ambiente físico de execução de testes;
-	\item Interpretação dos testes.			
-\end{itemize}
-
-Para realizar a comparação de desempenho proposto por esta pesquisa é fundamental que todas as placas sejam submetidas ao mesmo ambiente de teste, respeitando as especificações técnicas de cada plataforma. O ambiente de testes foi aplicado sobre um sistema operacional Linux, no qual para cada plataforma foi utilizado o sistema disponibilizado pelo seu respectivo fabricante, a lista abaixo exibe cada sistema utilizado:
-
-\begin{itemize}
-	\item BeagleBobe Black: Debian 9.2 IoT\cite{BeagleBoard};
-	\item Raspberry Pi 3: Raspbian Stretch with Desktop\cite{raspberry};
-	\item Raspberry Pi A+: Raspbian Stretch with Desktop\cite{raspberry};
-	\item Orange Pi One: Lubuntu \cite{orangepi:Orange}.
-\end{itemize}\label{lista os}
-
-A base do desenvolvimento deste artigo foi o algoritmo proposto por \cite{Singh2013StudyOV},neste estudo é realizado a implementação de um algoritmo genético, no qual os resultados se demonstraram bastantes promissores. No estudo é utilizado um algoritmo em Matlab. Para o desenvolvimento embarcado a memória e o processamento são recursos preciosos, porém o Matlab exige, em seus requisitos mínimos, 2 Gb de RAM e 2,2 Gb de armazenamento, sendo que em plataformas embarcadas a memória RAM e a memória de armazenamento possuem capacidades inferiores ao exigido, desta forma não é possível utilizar o algoritmo original para os testes nas plataformas embarcadas. Para contornar este problema foi realizado uma adaptação do algorítimo para uma linguagem presentes nos sistemas citados, a linguagem escolhida foi o Python na sua versão 3.6 \cite{Python}.
-
-O Python ocupa o primeiro lugar no \textit{ranking spectrun da IEEE}\cite{IEEE} em linguagens de cálculos científicos, já  possui funções nativas  de cálculos semelhantes ao Matlab, porém as mesmas ainda se demonstraram insuficientes para adaptar com precisão de tempo o algoritmo escolhido, para resolver este problema foi utilizado o pacote Numpy, que é pacote cientifico da linguagem \cite{Numpy}.
-
-
-A análise das plataformas foi feita considerando os seguintes aspectos:
-\begin{itemize}
-	\item tempo de execução: tempo utilizado pela placa para a execução do algoritimo;
-	\item consumo de RAM: consumo de memória RAM realizado pelo GA;
-	\item consumo de processamento: processamento consumido pelo GA.
-\end{itemize}
-
-A medida do tempo de execução foi realizada utilizando o módulo nativo do Python \textit{timeit},este módulo possui uma função chamada \textit{repeat} no qual  a definição encontradoa no \textit{help()} da linguagem define:
-\begin{quote}
-	Esta é uma função conveniente que chama o \textit{timeit()} repetidamente, retornando uma lista de resultados. O primeiro argumento \textit{repeat}	especifica quantas vezes deverá ser executado chamado o \textit{timeit()}, o padrão é igual à 3; 	o segundo argumento especifica o \textit{number} que define quantos testes são feitos em cada repetição,o valor padrão é igual 1000000.
-\end{quote}
-  Para a medida de uso de memória e de CPU foi utilizando o comando nativo do Linux \textit{top} , este comando oferece um conjunto de estatísticas sobre o estado geral, assim como dos processos com maior atividade no sistema. Essa lista é apresentada e atualizada de 2 em 2 segundos. Depois de captar os dados de cada plataforma é realizada a comparação entre elas.
-  
-O ambiente de testes para cada plataforma foi realizada de maneira que simulasse os mesmos aspectos para todas as plataformas. O ambiente de testes possui as características:
-\begin{itemize}
-	\item temperatura de 23 graus Celsius controlada por um ar-condicionado;
-	\item versão do Python 3.6;
-	\item versao do Numpy versão 1.13.3;
-	\item parâmetros do algoritmo genético:
-		\subitem tempo de execução: 60 minutos;
-		\subitem população: 50;
-		\subitem gerações: 100;
-		\subitem a matriz de distâncias entre os pontos sempre o mesmo;
-	\item parâmetros de execução:
-		\subitem número de repetições: 10;
-		\subitem número de execuções por repetição: 10;
-	
-\end{itemize}
-
-Por fim a interpretação dos testes.
+Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quanto ao cruzamento foi utilizado 3 métodos: \textit{one point}, \textit{two points} e \textit{sinusoidal}\cite{article:Hussain}. Já para as mutações foram realizados 4 tipos:  \textit{Swap}, \textit{Scramble}, \textit{Worst gene with random gene mutation} e \textit{Worst gene with nearest neighbor mutation }\cite{article:Hassanat}.
 
 \section{Resultados}
-Os experimentos são conduzidos para avaliar o desempenho de cada plataforma. Os testes em todas as plataformas foram executados sempre no mesmo ambiente sobe as mesmas condições físicas e de software. Para cada teste foi definido um tempo máximo de execução de 60 minutos, este tempo foi baseado no tempo médio de execução do algoritmo em uma plataforma não embarcada, notebook com processador core i7 de 1.8 GHz e 8 Gigabytes de memória RAM, definindo o mesmo número de repetições e execuções, 10 repetições e 10 execuções, o tempo de execução no notebook foi de 30 minutos, já nos testes das plataformas embarcadas este tempo foi dobrado para compensar sua baixa memória e seu baixo poder de processamento e executando o mesmo número de repetições e de execuções.
 
-Ao iniciar os testes todas as plataformas concluiram a análise dentro do tem máximo definifo, com excexão do placa Raspberry Pi A+, a mesma não conseguiu executar o teste em tempo hábil, desta forma os testes foram abostrados e seus dados nos gráficos seguintes irão ser exibidos com valores zerados.
+	Nesta seção serão apresentados os resultados da simulação do cálculo de rotas para um agente para os seguintes cenários:
+	
+	\begin{itemize}
+		\item Cenário 1 - Rota para 20 pontos, sem restrições de custo;
+		\item Cenário 2 - Rota para 20 pontos, com limitação de custo;
+		\item Cenário 3 - Rota para 30 pontos, sem restrições de custo;
+		\item Cenário 4 - Rota para 30 pontos, com limitação de custo;
+	\end{itemize}
 
-O foco do experimento não baseia-se apenas no tempo de execução do algoritmo mas também no uso de CPU e memória RAM.
+	Para cada cenário foi gerado um conjuntos de pontos a serem visitados, e para cada ponto foi atribuído uma recompensa. Para o cálculo de custos entre os pontos foi utilizado o cálculo da distância euclidiana.
+	
+	A seguir serão mostrados os resultados das simulações para cada um dos 8 cenários apresentados.
+	
+	\subsection{Cenário 1 - Rota para 20 pontos, sem restrições de custo}	
+	O cenário 1 relacionado com a simulação do cálculo de rota onde o agente não possui restrições de custo, e pode percorrer todas as cidades livremente. 
+	para o cenário 1 foi utilizado os seguintes pontos.
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=.3\textwidth]{pontos_2.png}
+		\caption{20 pontos}
+		\label{fig:Pontos1}
+	\end{figure}
+	
+	A pós a execução do algorítmo a seguinte rota foi encontrada:
+	
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=.3\textwidth]{rota_2.png}
+		\caption{Rota 1}
+		\label{fig:rota1}
+	\end{figure}
+	
+	Juntamente com a distância mínima de 37,38 metros e a pontuação máxima de 125 pontos.
+	
+	\subsection{Cenário 2 - Rota para 20 pontos, com limitação de custo}	
+	O cenário 2 é estabelecido em cima dos mesmos pontos estabelecidos no cenário 1(\ref{fig:Pontos1}), porém agora ao algorítmo foi imposta a restrição de percorrer no máximo 23 metros, sendo assim o seguinte resultado foi encontrado.
+	
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=.3\textwidth]{rota_c_2.png}
+		\caption{Rota 1}
+		\label{fig:rota}
+	\end{figure}
+	
+	Para o Cenário 2 o algorítmo foi executado um total de 30 vezes, sendo a 22,23 metros com uma pontuação de 58,0 pontos. 
+	
+	
+	\subsection{Cenário 3 - Rota para 30 pontos, sem restrições de custo}	
+	
+	O cenário 3  relacionado com a simulação do cálculo de rota onde o agente não possui restrições de custo, e pode percorrer todas as cidades livremente. 
+	Para o cenário 3 foi utilizado um conjunto de 30 pontos a serem visitados, como mostrado a seguir.
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=.4\textwidth]{pontos_3.png}
+		\caption{30 pontos}
+		\label{fig:Pontos3}
+	\end{figure}
+	
+	Após a execução do algorítmo a seguinte rota foi encontrada:	
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=.3\textwidth]{rota_3.png}
+		\caption{Rota 3}
+		\label{fig:rota3}
+	\end{figure}
+	
+	Juntamente com a distância mínima de 71,24 metros e a pontuação máxima de 149 pontos.
+	
+	\subsection{Cenário 4 - Rota para 30 pontos, com limitação de custo}	
+	O cenário 4 foi estabelecido em cima dos mesmos pontos utilizados no cenário 3(\ref{fig:Pontos1}), porém agora ao algorítmo foi imposta a restrição de percorrer no máximo 35 metros, sendo assim o seguinte resultado foi encontrado.
 
-\subsection{Tempo de Execução}
 
-O tempo de execução de cada plataforma é definido pela média resultados retornados pela função \textit{timeit.repeat()}.
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=.7\textwidth]{Time.png}
-	\caption{Tempo médio de execução}
-	\label{fig:Time}
-\end{figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=.3\textwidth]{rota_c_3.png}
+		\caption{Rota 3}
+		\label{fig:rota2}
+	\end{figure}
 
-\subsection{Memória RAM}
-
-O consumo de RAM de cada plataforma é definido pela média resultados captados apartir da função do Linux \textit{top}.
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=.7\textwidth]{RAM.png}
-	\caption{Consumo médio de memória RAM}
-	\label{fig:RAM}
-\end{figure}
-
-\subsection{CPU}
-
-O uso de CPU de cada plataforma é definido pela média de resultados captados apartir da função do Linux \textit{top}.
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=.7\textwidth]{CPU.png}
-	\caption{Uso médio de memória CPU}
-	\label{fig:CPU}
-\end{figure}
-
-\subsection{Tabela de Comparação de desempenho}
-
-\begin{table}[H]
-	\caption{Características BeagleBone Black }
-	\begin{center}
-		\begin{tabular}{ | p{2.2cm} | p{2.5cm}| p{2.5cm}| p{2.5cm}| p{2.5cm}|}
-			\hline
-			&\textbf{BeagleBone Black}&\textbf{Raspberry Pi 3}&\textbf{Raspberry Pi A+}&\textbf{Orange Pi One}\\ \hline
-			\textbf{Tempo Execução (seg.)}  &64 &23.51&0&31\\ \hline
-			\textbf{RAM (Mb)}  &17,48&16&0&17,48\\ \hline
-			\textbf{CPU (MHz)}  &980&1000&0&1000\\ \hline
-			
-		\end{tabular}
-	\end{center}
-	\label{tabela:Resultados}
-\end{table}
+	Para o Cenário 4 o algorítmo foi executado um total de 30 vezes, sendo a 33,66 metros com uma pontuação de 71,0 pontos. 
 
 \section{Conclusão}
 
-Os testes demonstraram que o Raspberry Pi 3 possui uma melhor performance na execução do AG proposto, seguido do Orange Pi One e BeagleBone Black. O Raspberry Pi A+ demonstrou não ser uma boa opção para a execução do algorítimo.
+O algoritmo proposto neste trabalho, visa principalmente a otimização e a busca por
+soluções satisfatórias, em ambientes que possuam ou não alguma restrição no agente. os testes executados mostraram resultados promissores para a busca de rotas otimizadas com restrições, porém ainda inconcluisivas já que para uma real avaliação será necessário um número maior de variabilidade de pontos e premiações para estudar melhor o comportamento do algorítmo.
 
-Apesar do Raspberry Pi 3 possuir um melhor performance o Orange Pi One demonstrou ser uma ótima escolha considerando que seu desempenho aproximou-se do Raspberry Pi 3 e seu custo ser menor, ver tabela \ref{tabela:BBB}, sendo assim a melhor plataforma pode ser definida tendo em consideração seu uso final.
-
-
-\section{Trabalhos Futuros}
-Temdo em comparação dos resultados e de performance, os seguintes resultados devem persuadir trabalhos futuros. A comparação de performance e de custo não são as únicas métricas que devem ser levadas em consideração na escolha da platforma, a eficiência enérgética deve ser levada em conta, no qual poderá ser realizada em pesquisas futuras. 
-
+Como proposta futura, tem-se a intenção de adaptar o algorítmo a utilizar rotas geradas pelo TSPLIB, e alterar possíveis formas de mutação e crossover, e o claculo de rotas com restrições para múltiplos agents.
 %
 
 

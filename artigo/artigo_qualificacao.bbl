@@ -1,13 +1,5 @@
 \begin{thebibliography}{}
 
-\bibitem[BeagleBoard 2017]{BeagleBoard}
-BeagleBoard (2017).
-\newblock Beagleboneblack.
-
-\bibitem[Brown 2016]{orangepi:Eric}
-Brown, E. (2016).
-\newblock \$10 orange pi one pits quad-core cortex-a7 against pi zero.
-
 \bibitem[CASS 2018]{IEEE}
 CASS, S. (2018).
 \newblock The 2018 top programming languages.
@@ -21,10 +13,6 @@ Coppin, B. (2004).
 de~Almeida, T.~A. (2019).
 \newblock M\'etodo do subgradiente para a resolu\c{c}\~ao da relaxa\c{c}\~ao
   lagrangeana do problema do caixeiro viajante sim\'etrico.
-
-\bibitem[DiCola 2014]{adafruit:Tony}
-DiCola, T. (2014).
-\newblock Power usage.
 
 \bibitem[Goldberg 1989]{book:1176457}
 Goldberg, D.~E. (1989).
@@ -40,6 +28,14 @@ Golden, B., Bodin, L., Doyle, T., and W.~Stewart, J. (1980).
 \bibitem[Google 2019]{Google:19}
 Google (2019).
 \newblock Just press go: designing a self-driving vehicle.
+
+\bibitem[Hassanat et~al. 2016]{article:Hassanat}
+Hassanat, A., Alkafaween, E., Alnawaiseh, N., Abbadi, M., Alkasassbeh, M., and
+  Alhasanat, M. (2016).
+\newblock Enhancing genetic algorithms using multi mutations: Experimental
+  results on the travelling salesman problem.
+\newblock {\em International Journal of Computer Science and Information
+  Security}, 14:785--801.
 
 \bibitem[Jones et~al. 01  ]{Numpy}
 Jones, E., Oliphant, T., Peterson, P., et~al. (2001--).
@@ -65,22 +61,10 @@ Mitchell, R. (2017).
 NASA (2017).
 \newblock Curiosity overview.
 
-\bibitem[Orangepi 2017]{orangepi:Orange}
-Orangepi (2017).
-\newblock orange pi one-orangepi.
-
 \bibitem[Prof. Hans~Kellerer 2004]{book:946517}
 Prof. Hans~Kellerer, Prof. Ulrich~Pferschy, P. D. P.~a. (2004).
 \newblock {\em Knapsack Problems}.
 \newblock Springer-Verlag Berlin Heidelberg, 1 edition.
-
-\bibitem[Python 2019]{Python}
-Python (2019).
-\newblock Python.
-
-\bibitem[Raspberry 2019]{raspberry}
-Raspberry (2019).
-\newblock Raspberry pi - teach, learn, and make with raspberry pi.
 
 \bibitem[ROBOCUP 2017]{ROBOCUP:17}
 ROBOCUP (2017).
