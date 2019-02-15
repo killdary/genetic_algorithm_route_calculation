@@ -1,12 +1,14 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.11.26)  14 FEB 2019 19:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.2.13)  14 FEB 2019 21:43
 entering extended mode
-**./artigo_qualificacao.tex
-(artigo_qualificacao.tex
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**artigo_qualificacao.tex
+(./artigo_qualificacao.tex
 LaTeX2e <2017-04-15>
-Babel <3.15> and hyphenation patterns for 75 language(s) loaded.
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
+Babel <3.18> and hyphenation patterns for 7 language(s) loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\size12.clo"
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -20,24 +22,24 @@ File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (sbc-template.sty
+) (./sbc-template.sty
 Package: sbc-template 2001/06/09
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 \Gm@cnth=\count87
@@ -52,8 +54,8 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen109
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks15
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg")) (caption2.sty
+)
+(./caption2.sty
 Package: caption2 2002/08/03 v2.1 Customising captions (AS)
 \captionmargin=\dimen111
 \captionwidth=\dimen112
@@ -61,13 +63,12 @@ Package: caption2 2002/08/03 v2.1 Customising captions (AS)
 Package caption2 Info: Running in caption2 v2.0 compatibility mode on input lin
 e 147.
 \captionlinewidth=\dimen114
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
+) (/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
 )
 \c@instn=\count90
 
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\titlesec\titlesec.s
-ty
+(/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \ttl@box=\box26
 \beforetitleunit=\skip43
@@ -78,34 +79,35 @@ Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \titlewidth=\dimen117
 \titlewidthlast=\dimen118
 \titlewidthfirst=\dimen119
-)) ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 99.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def"
-File: pdftex.def 2017/06/24 v1.0g Graphics/color driver for pdftex
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen120
 \Gin@req@width=\dimen121
 )
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\mathtools\mathtools
-.sty
-Package: mathtools 2017/10/30 v1.20 mathematical typesetting tools
- ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2018/01/08 v1.21 mathematical typesetting tools
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count91
 \calc@Bcount=\count92
@@ -118,27 +120,27 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count93
 \calc@Cskip=\skip47
 )
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\mathtools\mhsetup.s
-ty
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mhsetup.sty
 Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2017/09/02 v2.17a AMS math features
 \@mathmargin=\skip48
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks17
 \ex@=\dimen124
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen125
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count94
@@ -193,24 +195,24 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_above_shortintertext_sep=\dimen138
 \l_MT_below_shortintertext_sep=\dimen139
 )
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithm2e\algorit
-hm2e.sty
+(/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
 \c@AlgoLine=\count107
- ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \algocf@hangindent=\skip52
 
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\ifoddpage\ifoddpage
-.sty
+(/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
 \c@checkoddpage=\count108
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\xspace.sty"
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\relsize.sty"
-Package: relsize 2003/07/04 ver 3.1
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
 )
 \skiptotal=\skip53
 \skiplinenumber=\skip54
@@ -248,7 +250,7 @@ Package: relsize 2003/07/04 ver 3.1
 \algocf@algoframe=\box35
 \algocf@algobox=\box36
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\float\float.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count112
 \float@exts=\toks22
@@ -256,16 +258,15 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks23
 \@floatcapt=\box38
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\inputenc.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks24
 \inpenc@posthook=\toks25
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\latin1.def"
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
 File: latin1.def 2015/03/17 v1.2c Input encoding file
 ))
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.s
-ty
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count113
 \lst@gtempboxa=\box39
 \lst@token=\toks26
@@ -279,30 +280,29 @@ ty
 \lst@lineno=\count118
 \lst@maxwidth=\dimen149
 
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.st
-y
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 \c@lstnumber=\count119
 \lst@skipnumbers=\count120
 \lst@framebox=\box40
 )
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.c
-fg
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
- ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg"
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.s
-ty
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
-) (artigo_qualificacao.aux)
+)
+(./artigo_qualificacao.aux)
 \openout1 = `artigo_qualificacao.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
@@ -319,7 +319,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
 LaTeX Font Info:    ... okay on input line 53.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 53.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 *geometry* driver: auto-detecting
@@ -356,9 +356,7 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-
-(C:\Users\cpd_killdary\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mki
-i
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count121
 \scratchdimen=\dimen150
@@ -371,31 +369,31 @@ i
 \MPnumerator=\count125
 \makeMPintoPDFobject=\count126
 \everyMPtoPDFconversion=\toks28
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )))
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -404,8 +402,8 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 )))
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
-Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/01/21 v0.26 Utility functions of pdfTeX for LuaTeX (HO
 )
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
@@ -418,7 +416,11 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
-)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 \c@lstlisting=\count127
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
@@ -426,7 +428,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 55.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
@@ -435,11 +437,11 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 73.
  [1
 
-{C:/Users/cpd_killdary/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 106.
 
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
@@ -457,109 +459,100 @@ Underfull \hbox (badness 10000) in paragraph at lines 202--204
 
 [5] [6]
 Underfull \hbox (badness 1694) in paragraph at lines 314--317
-\OT1/ptm/m/n/12 da so-bre-viv[]encia e reprodu[][]ao dos in-div[]duos mais ap-
-tos, pro-posto por Charles
+\OT1/ptm/m/n/12 da so-bre-viv[]encia e reprodu[][]ao dos in-div[]^^Pduos mais a
+p-tos, pro-posto por Charles
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 329.
 
-LaTeX Warning: Citation `article:Hussain' on page 7 undefined on input line 345
-.
+Underfull \hbox (badness 3657) in paragraph at lines 345--346
+[]\OT1/ptm/m/n/12 Para a metodolo-gia de de ele[][]ao foi op-tado peloa forma d
+e \OT1/ptm/m/it/12 rank-ing\OT1/ptm/m/n/12 .
+ []
 
 
-Underfull \vbox (badness 2096) has occurred while \output is active []
+Underfull \hbox (badness 1675) in paragraph at lines 345--346
+\OT1/ptm/m/n/12 Quanto ao cruza-mento foi uti-lizado 3 m[]etodos: \OT1/ptm/m/it
+/12 one point\OT1/ptm/m/n/12 , \OT1/ptm/m/it/12 two points \OT1/ptm/m/n/12 e \O
+T1/ptm/m/it/12 si-nu-
+ []
 
- [7]
-<pontos_2.png, id=36, 373.395pt x 252.945pt>
+[7]
+<pontos_2.png, id=37, 373.395pt x 252.945pt>
 File: pontos_2.png Graphic file (type png)
 <use pontos_2.png>
-Package pdftex.def Info: pontos_2.png  used on input line 367. on input line 36
-7.
-Package pdftex.def Info: Requested size: 128.0387pt x 86.73349pt on input line 
-367.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 368.
+Package pdftex.def Info: pontos_2.png  used on input line 368.
+(pdftex.def)             Requested size: 128.0387pt x 86.73349pt.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 369.
 
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 368.
-<rota_2.png, id=38, 487.8225pt x 480.5955pt>
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 369.
+<rota_2.png, id=39, 487.8225pt x 480.5955pt>
 File: rota_2.png Graphic file (type png)
 <use rota_2.png>
-Package pdftex.def Info: rota_2.png  used on input line 377. on input line 377.
-
-Package pdftex.def Info: Requested size: 128.0387pt x 126.13988pt on input line
- 377.
+Package pdftex.def Info: rota_2.png  used on input line 378.
+(pdftex.def)             Requested size: 128.0387pt x 126.13988pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8 <./pontos_2.png>]
-<rota_c_2.png, id=44, 487.8225pt x 480.5955pt>
+<rota_c_2.png, id=45, 487.8225pt x 480.5955pt>
 File: rota_c_2.png Graphic file (type png)
 <use rota_c_2.png>
-Package pdftex.def Info: rota_c_2.png  used on input line 390. on input line 39
-0.
-Package pdftex.def Info: Requested size: 128.0387pt x 126.13988pt on input line
- 390.
-<pontos_3.png, id=45, 383.4325pt x 252.945pt>
+Package pdftex.def Info: rota_c_2.png  used on input line 393.
+(pdftex.def)             Requested size: 128.0387pt x 126.13988pt.
+<pontos_3.png, id=46, 383.4325pt x 252.945pt>
 File: pontos_3.png Graphic file (type png)
 <use pontos_3.png>
-Package pdftex.def Info: pontos_3.png  used on input line 404. on input line 40
-4.
-Package pdftex.def Info: Requested size: 170.71393pt x 112.62pt on input line 4
-04.
-<rota_3.png, id=46, 496.85625pt x 480.5955pt>
+Package pdftex.def Info: pontos_3.png  used on input line 407.
+(pdftex.def)             Requested size: 170.71393pt x 112.62pt.
+<rota_3.png, id=47, 496.85625pt x 480.5955pt>
 File: rota_3.png Graphic file (type png)
 <use rota_3.png>
-Package pdftex.def Info: rota_3.png  used on input line 413. on input line 413.
-
-Package pdftex.def Info: Requested size: 128.0387pt x 123.84456pt on input line
- 413.
+Package pdftex.def Info: rota_3.png  used on input line 417.
+(pdftex.def)             Requested size: 128.0387pt x 123.84456pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[9 <./rota_2.png> <./rota_c_2.png> <./pontos_3.png>]
-<rota_c_3.png, id=53, 496.85625pt x 480.5955pt>
+<rota_c_3.png, id=48, 496.85625pt x 480.5955pt>
 File: rota_c_3.png Graphic file (type png)
 <use rota_c_3.png>
-Package pdftex.def Info: rota_c_3.png  used on input line 426. on input line 42
-6.
-Package pdftex.def Info: Requested size: 128.0387pt x 123.84456pt on input line
- 426.
- (artigo_qualificacao.bbl
-[10 <./rota_3.png> <./rota_c_3.png>]) [11] (artigo_qualificacao.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+Package pdftex.def Info: rota_c_3.png  used on input line 433.
+(pdftex.def)             Requested size: 128.0387pt x 123.84456pt.
+[9 <./rota_2.png> <./rota_c_2.png>] [10 <./pontos_3.png> <./rota_3.png> <./rota
+_c_3.png>] (./artigo_qualificacao.bbl [11]) [12] (./artigo_qualificacao.aux) ) 
 Here is how much of TeX's memory you used:
- 6565 strings out of 493312
- 97015 string characters out of 3138877
- 204139 words of memory out of 3000000
- 9984 multiletter control sequences out of 15000+200000
- 24574 words of font info for 52 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 41i,16n,40p,877b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C
-:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/tim
-es/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C
-:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on artigo_qualificacao.pdf (11 pages, 231321 bytes).
+ 6573 strings out of 494847
+ 96140 string characters out of 6179080
+ 201050 words of memory out of 5000000
+ 9769 multiletter control sequences out of 15000+600000
+ 24574 words of font info for 52 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 41i,16n,40p,888b,444s stack positions out of 5000i,500n,10000p,200000b,80000s
+{
+/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri
+8a.pfb>
+Output written on artigo_qualificacao.pdf (12 pages, 218505 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
+ 109 PDF objects out of 1000 (max. 8388607)
+ 69 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

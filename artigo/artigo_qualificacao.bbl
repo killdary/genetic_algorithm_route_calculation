@@ -1,9 +1,5 @@
 \begin{thebibliography}{}
 
-\bibitem[CASS 2018]{IEEE}
-CASS, S. (2018).
-\newblock The 2018 top programming languages.
-
 \bibitem[Coppin 2004]{book:54924}
 Coppin, B. (2004).
 \newblock {\em Artificial Intelligence Illuminated}.
@@ -37,10 +33,17 @@ Hassanat, A., Alkafaween, E., Alnawaiseh, N., Abbadi, M., Alkasassbeh, M., and
 \newblock {\em International Journal of Computer Science and Information
   Security}, 14:785--801.
 
-\bibitem[Jones et~al. 01  ]{Numpy}
-Jones, E., Oliphant, T., Peterson, P., et~al. (2001--).
-\newblock {SciPy}: Open source scientific tools for {Python}.
-\newblock [Online; accessed 2017-12-21].
+\bibitem[Hussain et~al. 2017]{article:Hussain}
+Hussain, A., Muhammad, Y.~s., Nauman~Sajid, M., Hussain, I., Shoukry, A., and
+  Gani, S. (2017).
+\newblock Genetic algorithm for traveling salesman problem with modified cycle
+  crossover operator.
+\newblock {\em Computational Intelligence and Neuroscience}, 2017.
+
+\bibitem[Jovanovic-Dolecek and Mitra 2008]{article:Gordana}
+Jovanovic-Dolecek, G. and Mitra, S. (2008).
+\newblock Simple method for compensation of cic decimation filter.
+\newblock {\em Electronics Letters}, 44:1162 -- 1163.
 
 \bibitem[Kramer 2017]{book:1613056}
 Kramer, O. (2017).
@@ -52,10 +55,9 @@ Martello, S. and Toth, P. (1990).
 \newblock {\em Knapsack Problems: Algorithms and Computer Implementations}.
 \newblock John Wiley \& Sons, Inc., New York, NY, USA.
 
-\bibitem[Mitchell 2017]{allaboutcircuits:Robin}
-Mitchell, R. (2017).
-\newblock Battle of the sbcs: Beaglebone black, raspberry pi 3, and asus tinker
-  board.
+\bibitem[Mutingi and Mbohwa 2017]{book:Mutingi}
+Mutingi, M. and Mbohwa, C. (2017).
+\newblock {\em Grouping Genetic Algorithms}, volume 666.
 
 \bibitem[NASA 2017]{Nasa:17}
 NASA (2017).
@@ -65,6 +67,11 @@ NASA (2017).
 Prof. Hans~Kellerer, Prof. Ulrich~Pferschy, P. D. P.~a. (2004).
 \newblock {\em Knapsack Problems}.
 \newblock Springer-Verlag Berlin Heidelberg, 1 edition.
+
+\bibitem[Reinelt 2018]{TSPLIB}
+Reinelt, G. (2018).
+\newblock Tsplib.
+\newblock [Online; accessed 2019-02-01].
 
 \bibitem[ROBOCUP 2017]{ROBOCUP:17}
 ROBOCUP (2017).
