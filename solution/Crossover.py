@@ -35,10 +35,14 @@ class Crossover:
     def two_point(self, City1, City2):
         pass
 
-    def PMX(self, parent_1, parent_2):
+    def PMX(self, parent_1_tmp, parent_2_tmp):
+        start = np.array([parent_1_tmp[0]])
+        end = np.array([parent_1_tmp[-1]])
+        parent_1 = np.delete(parent_1_tmp, [0, parent_1_tmp.size-1])
+        parent_2 = np.delete(parent_2_tmp, [0, parent_2_tmp.size-1])
         self.__point_mutation(parent_1, parent_2)
-        offspring_1 = np.ones(parent_1.size) * -1
-        offspring_2 = np.ones(parent_2.size) * -1
+        offspring_1 = np.ones(parent_1.size).astype(int) * -1
+        offspring_2 = np.ones(parent_2.size).astype(int) * -1
         offspring_1[self.I:self.J] = parent_2[self.I:self.J]
         offspring_2[self.I:self.J] = parent_1[self.I:self.J]
 
@@ -53,13 +57,27 @@ class Crossover:
                     offspring_2[i] = parent_2[i]
 
 
-        index_fall_1 = np.where(offspring_1 == -1)
-        index_fall_2 = np.where(offspring_2 == -1)
+        index_fall_1 = np.where(offspring_1 == -1)[0]
+        index_fall_2 = np.where(offspring_2 == -1)[0]
 
-        elements_1 = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
-        elements_2 = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
-        offspring_1[index_fall_1] = elements_1[:len(index_fall_1)]
-        offspring_2[index_fall_2] = elements_2[:len(index_fall_2)]
+        elements_1 = list()
+        for value in range(parent_1.size):
+            if parent_1[value] not in offspring_1:
+                elements_1.append(parent_1[value])
+
+        elements_2 = list()
+        for value in range(parent_2.size):
+            if parent_2[value] not in offspring_2:
+                elements_2.append(parent_2[value])
+
+        elements_1_tmp = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
+        elements_2_tmp = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
+
+        offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
+        offspring_2[index_fall_2] = np.array(elements_2[:index_fall_2.size])
+
+        offspring_1 = np.concatenate([start, offspring_1, end])
+        offspring_2 = np.concatenate([start, offspring_2, end])
 
         return offspring_1.astype(int), offspring_2.astype(int)
 

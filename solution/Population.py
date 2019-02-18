@@ -11,7 +11,7 @@ class Population:
 
 
     def initialize(self, initial, size):
-        genes_elements = np.delete(initial, [0, initial.size-1])
+        genes_elements = np.copy(initial)
 
         population_init = list()
 

@@ -1,5 +1,9 @@
 \begin{thebibliography}{}
 
+\bibitem[Candido 2015]{article:Candido}
+Candido, A. d.~S. (2015).
+\newblock Sistema de gerenciamento do voo de quadrirotores tolerante a falhas.
+
 \bibitem[Coppin 2004]{book:54924}
 Coppin, B. (2004).
 \newblock {\em Artificial Intelligence Illuminated}.
@@ -55,10 +59,6 @@ Martello, S. and Toth, P. (1990).
 \newblock {\em Knapsack Problems: Algorithms and Computer Implementations}.
 \newblock John Wiley \& Sons, Inc., New York, NY, USA.
 
-\bibitem[Mutingi and Mbohwa 2017]{book:Mutingi}
-Mutingi, M. and Mbohwa, C. (2017).
-\newblock {\em Grouping Genetic Algorithms}, volume 666.
-
 \bibitem[NASA 2017]{Nasa:17}
 NASA (2017).
 \newblock Curiosity overview.
@@ -96,8 +96,13 @@ Vicente~Santos, A., De~G\'oes, E., Miranda, F., Freitas, G., Almir De~Sena, J.,
 \newblock Rob\^{o} ambiental h\'ibrido: um novo conceito em locomo\c{c}\~ao e
   monitoramento de \'areas in\'ospitas na floresta amaz\^onica.
 
-\bibitem[Wikipedia 2019]{Wikipedia:19}
-Wikipedia (2019).
+\bibitem[Wikipedia 2019a]{Wikipedia:SBC}
+Wikipedia (2019a).
+\newblock Single-board computer.
+\newblock [Online; accessed 2019-02-01].
+
+\bibitem[Wikipedia 2019b]{Wikipedia:19}
+Wikipedia (2019b).
 \newblock Wikipedia.
 
 \end{thebibliography}

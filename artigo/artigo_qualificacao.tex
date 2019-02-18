@@ -39,7 +39,7 @@
      
 \sloppy
 
-\title{Algoritimo genético para resoler o problema do caixeiro viajante com o problemas de mochila para cálculo de rotas ótimas para robôs}
+\title{Algoritimo genético aplicado ao problema do caixeiro viajante com o problemas de mochila para cálculo de rotas ótimas para robôs móveis autônomos}
 
 \author{Killdary A. Santana\inst{1}}
 
@@ -72,13 +72,13 @@
 
 \section{Introdução}
 
-Com o avanço da tecnologia os robôs se tornaram mais eficazes na execução de diversas tarefas, podendo executar funções que antes eram consideradas impossíveis para uma máquina, deixando de ser um componente caro e acessível apenas para grandes indústrias e passando a atuar nas mais diversas aplicações que antes eram executadas por humanos, impulsionando assim o desenvolvimento de robôs autônomos.
+\hspace{1.2cm}Com o avanço da tecnologia os robôs se tornaram mais eficazes na execução de diversas tarefas, podendo executar funções que antes eram consideradas impossíveis para uma máquina, deixando de ser um componente caro e acessível apenas para grandes indústrias e passando a atuar nas mais diversas aplicações que antes eram executadas por humanos, impulsionando assim o desenvolvimento de robôs autônomos.
 
 A finalidade da pesquisa de robôs móveis com autonomia é construir máquinas para realizar tarefas com precisão e capazes de tomar decisões adequadas frente a uma situação inesperada. 
 
 Muitos projetos podem ser observados com as mais diversas finalidades, como exploração de ambientes não estruturados como florestas\cite{article}, exploração de planetas como marte\cite{Nasa:17}, futebol de robôs\cite{ROBOCUP:17}, carros autônomos\cite{Google:19},  aplicações agrícolas\cite{TABILE2011}, entre muitos outros. 
 
-Um dos maiores desafios encontrados em robôs móveis se dá no planejamento de sua trajetória e tem recebido grande atenção por parte dos pesquisadores, tanto na indústria como no meio acadêmico, pois seu desenvolvimento está diretamente relacionado com a maior autonomia dos robôs. A complexidade do problema de planejamento do movimento tem motivado o desenvolvimento dos mais diversos algoritmos. Tal complexidade advém da necessidade de integrar a navegação do robô com o sensoriamento, a eficiência e o planejamento de rotas, como também a necessidade de  poupar recurso importantes e preservar suas partes mecânicas. A habilidade de planejamento de rotas deve estar presente na programação interna dos robôs para que os mesmos possam decidir quando será necessário alterar sua rota de modo a minimizar o impacto em compração ao planejamento inicial.
+Um dos maiores desafios encontrados em robôs móveis se dá no planejamento de sua trajetória e tem recebido grande atenção por parte dos pesquisadores, tanto na indústria como no meio acadêmico, pois seu desenvolvimento está diretamente relacionado com a maior autonomia dos robôs. A complexidade do problema de planejamento do movimento tem motivado o desenvolvimento dos mais diversos algoritmos. Tal complexidade advém da necessidade de integrar a navegação do robô com o sensoriamento, a eficiência e o planejamento de rotas, como também a necessidade de  poupar recurso importantes e preservar suas partes mecânicas. A habilidade de planejamento de rotas deve estar presente na programação interna dos robôs para que os mesmos possam decidir quando será necessário alterar sua rota de modo a minimizar o impacto em comparação ao planejamento inicial.
 
 
 O problema de roteirização de robôs pode ser modelado através do Problema do Caixeiro Viajante(PCV), porém o PVC não é suficiente para modelar a roteirização de rotas dentro de limitações do robô, como limitação energética ou de peso máximo a ser transportado, sendo assim o mesmo deve ser combinado ao Problema da Mochila(PM) para uma modelagem mais próxima a realidade. Este trabalho tem como objetivo desenvolver um algorítmo genético que forneça a melhor rota para um robô maximizando os ganhos que o mesmo pode realizar dentro de uma limitação imposta.
@@ -86,10 +86,10 @@ O problema de roteirização de robôs pode ser modelado através do Problema do Cai
 Na próxima seção será descrito o PCV e sua variação síncrona, o PM e a combinação do PCV e PM. Na seção 3 será abordado a fundamentação teórica do problema e da solução a ser implementada. A seção 4 abordará os métodos de implementação e suas metodologias. Na seção 5  será exposto os resultados obtidos oriundos da seção 4, enquanto a conclusão será apresentada na seção 6, e por fim na seção 7 os trabalhos futuros.
 
 \section{Problema do Caixeiro Viajante com o Problema da Mochila} \label{sec:PCVPM}
-Para uma melhor representação do problema de roteirização de robôs com restrições será combinado o PCV e o PM. A seguir será apresentado o PCV e sua variação síncrona, usada como base do algorítmo, o PM com sua variação do Problema da Mochila Binária, para adicionar a visitação de uma cidade apenas uma vez, e por fim a combinação dos dois problemas na formulação matemática final.
+ \hspace{1.2cm}Para uma melhor representação do problema de roteirização de robôs com restrições será combinado o PCV e o PM. A seguir será apresentado o PCV e sua variação síncrona, usada como base do algorítmo, o PM com sua variação do Problema da Mochila Binária, para adicionar a visitação de uma cidade apenas uma vez, e por fim a combinação dos dois problemas na formulação matemática final.
 \subsection{Problema do Caixeiro Viajante} \label{sec:PCV}
 
-O Problema do Caixeiro Viajante (PCV) tem sido muito utilizado no experimento
+ \hspace{1.2cm}O Problema do Caixeiro Viajante (PCV) tem sido muito utilizado no experimento
 de diversos métodos de otimização por ser, principalmente, um problema de fácil
 descrição e compreensão, mas de grande dificuldade de solução, uma vez que é
 \textit{NP-hard}(\textit{Non-Deterministic Polynomial Time}). O PCV determina que um vendedor tem N
@@ -108,7 +108,7 @@ Onde:
 
 \subsubsection{Formulação Matemática Para o PCV}
 
-Seja o grafo $G(N, A)$ onde $N$ representa o conjunto $(|N|=n)$ e $A$ o conjunto de arestas. Seja, uma matriz simétrica com custos ou distâncias mínimas entre os nós da rede considerando ainda que $c_{ij} = +\infty \forall i \in N$. A matriz $X[x_{ij}]$ é composta pelas variáveis de decisão do problema
+ \hspace{1.2cm}Seja o grafo $G(N, A)$ onde $N$ representa o conjunto $(|N|=n)$ e $A$ o conjunto de arestas. Seja, uma matriz simétrica com custos ou distâncias mínimas entre os nós da rede considerando ainda que $c_{ij} = +\infty \forall i \in N$. A matriz $X[x_{ij}]$ é composta pelas variáveis de decisão do problema
 
 \begin{equation}
 x_{ij} =
@@ -158,7 +158,7 @@ O PVC pode ser classificado em simétrico, onde os custos de um caixeiro ir da ci
 
 \subsubsection{Problema do Caixeiro Viajante Simétrico(PCVS)} \label{sec:PCVS}
 
-O PCVS possui a direção da arestas é irrelevante já que $c_{ij} = c_{ji}$. Uma vez que a direção não tem importância, é possível considerar que o grafo possui apenas um arco, sem direção, entre todos os pares de nós. Deste modo, $x_{j} \in 0,1$ é a variável de decisão onde $j$ percorre todos os arcos $A$ do grafo e $c_{j}$ é o custo de percorrer cada nó. Para encontrar um circuito no grafo, deve selecionar um subconjunto de arcos, no qual todos os nós estejam contidos. Assim, o problema pode ser formulado como:
+ \hspace{1.2cm}O PCVS possui a direção da arestas é irrelevante já que $c_{ij} = c_{ji}$. Uma vez que a direção não tem importância, é possível considerar que o grafo possui apenas um arco, sem direção, entre todos os pares de nós. Deste modo, $x_{j} \in 0,1$ é a variável de decisão onde $j$ percorre todos os arcos $A$ do grafo e $c_{j}$ é o custo de percorrer cada nó. Para encontrar um circuito no grafo, deve selecionar um subconjunto de arcos, no qual todos os nós estejam contidos. Assim, o problema pode ser formulado como:
 \begin{equation}\label{fat2}
 R(n)=\frac{(n-1)!}{2}
 \end{equation}
@@ -182,14 +182,14 @@ x_j = 0 \text{ ou } x_j = 1  \;  \;  \text{,para todo $j \varepsilon  E$}
 onde $J(j)$ é o conjunto de todos os arcos, não direcionados, ligados ao nó $j$ e $E(S)$ é o subconjunto de todos os arcos que ligam as cidades em qualquer conjunto S não vazio que contenha todas as cidades\cite{Wikipedia:19}.
 
 \subsection{Problema da Mochila (PM)} \label{sec:PM}
-O PM é um problema de programação linear inteira, classificado como
+ \hspace{1.2cm}O PM é um problema de programação linear inteira, classificado como
 NP-hard. O PM consiste de uma mochila com capacidade limitada, dentro dessa mochila deve ser colocado uma lista de itens, cada um com seu peso e valor, de modo que a soma do peso do conjunto agrupado na bolsa  não ultrapasse a capacidade da mochila e a soma dos valores seja a maior  possível\cite{Martello:1990:KPA:98124}. O cálculo da rota de um robô se assemelha ao PM, sendo o robô a mochila, a capacidade da mochila as restrições impostas ao robô, como peso máximo ou energia disponível, e os itens a serem colocados na mochilas são os pontos as serem visitados. 
 
 O PM possui diversas variações, porém um robô que tem sua rota com base no PCV só deverá passar por um ponto uma única vez, sendo assim a o PM binário é a representação mais aderente ao problema.
 
  
 \subsubsection{PM binário e sua Formulação Matemática}
-A variação PM binária consiste de um conjunto de itens $N$, que é formado por uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, cada item é de um tipo único, e o valor da capacidade da mochila igual a $C$. O objetivo é selecionar um subset de $N$ no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. Diferente do PCV o PM não é afetado pela ordem da lista de itens.A lista de itens é composta por um vetor $X[x_{j}]$, no qual
+ \hspace{1.2cm}A variação PM binária consiste de um conjunto de itens $N$, que é formado por uma lista de $n$ itens $j$ com valor $p_{j}$ e peso $w_{j}$, cada item é de um tipo único, e o valor da capacidade da mochila igual a $C$. O objetivo é selecionar um subset de $N$ no qual a soma dos pesos não exceda $C$ e o valor seja o maior possível\cite{book:946517}. Diferente do PCV o PM não é afetado pela ordem da lista de itens.A lista de itens é composta por um vetor $X[x_{j}]$, no qual
 
 \begin{equation}\label{eq:16}
 x_{i} =
@@ -220,7 +220,7 @@ A restrição (\ref{eq:18}) garante que a capacidade da mochila não será ultrapass
 
 \subsection{Problema do Caxeiro Viajante Combinado ao Problema da Mocila (PCVPM)}\label{PCVPM}
 
-Nesta seção, o objetivo deste artigo, a saber, o Problema do Caixeiro Viajante com Problema de Mochila (PCVPM).
+ \hspace{1.2cm}Nesta seção, o objetivo deste artigo, a saber, o Problema do Caixeiro Viajante com Problema de Mochila (PCVPM).
 Pode-se dizer que esse problema é a junção do PCV Simétrico com o PM Binário, de modo que, para 
 formulá-lo, foi decidido que devem ser mantidas as principais características de cada um
 dos dois problemas componentes:
@@ -255,7 +255,7 @@ x_{i} =
 	\end{cases}
 \end{equation}
 
-Desta forma, a formulação de Programação Linear Inteira para o problema pode ser escrita como:
+Desta forma, a formulação de Programação Linear Inteira, com base em \cite{article:Candido} para o problema pode ser escrita como:
 
 
 \begin{equation}\label{eq:obj_PCVPM}
@@ -286,7 +286,7 @@ sobre a quantidade de visitações:
 \sum_{j=1}^{n}x_{ij} \qquad i=1,2,\dots,n
 \end{equation}
 
-sobre a distância máxima a ser percorrida:
+sobre o custo energético máxio a ser utilizado:
 
 \begin{equation}\label{eq:PCVPM_Max_dist}
  \sum_{i=1}^{n}\sum_{j=1}^{n}c_{ij}x_{ij} \leq C_T
@@ -306,12 +306,12 @@ i_i - u_j + 1 \leq (1 + -x_{ij})n \qquad  2\leq i \neq j \leq n
 
 onde $n$ é o tamanho do conjunto de cidades a serem visitadas, $T$ é conjuntos de cidades que comõe uma rota viável, $c_{ij}$ é o custo de movimentação entre uma cidade e outra, $p_i$ é o prêmio da $i$-ésima cidade, $\alpha_P$ e $\beta_D$ são os pesos na fução objetivo relacionados a maximização da premiação e minimização do custo, a técnica utilizada para formar a função objetivo foi o Filtro de Compensação\cite{article:Gordana}.
 
-Neste problema as equações (\ref{eq:PCVPM_rest1}) e (\ref{eq:PCVPM_rest2}) são restrições sobre o ponto inicial e final que devem ser inclusos na rota, a restição (\ref{eq:PCVPM_rest3}) impõe que nenhum ponto seja visitado após chegar ao ponto final, (\ref{eq:PCVPM_vis1}) e (\ref{eq:PCVPM_vis2}) restringe que cada ponto seja visitado apenas uma única vez, a equação (\ref{eq:PCVPM_Max_dist}) limita a distância máxima percorrida a $C_{T}$, subrotas são impedidas de ser geradas pelas equações (\ref{eq:PCVPM_sub1}) e (\ref{eq:PCVPM_sub2}).
+Neste problema as equações (\ref{eq:PCVPM_rest1}) e (\ref{eq:PCVPM_rest2}) são restrições sobre o ponto inicial e final que devem ser inclusos na rota, a restição (\ref{eq:PCVPM_rest3}) impõe que nenhum ponto seja visitado após chegar ao ponto final, (\ref{eq:PCVPM_vis1}) e (\ref{eq:PCVPM_vis2}) restringe que cada ponto seja visitado apenas uma única vez, a equação (\ref{eq:PCVPM_Max_dist}) limita a custo energético máximo a $C_{T}$, subrotas são impedidas de ser geradas pelas equações (\ref{eq:PCVPM_sub1}) e (\ref{eq:PCVPM_sub2}).
 
 O resultado desta otimização será um conjunto de vértices ordenados a serem visitados pelo agente.
 
 \section{Algoritmo Genético}
-Os Algoritmos Genéticos (AGs) são técnicas de otimização inspirados no
+ \hspace{1.2cm}Os Algoritmos Genéticos (AGs) são técnicas de otimização inspirados no
 princípio da sobrevivência e reprodução dos indivíduos mais aptos, proposto por
 Charles Darwin\cite{book:54924}\cite{book:1176457}.
 
@@ -346,7 +346,7 @@ Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quan
 
 \section{Resultados}
 
-	Nesta seção serão apresentados os resultados da simulação do cálculo de rotas para um agente para os seguintes cenários:
+ \hspace{1.2cm}	Nesta seção serão apresentados os resultados da simulação do cálculo de rotas para um agente para os seguintes cenários:
 	
 	\begin{itemize}
 		\item Cenário 1 - Rota para 20 pontos, sem restrições de custo;
@@ -360,7 +360,7 @@ Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quan
 	A seguir serão mostrados os resultados das simulações para cada um dos 4 cenários apresentados.
 	
 	\subsection{Cenário 1 - Rota para 20 pontos, sem restrições de custo}	
-	O cenário 1 relacionado com a simulação do cálculo de rota, onde o agente não possui restrições de custo, e pode percorrer todas as cidades livremente. 
+	 \hspace{1.2cm}O cenário 1 relacionado com a simulação do cálculo de rota, onde o agente não possui restrições de custo, e pode percorrer todas as cidades livremente. 
 	
 	Para o cenário 1 foi utilizado os seguintes pontos.
 	\begin{figure}[ht]
@@ -380,10 +380,10 @@ Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quan
 		\label{fig:rota1}
 	\end{figure}
 	
-	O algoritmo foi executado um total de 30 vezes sendo que a menor distância encontrada foi de 37,38 metros e a pontuação máxima de 125 pontos.
+	O algoritmo foi executado um total de 30 vezes sendo que o menor consumo  enérgético encontrado foi de 37,38 \% da bateria e a pontuação máxima de 125 pontos.
 	
 	\subsection{Cenário 2 - Rota para 20 pontos, com limitação de custo}	
-	O cenário 2 é estabelecido sobre o mesmo conjunto de pontos estabelecidos no cenário 1(figura \ref{fig:Pontos1}), porém na seguinte execução foi imposto a restrição de custo máximo de 23 metros.
+	 \hspace{1.2cm}O cenário 2 é estabelecido sobre o mesmo conjunto de pontos estabelecidos no cenário 1(figura \ref{fig:Pontos1}), porém na seguinte execução foi imposto a restrição de custo máximo de 23 metros.
 	
 	A rota encontrada pelo algoritmo pode ser visto na figura \ref{fig:rota_c_2}.
 	
@@ -396,12 +396,12 @@ Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quan
 	\end{figure}
 	
 	
-	O algoritmo foi executado o mesmo número de vezes que o cenário 1, 30 execuções, sendo que a menor distância encontrada foi de 22,23 metros com uma pontuação de 58,0 pontos. 
+	O algoritmo foi executado o mesmo número de vezes que o cenário 1, 30 execuções, sendo queo menor consumo  enérgético encontrado foi de 22,23 \% da bateria com uma pontuação de 58,0 pontos. 
 	
 	
 	\subsection{Cenário 3 - Rota para 30 pontos, sem restrições de custo}	
 	
-	O cenário 3  relacionado com a simulação do cálculo de rota, onde o agente não possui restrições de custo, e pode percorrer todas as cidades livremente. Para este cenário foi utilizado um conjunto de 30 pontos a serem visitados, como mostrado a seguir na figura \ref{fig:Pontos3}.
+	 \hspace{1.2cm}O cenário 3  relacionado com a simulação do cálculo de rota, onde o agente não possui restrições de custo, e pode percorrer todas as cidades livremente. Para este cenário foi utilizado um conjunto de 30 pontos a serem visitados, como mostrado a seguir na figura \ref{fig:Pontos3}.
 	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=.4\textwidth]{pontos_3.png}
@@ -419,10 +419,10 @@ Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quan
 		\label{fig:rota3}
 	\end{figure}
 	
-	O algoritmo foi executado um total de 30 vezes sendo que a menor distância encontrada foi de 71,24 metros e a pontuação máxima de 149 pontos.
+	O algoritmo foi executado um total de 30 vezes sendo que o menor consumo  enérgético encontrado foi de 71,24 \% da bateria e a pontuação máxima de 149 pontos.
 	
 	\subsection{Cenário 4 - Rota para 30 pontos, com limitação de custo}	
-	O cenário 4 é estabelecido sobre o mesmo conjunto de pontos estabelecidos no cenário 3(figura \ref{fig:Pontos3}), porém na seguinte execução foi imposto a restrição de custo máximo de 35 metros.
+	 \hspace{1.2cm}O cenário 4 é estabelecido sobre o mesmo conjunto de pontos estabelecidos no cenário 3(figura \ref{fig:Pontos3}), porém na seguinte execução foi imposto a restrição de custo máximo de 35 metros.
 	
 	
 	A rota encontrada pelo algoritmo pode ser visto na figura \ref{fig:rota2}.
@@ -435,14 +435,15 @@ Para a metodologia de de eleção foi optado peloa forma de \textit{ranking}. Quan
 		\label{fig:rota2}
 	\end{figure}
 
-	O algoritmo foi executado o mesmo número de vezes que o cenário 3, 30 execuções, sendo que a menor distância encontrada foi de  33,66 metros com uma pontuação de 71,0 pontos. 
+	O algoritmo foi executado o mesmo número de vezes que o cenário 3, 30 execuções, sendo que o menor consumo  enérgético encontrado foi de  33,66 \% da bateria com uma pontuação de 71,0 pontos. 
 
 \section{Conclusão}
 
-O algoritmo proposto neste trabalho, visa principalmente a otimização e a busca por
+ \hspace{1.2cm}O algoritmo proposto neste trabalho, visa principalmente a otimização e a busca por
 soluções satisfatórias, em ambientes que possuam ou não alguma restrição no agente. os testes executados mostraram resultados promissores para a busca de rotas otimizadas com e sem restrições, porém os resultados  ainda são inconclusivos, já que para uma real avaliação será necessário um número maior de variabilidade de pontos e premiações para estudar melhor o comportamento do algoritmo.
 
-Como proposta futura, tem-se a intenção de adaptar o algoritmo para utilizar rotas presentes no TSPLIB\cite{TSPLIB}, e alterar possíveis formas de mutação e \textit{crossover}, e e adicionar o calculo de rotas com restrições para múltiplos agentes.
+Como proposta futura, tem-se a intenção de adaptar o algoritmo para plataformas embarcadas ARM's SBCs (\textit{single-board
+computers} ou computadores de placa única)\cite{Wikipedia:SBC}, realizar teste de execução utilizando rotas presentes no TSPLIB\cite{TSPLIB}, e alterar possíveis formas de mutação e \textit{crossover}, e adicionar o calculo de rotas com restrições para múltiplos agentes.
 %
 
 

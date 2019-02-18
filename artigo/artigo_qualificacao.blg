@@ -1,6 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
-The top-level auxiliary file: artigo_qualificacao.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: artigo_qualificacao.aux
 The style file: sbc.bst
 Database file #1: sbc-template.bib
 Warning--entry type for "Nasa:17" isn't style-file defined
@@ -16,48 +14,7 @@ Warning--entry type for "Wikipedia:19" isn't style-file defined
 A bad cross reference---entry "TABILE2011"
 refers to entry "10.1590/S0100-69162011000100013", which doesn't exist
 Warning--I didn't find a database entry for "10.1590/S0100-69162011000100013"
-Warning--empty publisher in book:Mutingi
+Warning--empty journal in article:Candido
 Warning--empty booktitle in Singh2013StudyOV
 Warning--empty journal in article
-You've used 19 entries,
-            1935 wiz_defined-function locations,
-            575 strings with 6608 characters,
-and the built_in function-call counts, 6455 in all, are:
-= -- 601
-> -- 302
-< -- 15
-+ -- 102
-- -- 102
-* -- 522
-:= -- 1195
-add.period$ -- 49
-call.type$ -- 19
-change.case$ -- 143
-chr.to.int$ -- 19
-cite$ -- 22
-duplicate$ -- 243
-empty$ -- 419
-format.name$ -- 129
-if$ -- 1220
-int.to.chr$ -- 1
-int.to.str$ -- 0
-missing$ -- 19
-newline$ -- 90
-num.names$ -- 57
-pop$ -- 137
-preamble$ -- 1
-purify$ -- 146
-quote$ -- 0
-skip$ -- 188
-stack$ -- 0
-substring$ -- 330
-swap$ -- 12
-text.length$ -- 1
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 102
-warning$ -- 3
-while$ -- 42
-width$ -- 0
-write$ -- 224
 (There was 1 error message)
