@@ -87,7 +87,7 @@ class GA_TSPKP:
         all_x = self.mapa[rota.astype(int), 0]
         all_y = self.mapa[rota.astype(int), 1]
 
-        cid_nome = range(len(pos_x))
+        cid_nome = range(len(all_x))
 
         plt.figure(num=None,
                    figsize=(size, size),
@@ -189,47 +189,43 @@ class GA_TSPKP:
 
             rand = np.random.uniform(0,1, len(new_population))
 
-
-            for i in range(len(new_population)):
-                if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
-                    print('error')
+            #
+            # for i in range(len(new_population)):
+            #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
+            #         print('error')
 
             for i in range(rand.size):
                 if rand[i] >= self.mutation_rate:
-                    mut_1 = self.mutation_object.swap(new_population[i])
-                    mut_2 = self.mutation_object.insertion(new_population[i])
-                    mut_3 = self.mutation_object.WGWRGM(new_population[i], self.function_objective)
-                    mut_4 = self.mutation_object.WGWWGM(new_population[i], self.function_objective)
-                    mut_5 = self.mutation_object.WGWNNM(new_population[i], self.function_objective)
+                    if new_population[i].size > 3:
+                        list_mut = list()
+                        list_mut.append(self.mutation_object.swap(new_population[i]))
+                        list_mut.append(self.mutation_object.insertion(new_population[i]))
+                        list_mut.append(self.mutation_object.reverse(new_population[i]))
+                        list_mut.append(self.mutation_object.scramble(new_population[i]))
+                        list_mut.append(self.mutation_object.swap(new_population[i]))
+                        list_mut.append(self.mutation_object.WGWRGM(new_population[i], self.function_objective))
+                        list_mut.append(self.mutation_object.WGWWGM(new_population[i], self.function_objective))
+                        list_mut.append(self.mutation_object.WGWNNM(new_population[i], self.function_objective))
 
-                    if not np.unique(self.initial_cromossome).size == mut_1.size - 2:
-                        print('error')
-                    if not np.unique(self.initial_cromossome).size == mut_2.size - 2:
-                        print('error')
-                    if not np.unique(self.initial_cromossome).size == mut_3.size - 2:
-                        print('error')
-                    if not np.unique(self.initial_cromossome).size == mut_4.size - 2:
-                        print('error')
+                        cousts_mut = np.zeros(8)
 
-                    coust_mut_1 = self.function_objective(mut_1)
-                    coust_mut_2 = self.function_objective(mut_2)
-                    coust_mut_3 = self.function_objective(mut_3)
-                    coust_mut_4 = self.function_objective(mut_4)
-                    coust_mut_5 = self.function_objective(mut_5)
+                        cousts_mut[0] = self.function_objective(list_mut[0])
+                        cousts_mut[1] = self.function_objective(list_mut[1])
+                        cousts_mut[2] = self.function_objective(list_mut[2])
+                        cousts_mut[3] = self.function_objective(list_mut[3])
+                        cousts_mut[4] = self.function_objective(list_mut[4])
+                        cousts_mut[5] = self.function_objective(list_mut[5])
+                        cousts_mut[6] = self.function_objective(list_mut[6])
+                        cousts_mut[7] = self.function_objective(list_mut[7])
 
-                    if coust_mut_1 > coust_mut_2 and coust_mut_1 > coust_mut_3  and coust_mut_1 >  coust_mut_4 and coust_mut_1 >  coust_mut_5:
-                        new_population[i] = mut_1
-                    elif coust_mut_2 >  coust_mut_3 and coust_mut_2 > coust_mut_4 and coust_mut_2 > coust_mut_5:
-                        new_population[i] = mut_2
-                    elif coust_mut_3 >  coust_mut_4:
-                        new_population[i] = mut_3
-                    else:
-                        new_population[i] = mut_4
+                        min_mut = np.argmin(cousts_mut)
+                        new_population[i] = list_mut[min_mut]
 
 
-            for i in range(len(new_population)):
-                if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
-                    print('error')
+            #
+            # for i in range(len(new_population)):
+            #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
+            #         print('error')
 
             new_population = new_population + population
 
@@ -287,12 +283,12 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-        population = 300,
-        limit_population = 100,
+        population = 1500,
+        limit_population = 15,
         crossover_rate = 100,
         mutation_rate = 0.8,
-        map_points = '../novas_cidades_2.txt',
-        prizes = '../novos_premios_2.txt',
+        map_points = '../novas_cidades_4.txt',
+        prizes = '../novos_premios_4.txt',
         max_coust = 0,
         start_point = 0,
         end_point = 0)
