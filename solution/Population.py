@@ -33,6 +33,22 @@ class Population:
 
         return population_init
 
+    def initialize_with_coust(self, initial, size, distancias):
+        mean_distances = np.matrix(distancias).mean()
+        number_selection = round(self.max_coust/mean_distances)
+
+        genes_elements = np.copy(initial)
+
+        population_init = list()
+
+        for i in range(size):
+            individual = np.random.choice(genes_elements, number_selection - 2, replace=False)
+
+            individual = np.concatenate([self.start, individual, self.end])
+            population_init.append(individual)
+
+        return population_init
+
 
 
 if __name__ == '__main__':

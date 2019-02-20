@@ -36,7 +36,15 @@ class Crossover:
         pass
 
 
-    def two_point(self, City1, City2):
+    def two_point(self, parent_1, parent_2):
+        start = np.array([parent_1[0]])
+        end = np.array([parent_1[-1]])
+
+        parent_tmp_1 = np.delete(parent_1, [0, parent_1.size - 1])
+        parent_tmp_2 = np.delete(parent_2, [0, parent_2.size - 1])
+
+
+
         pass
 
     def PMX(self, parent_1_tmp, parent_2_tmp):
@@ -93,16 +101,156 @@ class Crossover:
 
         return offspring_1.astype(int), offspring_2.astype(int)
 
+    def OX(self, parent_1, parent_2):
+
+        start = np.array([parent_1[0]])
+        end = np.array([parent_1[-1]])
+
+        if parent_1.size > parent_2.size:
+            parent_tmp_1 = np.delete(parent_2, [0, parent_2.size-1])
+            parent_tmp_2 = np.delete(parent_1, [0, parent_1.size-1])
+        else:
+            parent_tmp_1 = np.delete(parent_1, [0, parent_1.size-1])
+            parent_tmp_2 = np.delete(parent_2, [0, parent_2.size-1])
+
+        self.__point_mutation(parent_tmp_1, parent_tmp_2)
+
+        offspring_1 = np.ones(parent_tmp_2.size).astype(int) * np.nan
+        offspring_2 = np.ones(parent_tmp_1.size).astype(int) * np.nan
+
+        offspring_1[self.I:self.J] = parent_tmp_1[self.I:self.J]
+        offspring_2[self.I:self.J] = parent_tmp_2[self.I:self.J]
+
+        copy_ordend_parent_1 = np.ones(parent_tmp_1.size)
+        copy_ordend_parent_1 = np.concatenate([parent_tmp_1[self.J:],parent_tmp_1[:self.J]])
+        copy_ordend_parent_2 = np.ones(parent_tmp_2.size)
+        copy_ordend_parent_2 = np.concatenate([parent_tmp_2[self.J:],parent_tmp_2[:self.J]])
+
+        index_parent_2 = np.array(list(range(self.J, parent_tmp_2.size)) + list(range(self.J)))
+        index_parent_2 = index_parent_2[np.where(index_parent_2 < parent_tmp_1.size)]
+
+        all = np.concatenate([parent_tmp_1, parent_tmp_2])
+        all = self.removed_citys_repeat(all)
+
+        x_teste = np.isin(parent_tmp_2, offspring_1, invert=True)
+        
+
+        j = 0
+        for i in index_parent_2:
+            if j == (copy_ordend_parent_2.size - 1):
+                break
+            while copy_ordend_parent_2[j] in offspring_1:
+                j += 1
+
+            if i < self.I or i >= self.J:
+                offspring_1[i] = copy_ordend_parent_2[j]
+                j += 1
+
+        j = 0
+        for i in index_parent_1:
+            if j == (copy_ordend_parent_1.size - 1):
+                break
+            while copy_ordend_parent_1[j] in offspring_2:
+                j += 1
+
+            if i < self.I or i >= self.J:
+                offspring_2[i] = copy_ordend_parent_1[j]
+                j += 1
+
+        elements_fault = np.isin(parent_tmp_2,offspring_1, invert=True)
+        elements_fault = parent_tmp_2[elements_fault]
+        # elements_fault = np.isin(elements_fault,offspring_2, invert=True)
+        # elements_fault = all[elements_fault]
+
+        idx = np.isnan(offspring_1)
+        offspring_1[idx] = elements_fault[:np.sum(idx)]
+        print(all)
+        print(self.I, self.J)
+
+        return offspring_1.astype(int), offspring_2.astype(int)
+
+    def OX2(self, parent_1, parent_2):
+
+        start = np.array([parent_1[0]])
+        end = np.array([parent_1[-1]])
+
+        if parent_1.size > parent_2.size:
+            parent_tmp_1 = np.delete(parent_2, [0, parent_2.size-1])
+            parent_tmp_2 = np.delete(parent_1, [0, parent_1.size-1])
+        else:
+            parent_tmp_1 = np.delete(parent_1, [0, parent_1.size-1])
+            parent_tmp_2 = np.delete(parent_2, [0, parent_2.size-1])
+
+
+
+        self.__point_mutation(parent_tmp_1, parent_tmp_2)
+
+        offspring_1 = np.ones(parent_tmp_2.size).astype(int) * np.nan
+        offspring_2 = np.ones(parent_tmp_1.size).astype(int) * np.nan
+
+        offspring_1[self.I:self.J] = parent_tmp_1[self.I:self.J]
+        offspring_2[self.I:self.J] = parent_tmp_2[self.I:self.J]
+
+        copy_ordend_parent_1 = np.ones(parent_tmp_1.size)
+        copy_ordend_parent_1 = np.concatenate([parent_tmp_1[self.J:],parent_tmp_1[:self.J]])
+        copy_ordend_parent_2 = np.ones(parent_tmp_2.size)
+        copy_ordend_parent_2 = np.concatenate([parent_tmp_2[self.J:],parent_tmp_2[:self.J]])
+
+        index_parent_2 = np.array(list(range(self.J, parent_tmp_2.size)) + list(range(self.J)))
+        index_parent_2 = index_parent_2[np.where(index_parent_2 < parent_tmp_1.size)]
+
+
+        index_parent_1 = np.array(list(range(self.J, parent_tmp_2.size)) + list(range(self.J)))
+        index_parent_1 = index_parent_2[np.where(index_parent_2 < parent_tmp_1.size)]
+
+        all = np.concatenate([parent_tmp_1, parent_tmp_2])
+
+        all = self.removed_citys_repeat(all)
+
+        j = 0
+        for i in index_parent_2:
+            if j == (copy_ordend_parent_2.size - 1):
+                break
+            while copy_ordend_parent_2[j] in offspring_1:
+                j += 1
+
+            if i < self.I or i >= self.J:
+                offspring_1[i] = copy_ordend_parent_2[j]
+                j += 1
+
+        j = 0
+        for i in index_parent_1:
+            if j == (copy_ordend_parent_1.size - 1):
+                break
+            while copy_ordend_parent_1[j] in offspring_2:
+                j += 1
+
+            if i < self.I or i >= self.J:
+                offspring_2[i] = copy_ordend_parent_1[j]
+                j += 1
+
+        elements_fault = np.isin(parent_tmp_2,offspring_1, invert=True)
+        elements_fault = parent_tmp_2[elements_fault]
+        # elements_fault = np.isin(elements_fault,offspring_2, invert=True)
+        # elements_fault = all[elements_fault]
+
+        idx = np.isnan(offspring_1)
+        offspring_1[idx] = elements_fault[:np.sum(idx)]
+        print(all)
+        print(self.I, self.J)
+
+        return offspring_1.astype(int), offspring_2.astype(int)
+
 
 
 
 if __name__ == '__main__':
-    parent_1 = np.random.choice(np.arange(10),10, replace=False)
-    parent_2 = np.random.choice(np.arange(12),12, replace=False)
+    parent_1 = np.random.choice(np.arange(20),12, replace=False)
+    parent_2 = np.random.choice(np.arange(20),10, replace=False)
 
     corssover = Crossover()
 
-    x,y = corssover.PMX(parent_1, parent_2)
+    x,y = corssover.OX(parent_1, parent_2)
 
     print(parent_1, parent_2)
     print(x,y)
