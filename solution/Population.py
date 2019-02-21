@@ -3,8 +3,8 @@ import numpy as np
 
 class Population:
     def __init__(self, start_city, end_city, function_mensure_coust, max_coust):
-        self.start = start_city
-        self.end = end_city
+        self.start = np.array([start_city])
+        self.end = np.array([end_city])
         self.function_mensure_coust = function_mensure_coust
         self.max_coust = max_coust
 
@@ -17,16 +17,16 @@ class Population:
 
         for i in range(size):
             individual = np.random.choice(genes_elements, genes_elements.size, replace=False)
-
-            if self.max_coust > 0:
-                while True:
-                    coust = self.function_mensure_coust(np.concatenate([self.start, individual, self.end]))
-
-                    if coust > self.max_coust:
-                        city_remove = np.random.randint(0, individual.shape[0], 1)
-                        individual = np.delete(individual, city_remove)
-                    else:
-                        break
+            #
+            # if self.max_coust > 0:
+            #     while True:
+            #         coust = self.function_mensure_coust(np.concatenate([self.start, individual, self.end]))
+            #
+            #         if coust > self.max_coust:
+            #             city_remove = np.random.randint(0, individual.shape[0], 1)
+            #             individual = np.delete(individual, city_remove)
+            #         else:
+            #             break
 
             individual = np.concatenate([self.start,individual, self.end])
             population_init.append(individual)

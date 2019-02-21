@@ -106,33 +106,70 @@ class GA_TSPKP:
 
 
 
-    def __init__(self,
-                genetarion,
-                population,
-                limit_population,
-                crossover_rate,
-                mutation_rate,
-                map_points,
-                prizes,
-                max_coust,
-                start_point,
-                end_point):
+    # def __init__(self,
+    #             genetarion,
+    #             population,
+    #             limit_population,
+    #             crossover_rate,
+    #             mutation_rate,
+    #             map_points,
+    #             prizes,
+    #             max_coust,
+    #             start_point,
+    #             end_point):
+
+    def __init__(self, **kwargs):
+
+        for key, value in kwargs.items():
+            if key == 'genetarion':
+                self.generation_size = value
+            elif key == 'population':
+                self.population_size = value
+            elif key == 'limit_population':
+                self.limit_population = value
+            elif key == 'crossover_rate':
+                self.crossover_rate = value
+            elif key == 'mutation_rate':
+                self.mutation_rate = value
+            elif key == 'map_points':
+                self.map_points = value
+            elif key == 'max_coust':
+                self.max_coust = value
+            elif key == 'start_point':
+                self.start_point = value
+            elif key == 'end_point':
+                self.end_point = value
+            elif key == 'prizes':
+                self.prizes = np.loadtxt(value)
+            elif key == 'initial_cromossome':
+                self.initial_cromossome = value
+                self.receive_route = True
+
+
+
 
         # as variáveis 
-        self.genetarion_size = genetarion
-        self.population_size = population
-        self.limit_population = limit_population
-        self.crossover_rate = crossover_rate
-        self.mutation_rate = mutation_rate
-        self.map_points = map_points
-        self.max_coust = max_coust
-        self.start_point = np.array([start_point])
-        self.end_point = np.array([end_point])
+        # self.generation_size = genetarion
+        # self.population_size = population
+        # self.limit_population = limit_population
+        # self.crossover_rate = crossover_rate
+        # self.mutation_rate = mutation_rate
+        # self.map_points = map_points
+        # self.max_coust = max_coust
+        # self.start_point = np.array([start_point])
+        # self.end_point = np.array([end_point])
+        # self.prizes = np.loadtxt(prizes)
 
-        self.mapa = np.loadtxt(map_points)
+        if 'initial_cromossome' not in locals():
+           self.initial_cromossome = np.arange(self.mapa.shape[0])
+           self.receive_route = False
 
-        self.prizes = np.loadtxt(prizes)
+        if self.start_point != self.end_point:
+            self.initial_cromossome = np.delete(self.initial_cromossome, [self.start_point, self.end_point])
+        else:
+            self.initial_cromossome = np.delete(self.initial_cromossome, [self.start_point])
 
+        self.mapa = np.loadtxt(self.map_points)
         self.distance_matrix_calculate()
 
         self.mutation_object = Mutation()
@@ -142,136 +179,129 @@ class GA_TSPKP:
         self.crossover_class = Crossover()
         self.crossover = self.crossover_class.PMX
 
-        self.Population = Population(self.start_point, self.end_point, self.med_custo, max_coust)
-
-        self.initial_cromossome = np.arange(self.mapa.shape[0])
-
-        if start_point != end_point:
-            self.initial_cromossome = np.delete(self.initial_cromossome, [start_point, end_point])
-        else:
-            self.initial_cromossome = np.delete(self.initial_cromossome, [start_point])
-
+        self.Population = Population(self.start_point, self.end_point, self.med_custo, self.max_coust)
 
         self.Selection_object = Selection()
         self.selection = self.Selection_object.tournament
 
     def run(self):
 
-        population = self.Population.initialize(self.initial_cromossome, self.population_size)
-        best_elements = population[0:4]
-        best_elements_coust = np.array([self.function_objective(element) for element in best_elements])
+        if self.receive_route:
+            population = self.Population.initialize(self.initial_cromossome, self.population_size)
+            best_elements = population[0:4]
+            best_elements_coust = np.array([self.function_objective(element) for element in best_elements])
 
-        best_count = 0
-        best_always = np.copy( best_elements[0])
-        best_coust = best_elements_coust[0]
-        best_element_generation = list()
-        for g in range(self.genetarion_size):
+            best_count = 0
+            best_always = np.copy( best_elements[0])
+            best_coust = best_elements_coust[0]
+            best_element_generation = list()
+            for g in range(self.generation_size):
 
-            print(g, best_coust, best_count)
+                print(g, best_coust, best_count)
 
-            cousts_population = [self.function_objective(value) for value in population]
-            cousts_population = np.array(cousts_population)
+                cousts_population = [self.function_objective(value) for value in population]
+                cousts_population = np.array(cousts_population)
 
-            selected_parents_index = self.selection(self.population_size, cousts_population, 5)
+                selected_parents_index = self.selection(self.population_size, cousts_population, 5)
 
-            parents_select = [population[chromossome] for chromossome in selected_parents_index]
+                parents_select = [population[chromossome] for chromossome in selected_parents_index]
 
-            new_population = list()
+                new_population = list()
 
-            for i in range(selected_parents_index.size):
-                select_2_parents = np.random.randint(selected_parents_index.size, size=2)
+                for i in range(selected_parents_index.size):
+                    select_2_parents = np.random.randint(selected_parents_index.size, size=2)
 
-                offspring_1,offspring_2 = self.crossover(parents_select[select_2_parents[0]],parents_select[select_2_parents[1]])
+                    offspring_1,offspring_2 = self.crossover(parents_select[select_2_parents[0]],parents_select[select_2_parents[1]])
 
-                new_population.append(offspring_1)
-                new_population.append(offspring_2)
-
-
-            rand = np.random.uniform(0,1, len(new_population))
-
-            #
-            # for i in range(len(new_population)):
-            #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
-            #         print('error')
-
-            for i in range(rand.size):
-                if rand[i] >= self.mutation_rate:
-                    if new_population[i].size > 3:
-                        list_mut = list()
-                        list_mut.append(self.mutation_object.swap(new_population[i]))
-                        list_mut.append(self.mutation_object.insertion(new_population[i]))
-                        list_mut.append(self.mutation_object.reverse(new_population[i]))
-                        list_mut.append(self.mutation_object.scramble(new_population[i]))
-                        list_mut.append(self.mutation_object.swap(new_population[i]))
-                        list_mut.append(self.mutation_object.WGWRGM(new_population[i], self.function_objective))
-                        list_mut.append(self.mutation_object.WGWWGM(new_population[i], self.function_objective))
-                        list_mut.append(self.mutation_object.WGWNNM(new_population[i], self.function_objective))
-
-                        cousts_mut = np.zeros(8)
-
-                        cousts_mut[0] = self.function_objective(list_mut[0])
-                        cousts_mut[1] = self.function_objective(list_mut[1])
-                        cousts_mut[2] = self.function_objective(list_mut[2])
-                        cousts_mut[3] = self.function_objective(list_mut[3])
-                        cousts_mut[4] = self.function_objective(list_mut[4])
-                        cousts_mut[5] = self.function_objective(list_mut[5])
-                        cousts_mut[6] = self.function_objective(list_mut[6])
-                        cousts_mut[7] = self.function_objective(list_mut[7])
-
-                        min_mut = np.argmin(cousts_mut)
-                        new_population[i] = list_mut[min_mut]
+                    new_population.append(offspring_1)
+                    new_population.append(offspring_2)
 
 
-            #
-            # for i in range(len(new_population)):
-            #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
-            #         print('error')
+                rand = np.random.uniform(0,1, len(new_population))
 
-            new_population = new_population + population
+                #
+                # for i in range(len(new_population)):
+                #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
+                #         print('error')
+
+                for i in range(rand.size):
+                    if rand[i] >= self.mutation_rate:
+                        if new_population[i].size > 3:
+                            list_mut = list()
+                            list_mut.append(self.mutation_object.swap(new_population[i]))
+                            list_mut.append(self.mutation_object.insertion(new_population[i]))
+                            list_mut.append(self.mutation_object.reverse(new_population[i]))
+                            list_mut.append(self.mutation_object.scramble(new_population[i]))
+                            list_mut.append(self.mutation_object.swap(new_population[i]))
+                            list_mut.append(self.mutation_object.WGWRGM(new_population[i], self.function_objective))
+                            list_mut.append(self.mutation_object.WGWWGM(new_population[i], self.function_objective))
+                            list_mut.append(self.mutation_object.WGWNNM(new_population[i], self.function_objective))
+
+                            cousts_mut = np.zeros(8)
+
+                            cousts_mut[0] = self.function_objective(list_mut[0])
+                            cousts_mut[1] = self.function_objective(list_mut[1])
+                            cousts_mut[2] = self.function_objective(list_mut[2])
+                            cousts_mut[3] = self.function_objective(list_mut[3])
+                            cousts_mut[4] = self.function_objective(list_mut[4])
+                            cousts_mut[5] = self.function_objective(list_mut[5])
+                            cousts_mut[6] = self.function_objective(list_mut[6])
+                            cousts_mut[7] = self.function_objective(list_mut[7])
+                            min_mut = np.argmin(cousts_mut)
+                            new_population[i] = list_mut[min_mut]
 
 
-            fitness_values = np.zeros(len(new_population))
+                #
+                # for i in range(len(new_population)):
+                #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
+                #         print('error')
 
-            for i in range(fitness_values.size):
-                fitness_values[i] = self.function_objective(new_population[i])
+                new_population = new_population + population
 
-            population_select = np.zeros(self.population_size)
-            population = list()
-            for i in range(self.population_size):
-                min_index = np.argmin(fitness_values)
-                population_select[i] = min_index
 
-                exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
+                fitness_values = np.zeros(len(new_population))
 
-                crhomossome = new_population[min_index]
-                if len(exist_menor) > 0:
-                    flag_possui = [np.array_equal(element, crhomossome) for element in best_elements]
-                    if True not in flag_possui:
-                        best_tmp = best_elements
-                        best_tmp.append(crhomossome)
+                for i in range(fitness_values.size):
+                    fitness_values[i] = self.function_objective(new_population[i])
 
-                        new_cousts = np.array([self.function_objective(tmp) for tmp in best_tmp])
-                        indexes_tmp = np.argsort(new_cousts)
+                population_select = np.zeros(self.population_size)
+                population = list()
+                for i in range(self.population_size):
+                    min_index = np.argmin(fitness_values)
+                    population_select[i] = min_index
 
-                        best_elements_coust = new_cousts[indexes_tmp[0:4]]
-                        best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
+                    exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
 
-                population.append(new_population[min_index])
-                del new_population[min_index]
-                fitness_values = np.delete(fitness_values,[min_index])
+                    crhomossome = new_population[min_index]
+                    if len(exist_menor) > 0:
+                        flag_possui = [np.array_equal(element, crhomossome) for element in best_elements]
+                        if True not in flag_possui:
+                            best_tmp = best_elements
+                            best_tmp.append(crhomossome)
 
-            if best_elements_coust[0] < best_coust:
-                best_coust = best_elements_coust[0]
-                best_always = np.copy(best_elements[0])
-                best_count = 0
+                            new_cousts = np.array([self.function_objective(tmp) for tmp in best_tmp])
+                            indexes_tmp = np.argsort(new_cousts)
 
-            elif best_elements_coust[0] == best_coust:
-                best_count += 1
+                            best_elements_coust = new_cousts[indexes_tmp[0:4]]
+                            best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
 
-            best_element_generation.append(best_elements_coust[0])
+                    population.append(new_population[min_index])
+                    del new_population[min_index]
+                    fitness_values = np.delete(fitness_values,[min_index])
 
-            if best_count >= self.limit_population:
-                break
+                if best_elements_coust[0] < best_coust:
+                    best_coust = best_elements_coust[0]
+                    best_always = np.copy(best_elements[0])
+                    best_count = 0
+
+                elif best_elements_coust[0] == best_coust:
+                    best_count += 1
+
+                best_element_generation.append(best_elements_coust[0])
+
+                if best_count >= self.limit_population:
+                    break
+
 
         print(best_element_generation)
         return best_elements_coust, best_elements
@@ -282,16 +312,17 @@ class GA_TSPKP:
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
-        genetarion = 1000,
-        population = 1500,
-        limit_population = 15,
+        genetarion = 10,
+        population = 50,
+        limit_population = 75,
         crossover_rate = 100,
         mutation_rate = 0.8,
-        map_points = '../novas_cidades_4.txt',
-        prizes = '../novos_premios_4.txt',
+        map_points = '../novas_cidades.txt',
+        prizes = '../novos_premios.txt',
         max_coust = 0,
         start_point = 0,
-        end_point = 0)
+        end_point = 0,
+        individual= 0)
     a , b = ga.run()
 
     for i in range(4):

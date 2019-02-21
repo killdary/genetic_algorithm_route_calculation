@@ -2,6 +2,8 @@ import numpy as np
 
 class Mutation:
 
+    def __init__(self, max_coust = 0):
+        self.max_coust = max_coust
 
     def __point_mutation(self, flux):
         size_min = flux.size
@@ -21,7 +23,8 @@ class Mutation:
     def __trata_crhomossomo(self, crhormossomo):
         self.start = np.array([crhormossomo[0]])
         self.end = np.array([crhormossomo[crhormossomo.size-1]])
-        return np.delete(crhormossomo, [0, crhormossomo.size-1])
+        result_crhomossome = np.delete(crhormossomo, [0, crhormossomo.size - 1])
+        return result_crhomossome
 
     def __corrige_chromossomo(self, chromossomo):
         tes = np.concatenate([self.start, chromossomo, self.end])
@@ -123,6 +126,35 @@ class Mutation:
 
         return individual
 
+    def remove_pior_custo(self, City, med_custo):
+        value_worst = 0
+        index_worst = 0
+        individual = np.copy(City)
+        while med_custo(individual) > self.max_coust:
+            individual = self.__trata_crhomossomo(City)
+            for i in range(0, individual.size - 2):
+                value = med_custo(individual[i:i + 2])
+                if value < value_worst:
+                    value_worst = value
+                    index_worst = i
+            individual = np.delete(individual,[index_worst])
+            individual = self.__corrige_chromossomo(individual)
+
+        return individual
+
+    def remove_pior_premio(self, City, med_custo, premios):
+        individual = np.copy(City)
+        prizes = np.delete(premios, [0, premios.size-1])
+        while med_custo(individual) > self.max_coust:
+            individual = self.__trata_crhomossomo(City)
+            ind_min_prize = np.argmin(prizes)
+
+            individual = np.delete(individual,[ind_min_prize])
+            prizes = np.delete(prizes,[ind_min_prize])
+
+            individual = self.__corrige_chromossomo(individual)
+
+        return individual
 
     def SWGLM(self, City, med_custo):
         value_worst = 0

@@ -75,19 +75,19 @@ class Crossover:
 
             index_fall_1 = np.where(offspring_1 == -1)[0]
             index_fall_2 = np.where(offspring_2 == -1)[0]
+            #
+            # elements_1 = list()
+            # for value in range(parent_1.size):
+            #     if parent_1[value] not in offspring_1:
+            #         elements_1.append(parent_1[value])
+            #
+            # elements_2 = list()
+            # for value in range(parent_2.size):
+            #     if parent_2[value] not in offspring_2:
+            #         elements_2.append(parent_2[value])
 
-            elements_1 = list()
-            for value in range(parent_1.size):
-                if parent_1[value] not in offspring_1:
-                    elements_1.append(parent_1[value])
-
-            elements_2 = list()
-            for value in range(parent_2.size):
-                if parent_2[value] not in offspring_2:
-                    elements_2.append(parent_2[value])
-
-            elements_1_tmp = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
-            elements_2_tmp = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
+            elements_1 = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
+            elements_2 = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
 
             offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
             offspring_2[index_fall_2] = np.array(elements_2[:index_fall_2.size])
@@ -127,19 +127,22 @@ class Crossover:
         copy_ordend_parent_2 = np.concatenate([parent_tmp_2[self.J:],parent_tmp_2[:self.J]])
 
         index_parent_2 = np.array(list(range(self.J, parent_tmp_2.size)) + list(range(self.J)))
-        index_parent_2 = index_parent_2[np.where(index_parent_2 < parent_tmp_1.size)]
+
+        index_parent_1 = np.array(list(range(self.J, parent_tmp_1.size)) + list(range(self.J)))
 
         all = np.concatenate([parent_tmp_1, parent_tmp_2])
         all = self.removed_citys_repeat(all)
 
         x_teste = np.isin(parent_tmp_2, offspring_1, invert=True)
-        
+
 
         j = 0
         for i in index_parent_2:
-            if j == (copy_ordend_parent_2.size - 1):
+            if j >= (copy_ordend_parent_2.size - 1):
                 break
             while copy_ordend_parent_2[j] in offspring_1:
+                if j >= (copy_ordend_parent_2.size - 1):
+                    break
                 j += 1
 
             if i < self.I or i >= self.J:
@@ -148,9 +151,11 @@ class Crossover:
 
         j = 0
         for i in index_parent_1:
-            if j == (copy_ordend_parent_1.size - 1):
+            if j >= (copy_ordend_parent_1.size - 1):
                 break
             while copy_ordend_parent_1[j] in offspring_2:
+                if j >= (copy_ordend_parent_2.size - 1):
+                    break
                 j += 1
 
             if i < self.I or i >= self.J:
@@ -164,89 +169,36 @@ class Crossover:
 
         idx = np.isnan(offspring_1)
         offspring_1[idx] = elements_fault[:np.sum(idx)]
-        print(all)
-        print(self.I, self.J)
+
+
+        elements_fault = np.isin(parent_tmp_1,offspring_2, invert=True)
+        elements_fault = parent_tmp_1[elements_fault]
+        idx = np.isnan(offspring_2)
+        offspring_2[idx] = elements_fault[:np.sum(idx)]
+
+
+
+        offspring_1 = np.concatenate([start, offspring_1, end])
+        offspring_2 = np.concatenate([start, offspring_2, end])
+        #
+        # x =  np.isnan(offspring_1).any()
+        # if x:
+        #     print('aqui')
+        #
+        # x =  np.isnan(offspring_2).any()
+        # if x:
+        #     print('aqui')
+
 
         return offspring_1.astype(int), offspring_2.astype(int)
-
-    def OX2(self, parent_1, parent_2):
-
-        start = np.array([parent_1[0]])
-        end = np.array([parent_1[-1]])
-
-        if parent_1.size > parent_2.size:
-            parent_tmp_1 = np.delete(parent_2, [0, parent_2.size-1])
-            parent_tmp_2 = np.delete(parent_1, [0, parent_1.size-1])
-        else:
-            parent_tmp_1 = np.delete(parent_1, [0, parent_1.size-1])
-            parent_tmp_2 = np.delete(parent_2, [0, parent_2.size-1])
-
-
-
-        self.__point_mutation(parent_tmp_1, parent_tmp_2)
-
-        offspring_1 = np.ones(parent_tmp_2.size).astype(int) * np.nan
-        offspring_2 = np.ones(parent_tmp_1.size).astype(int) * np.nan
-
-        offspring_1[self.I:self.J] = parent_tmp_1[self.I:self.J]
-        offspring_2[self.I:self.J] = parent_tmp_2[self.I:self.J]
-
-        copy_ordend_parent_1 = np.ones(parent_tmp_1.size)
-        copy_ordend_parent_1 = np.concatenate([parent_tmp_1[self.J:],parent_tmp_1[:self.J]])
-        copy_ordend_parent_2 = np.ones(parent_tmp_2.size)
-        copy_ordend_parent_2 = np.concatenate([parent_tmp_2[self.J:],parent_tmp_2[:self.J]])
-
-        index_parent_2 = np.array(list(range(self.J, parent_tmp_2.size)) + list(range(self.J)))
-        index_parent_2 = index_parent_2[np.where(index_parent_2 < parent_tmp_1.size)]
-
-
-        index_parent_1 = np.array(list(range(self.J, parent_tmp_2.size)) + list(range(self.J)))
-        index_parent_1 = index_parent_2[np.where(index_parent_2 < parent_tmp_1.size)]
-
-        all = np.concatenate([parent_tmp_1, parent_tmp_2])
-
-        all = self.removed_citys_repeat(all)
-
-        j = 0
-        for i in index_parent_2:
-            if j == (copy_ordend_parent_2.size - 1):
-                break
-            while copy_ordend_parent_2[j] in offspring_1:
-                j += 1
-
-            if i < self.I or i >= self.J:
-                offspring_1[i] = copy_ordend_parent_2[j]
-                j += 1
-
-        j = 0
-        for i in index_parent_1:
-            if j == (copy_ordend_parent_1.size - 1):
-                break
-            while copy_ordend_parent_1[j] in offspring_2:
-                j += 1
-
-            if i < self.I or i >= self.J:
-                offspring_2[i] = copy_ordend_parent_1[j]
-                j += 1
-
-        elements_fault = np.isin(parent_tmp_2,offspring_1, invert=True)
-        elements_fault = parent_tmp_2[elements_fault]
-        # elements_fault = np.isin(elements_fault,offspring_2, invert=True)
-        # elements_fault = all[elements_fault]
-
-        idx = np.isnan(offspring_1)
-        offspring_1[idx] = elements_fault[:np.sum(idx)]
-        print(all)
-        print(self.I, self.J)
-
-        return offspring_1.astype(int), offspring_2.astype(int)
-
-
-
 
 if __name__ == '__main__':
-    parent_1 = np.random.choice(np.arange(20),12, replace=False)
-    parent_2 = np.random.choice(np.arange(20),10, replace=False)
+    start = np.array([0])
+    end = np.array([30])
+    tmp1 = np.random.choice(np.arange(1,21),20, replace=False)
+    tmp2 = np.random.choice(np.arange(1,21),20, replace=False)
+    parent_1 = np.concatenate([start,tmp1,end])
+    parent_2 = np.concatenate([start,tmp2,end])
 
     corssover = Crossover()
 
