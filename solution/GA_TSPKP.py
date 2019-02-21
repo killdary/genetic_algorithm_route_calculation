@@ -47,7 +47,9 @@ class GA_TSPKP:
         return dist_total
 
     def function_objective(self, cromossome):
-        return self.med_custo(cromossome)
+        coust = self.med_custo(cromossome)
+        prizes = self.prizes.take(cromossome).sum()
+        return (self.prizes_rate * prizes) - (self.coust_rate * coust)
 
     '''funcao para remover valores repetidos da ordem da cidade'''
     @staticmethod
@@ -135,20 +137,23 @@ class GA_TSPKP:
                 self.map_points = value
             elif key == 'max_coust':
                 self.max_coust = value
+            elif key == 'coust_rate':
+                self.coust_rate = value
+            elif key == 'prizes_rate':
+                self.prizes_rate = value
             elif key == 'start_point':
                 self.start_point = value
             elif key == 'end_point':
                 self.end_point = value
             elif key == 'prizes':
-                self.prizes = np.loadtxt(value)
+                prizes = np.loadtxt(value)
+                self.prizes = prizes[:, 1]
             elif key == 'initial_cromossome':
                 self.initial_cromossome = value
+                self.best_route = value
                 self.receive_route = True
 
-
-
-
-        # as variáveis 
+        # as variáveis
         # self.generation_size = genetarion
         # self.population_size = population
         # self.limit_population = limit_population
@@ -160,6 +165,9 @@ class GA_TSPKP:
         # self.end_point = np.array([end_point])
         # self.prizes = np.loadtxt(prizes)
 
+        self.mapa = np.loadtxt(self.map_points)
+        self.distance_matrix_calculate()
+
         if 'initial_cromossome' not in locals():
            self.initial_cromossome = np.arange(self.mapa.shape[0])
            self.receive_route = False
@@ -169,10 +177,7 @@ class GA_TSPKP:
         else:
             self.initial_cromossome = np.delete(self.initial_cromossome, [self.start_point])
 
-        self.mapa = np.loadtxt(self.map_points)
-        self.distance_matrix_calculate()
-
-        self.mutation_object = Mutation()
+        self.mutation_object = Mutation(self.max_coust, self.prizes)
 
         self.mutation = self.mutation_object.scramble
 
@@ -186,7 +191,7 @@ class GA_TSPKP:
 
     def run(self):
 
-        if self.receive_route:
+        if not self.receive_route:
             population = self.Population.initialize(self.initial_cromossome, self.population_size)
             best_elements = population[0:4]
             best_elements_coust = np.array([self.function_objective(element) for element in best_elements])
@@ -216,13 +221,7 @@ class GA_TSPKP:
                     new_population.append(offspring_1)
                     new_population.append(offspring_2)
 
-
                 rand = np.random.uniform(0,1, len(new_population))
-
-                #
-                # for i in range(len(new_population)):
-                #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
-                #         print('error')
 
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
@@ -250,14 +249,7 @@ class GA_TSPKP:
                             min_mut = np.argmin(cousts_mut)
                             new_population[i] = list_mut[min_mut]
 
-
-                #
-                # for i in range(len(new_population)):
-                #     if not np.unique(self.initial_cromossome).size == new_population[i].size - 2:
-                #         print('error')
-
                 new_population = new_population + population
-
 
                 fitness_values = np.zeros(len(new_population))
 
@@ -302,9 +294,24 @@ class GA_TSPKP:
                 if best_count >= self.limit_population:
                     break
 
+            self.best_route = best_elements[0]
+
+        if self.max_coust > 0:
+            new_population = list()
+            for i in range(10):
+                cousts_mut = np.zeros(2)
+                list_mut = list()
+                list_mut.append(self.mutation_object.remove_random(self.best_route, self.function_objective))
+                list_mut.append(self.mutation_object.remove_pior_premio(self.best_route, self.function_objective))
+                cousts_mut[0] = self.function_objective(list_mut[0])
+                cousts_mut[1] = self.function_objective(list_mut[1])
+
+                index_min = np.argmin(cousts_mut)
+                new_population.append(list_mut[index_min])
+
 
         print(best_element_generation)
-        return best_elements_coust, best_elements
+        return best_elements_coust, new_population
 
 
 
@@ -317,15 +324,17 @@ if __name__ == '__main__':
         limit_population = 75,
         crossover_rate = 100,
         mutation_rate = 0.8,
+        coust_rate = 3,
+        prizes_rate = 2,
         map_points = '../novas_cidades.txt',
         prizes = '../novos_premios.txt',
-        max_coust = 0,
+        max_coust = 15,
         start_point = 0,
         end_point = 0,
         individual= 0)
     a , b = ga.run()
 
-    for i in range(4):
+    for i in range(10):
         ga.plota_rotas(ga.mapa, b[i])
         print(a[i])
 
