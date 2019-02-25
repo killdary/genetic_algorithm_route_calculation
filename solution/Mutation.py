@@ -127,6 +127,32 @@ class Mutation:
 
         return individual
 
+    def insert_individualin_cromossome(self, City, chromossome, med_custo):
+
+        citys_fall = np.delete(chromossome, City)
+        chromossome_generate = self.__trata_crhomossomo(City)
+
+        chromossome_generate_tmp = np.copy(chromossome_generate)
+
+        while True:
+            mede_custo_rota = med_custo(self.__corrige_chromossomo(chromossome_generate_tmp))
+            if mede_custo_rota >= self.max_coust:
+                break
+
+            chromossome_generate = np.copy(chromossome_generate_tmp)
+
+            if chromossome_generate.size < 2:
+                city_add = 1
+            else:
+                city_add = np.random.randint(chromossome_generate.size - 1, size=1)
+            city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+
+            chromossome_generate_tmp = np.insert(chromossome_generate, city_add, citys_fall[city_rmv])
+            citys_fall = np.delete(citys_fall, [city_rmv])
+
+        chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+        return chromossome_generate
+
     def remove_pior_custo(self, City, med_custo):
         value_worst = 0
         index_worst = 0

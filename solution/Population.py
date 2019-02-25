@@ -49,6 +49,26 @@ class Population:
 
         return population_init
 
+    def initialize_OP(self, initial, size):
+        new_population = list()
+        for i in range(size):
+            cromossome_default = np.copy(initial)
+            chromossome_generate = np.copy(cromossome_default)
+            np.random.shuffle(chromossome_generate)
+            while True:
+                mede_custo_rota = self.function_mensure_coust(np.concatenate([self.start, chromossome_generate, self.end]))
+                if mede_custo_rota <= self.max_coust:
+                    break
+                if chromossome_generate.size -1 == 0:
+                    chromossome_generate = np.copy(cromossome_default)
+                    np.random.shuffle(chromossome_generate)
+
+                city_rmv = np.random.randint(chromossome_generate.size -1, size=1)
+                chromossome_generate = np.delete(chromossome_generate, [city_rmv])
+
+            new_population.append(np.concatenate([self.start, chromossome_generate, self.end]))
+
+        return new_population
 
 
 if __name__ == '__main__':

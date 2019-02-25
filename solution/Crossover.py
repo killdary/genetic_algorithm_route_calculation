@@ -72,22 +72,21 @@ class Crossover:
                     if parent_2[i] not in offspring_2:
                         offspring_2[i] = parent_2[i]
 
-
             index_fall_1 = np.where(offspring_1 == -1)[0]
             index_fall_2 = np.where(offspring_2 == -1)[0]
             #
-            # elements_1 = list()
-            # for value in range(parent_1.size):
-            #     if parent_1[value] not in offspring_1:
-            #         elements_1.append(parent_1[value])
-            #
-            # elements_2 = list()
-            # for value in range(parent_2.size):
-            #     if parent_2[value] not in offspring_2:
-            #         elements_2.append(parent_2[value])
+            elements_1 = list()
+            for value in range(parent_1.size):
+                if parent_1[value] not in offspring_1:
+                    elements_1.append(parent_1[value])
 
-            elements_1 = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
-            elements_2 = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
+            elements_2 = list()
+            for value in range(parent_2.size):
+                if parent_2[value] not in offspring_2:
+                    elements_2.append(parent_2[value])
+
+            # elements_1 = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
+            # elements_2 = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
 
             offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
             offspring_2[index_fall_2] = np.array(elements_2[:index_fall_2.size])
@@ -162,8 +161,8 @@ class Crossover:
                 offspring_2[i] = copy_ordend_parent_1[j]
                 j += 1
 
-        elements_fault = np.isin(parent_tmp_2,offspring_1, invert=True)
-        elements_fault = parent_tmp_2[elements_fault]
+        elements_fault1 = np.isin(parent_tmp_2,offspring_1, invert=True)
+        elements_fault = parent_tmp_2[elements_fault1]
         # elements_fault = np.isin(elements_fault,offspring_2, invert=True)
         # elements_fault = all[elements_fault]
 
@@ -171,8 +170,8 @@ class Crossover:
         offspring_1[idx] = elements_fault[:np.sum(idx)]
 
 
-        elements_fault = np.isin(parent_tmp_1,offspring_2, invert=True)
-        elements_fault = parent_tmp_1[elements_fault]
+        elements_fault1 = np.isin(parent_tmp_1,offspring_2, invert=True)
+        elements_fault = parent_tmp_1[elements_fault1]
         idx = np.isnan(offspring_2)
         offspring_2[idx] = elements_fault[:np.sum(idx)]
 
