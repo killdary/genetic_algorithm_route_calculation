@@ -47,9 +47,9 @@ class GA_TSPKP:
         return dist_total
 
     def function_objective(self, cromossome):
-        coust = self.med_custo(cromossome)
+        custo = self.med_custo(cromossome)
         prizes = self.prizes.take(cromossome).sum()
-        return (self.prizes_rate * prizes) - (self.coust_rate * coust)
+        return self.coust_rate*custo - self.prizes_rate*prizes
 
     '''funcao para remover valores repetidos da ordem da cidade'''
     @staticmethod
@@ -232,9 +232,9 @@ class GA_TSPKP:
                             list_mut.append(self.mutation_object.reverse(new_population[i]))
                             list_mut.append(self.mutation_object.scramble(new_population[i]))
                             list_mut.append(self.mutation_object.swap(new_population[i]))
-                            list_mut.append(self.mutation_object.WGWRGM(new_population[i], self.function_objective))
-                            list_mut.append(self.mutation_object.WGWWGM(new_population[i], self.function_objective))
-                            list_mut.append(self.mutation_object.WGWNNM(new_population[i], self.function_objective))
+                            list_mut.append(self.mutation_object.WGWRGM(new_population[i], self.med_custo))
+                            list_mut.append(self.mutation_object.WGWWGM(new_population[i], self.med_custo))
+                            list_mut.append(self.mutation_object.WGWNNM(new_population[i], self.med_custo))
 
                             cousts_mut = np.zeros(8)
 
@@ -298,7 +298,7 @@ class GA_TSPKP:
 
         if self.max_coust > 0:
             new_population = list()
-            for i in range(10):
+            for i in range(round(self.population_size/4)):
                 cousts_mut = np.zeros(2)
                 list_mut = list()
                 list_mut.append(self.mutation_object.remove_random(self.best_route, self.function_objective))
@@ -311,7 +311,7 @@ class GA_TSPKP:
 
 
         print(best_element_generation)
-        return best_elements_coust, new_population
+        return best_elements_coust, best_elements
 
 
 
@@ -319,22 +319,22 @@ class GA_TSPKP:
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
-        genetarion = 10,
-        population = 50,
-        limit_population = 75,
+        genetarion = 200,
+        population = 75,
+        limit_population = 100,
         crossover_rate = 100,
         mutation_rate = 0.8,
-        coust_rate = 3,
+        coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades.txt',
-        prizes = '../novos_premios.txt',
-        max_coust = 15,
+        map_points = '../novas_cidades_3.txt',
+        prizes = '../novos_premios_3.txt',
+        max_coust = 35,
         start_point = 0,
         end_point = 0,
         individual= 0)
     a , b = ga.run()
 
-    for i in range(10):
+    for i in range(4):
         ga.plota_rotas(ga.mapa, b[i])
         print(a[i])
 
