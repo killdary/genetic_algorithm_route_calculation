@@ -49,7 +49,7 @@ class GA_TSPKP:
     def function_objective(self, cromossome):
         custo = self.med_custo(cromossome)
         prizes = self.prizes.take(cromossome).sum()
-        return self.coust_rate*custo - self.prizes_rate*prizes
+        return (self.coust_rate * coust) - (self.prizes_rate * prizes)
 
     '''funcao para remover valores repetidos da ordem da cidade'''
     @staticmethod
@@ -301,12 +301,15 @@ class GA_TSPKP:
             for i in range(round(self.population_size/4)):
                 cousts_mut = np.zeros(2)
                 list_mut = list()
-                list_mut.append(self.mutation_object.remove_random(self.best_route, self.function_objective))
-                list_mut.append(self.mutation_object.remove_pior_premio(self.best_route, self.function_objective))
+                s = np.copy(self.best_route)
+                list_mut.append(self.mutation_object.remove_random(s, self.med_custo))
+                list_mut.append(self.mutation_object.remove_pior_premio(s, self.med_custo))
                 cousts_mut[0] = self.function_objective(list_mut[0])
                 cousts_mut[1] = self.function_objective(list_mut[1])
 
                 index_min = np.argmin(cousts_mut)
+                print(cousts_mut[index_min])
+                print(self.prizes.take(list_mut[index_min]).sum())
                 new_population.append(list_mut[index_min])
 
 
@@ -326,9 +329,9 @@ if __name__ == '__main__':
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_3.txt',
-        prizes = '../novos_premios_3.txt',
-        max_coust = 35,
+        map_points = '../novas_cidades_2.txt',
+        prizes = '../novos_premios_2.txt',
+        max_coust = 30,
         start_point = 0,
         end_point = 0,
         individual= 0)
