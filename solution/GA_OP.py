@@ -49,7 +49,7 @@ class GA_TSPKP:
     def function_objective(self, cromossome):
         coust = self.med_custo(cromossome)
         prizes = self.prizes.take(cromossome).sum()
-        return prizes * -1
+        return (prizes * -2 ) + coust
 
     '''funcao para remover valores repetidos da ordem da cidade'''
     @staticmethod
@@ -106,20 +106,6 @@ class GA_TSPKP:
         plt.title('Mapa GA')
         plt.show()
 
-
-
-    # def __init__(self,
-    #             genetarion,
-    #             population,
-    #             limit_population,
-    #             crossover_rate,
-    #             mutation_rate,
-    #             map_points,
-    #             prizes,
-    #             max_coust,
-    #             start_point,
-    #             end_point):
-
     def __init__(self, **kwargs):
 
         for key, value in kwargs.items():
@@ -152,18 +138,6 @@ class GA_TSPKP:
                 self.initial_cromossome = value
                 self.best_route = value
                 self.receive_route = True
-
-        # as variáveis
-        # self.generation_size = genetarion
-        # self.population_size = population
-        # self.limit_population = limit_population
-        # self.crossover_rate = crossover_rate
-        # self.mutation_rate = mutation_rate
-        # self.map_points = map_points
-        # self.max_coust = max_coust
-        # self.start_point = np.array([start_point])
-        # self.end_point = np.array([end_point])
-        # self.prizes = np.loadtxt(prizes)
 
         self.mapa = np.loadtxt(self.map_points)
         self.distance_matrix_calculate()
@@ -208,7 +182,7 @@ class GA_TSPKP:
             best_element_generation = list()
             for g in range(self.generation_size):
 
-                print(g, best_coust, best_count)
+                print(g, best_coust, best_count, self.med_custo(best_always))
 
                 # calculo do custo
                 cousts_population = [self.function_objective(value) for value in population]
@@ -238,7 +212,8 @@ class GA_TSPKP:
                     if coust > self.max_coust:
                         new_population[i] = self.mutation_object.remove_pior_custo(new_population[i], self.med_custo)
                     elif coust < self.max_coust:
-                        new_population[i] = self.mutation_object.insert_individualin_cromossome(new_population[i], self.all_elements, self.med_custo)
+                        if np.unique(new_population[i]).size < self.all_elements.size:
+                            new_population[i] = self.mutation_object.insert_individualin_cromossome(new_population[i], self.all_elements, self.med_custo)
 
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
@@ -325,25 +300,6 @@ class GA_TSPKP:
 
 
 
-        # if self.max_coust > 0:
-        #     new_population = list()
-        #     for i in range(round(self.population_size/4)):
-        #         cousts_mut = np.zeros(2)
-        #         list_mut = list()
-        #         s = np.copy(self.best_route)
-        #         list_mut.append(self.mutation_object.remove_random(s, self.med_custo))
-        #         list_mut.append(self.mutation_object.remove_pior_premio(s, self.med_custo))
-        #         cousts_mut[0] = self.function_objective(list_mut[0])
-        #         cousts_mut[1] = self.function_objective(list_mut[1])
-        #
-        #         index_min = np.argmin(cousts_mut)
-        #         print(cousts_mut[index_min])
-        #         print(self.prizes.take(list_mut[index_min]).sum())
-        #         new_population.append(list_mut[index_min])
-
-
-
-
         print(best_element_generation)
         return best_elements_coust, best_elements
 
@@ -353,16 +309,16 @@ class GA_TSPKP:
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
-        genetarion = 250,
-        population = 100,
+        genetarion = 200,
+        population = 50,
         limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_4.txt',
-        prizes = '../novos_premios_4.txt',
-        max_coust = 15,
+        map_points = '../novas_cidades_3.txt',
+        prizes = '../novos_premios_3.txt',
+        max_coust =73,
         start_point = 0,
         end_point = 0,
         individual= 0)

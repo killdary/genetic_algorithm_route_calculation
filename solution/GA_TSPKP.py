@@ -322,15 +322,15 @@ class GA_TSPKP:
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
-        genetarion = 200,
-        population = 75,
-        limit_population = 100,
+        genetarion = 300,
+        population = 100,
+        limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_2.txt',
-        prizes = '../novos_premios_2.txt',
+        map_points = '../novas_cidades_3.txt',
+        prizes = '../novos_premios_3.txt',
         max_coust = 0,
         start_point = 0,
         end_point = 0,
@@ -340,5 +340,6 @@ if __name__ == '__main__':
     for i in range(4):
         ga.plota_rotas(ga.mapa, b[i])
         print(a[i])
+        print(ga.med_custo(b[i]))
 
     input()

@@ -145,7 +145,12 @@ class Mutation:
                 city_add = 1
             else:
                 city_add = np.random.randint(chromossome_generate.size - 1, size=1)
-            city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+
+            if citys_fall.size > 1:
+                city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+            else:
+                city_rmv = 0
+                break
 
             chromossome_generate_tmp = np.insert(chromossome_generate, city_add, citys_fall[city_rmv])
             citys_fall = np.delete(citys_fall, [city_rmv])
