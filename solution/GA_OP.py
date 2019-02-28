@@ -4,6 +4,7 @@ from Mutation import Mutation
 from Crossover import Crossover
 from Population import Population
 from Selection import Selection
+from FunctionObjective import FunctionObjective
 
 
 class GA_TSPKP:
@@ -34,22 +35,22 @@ class GA_TSPKP:
 
         self.distancias = distancias
 
-    def med_custo(self, flux):
-        dist_total = 0
-        rota = flux.astype(int)
-
-        cidade_atual = -1
-        for cidade in rota:
-            if cidade_atual >= 0:
-                dist_total += self.distancias[cidade_atual, cidade]
-            cidade_atual = cidade
-
-        return dist_total
-
-    def function_objective(self, cromossome):
-        coust = self.med_custo(cromossome)
-        prizes = self.prizes.take(cromossome).sum()
-        return (prizes * -2 ) + coust
+    # def med_custo(self, flux):
+    #     dist_total = 0
+    #     rota = flux.astype(int)
+    #
+    #     cidade_atual = -1
+    #     for cidade in rota:
+    #         if cidade_atual >= 0:
+    #             dist_total += self.distancias[cidade_atual, cidade]
+    #         cidade_atual = cidade
+    #
+    #     return dist_total
+    # #
+    # def function_objective(self, cromossome):
+    #     coust = self.med_custo(cromossome)
+    #     prizes = self.prizes.take(cromossome).sum()
+    #     return ((prizes ** 3)  /coust) * -1
 
     '''funcao para remover valores repetidos da ordem da cidade'''
     @staticmethod
@@ -59,20 +60,6 @@ class GA_TSPKP:
         new_citys = flux.take(citys_position)
 
         return new_citys
-
-    # def correct_individual(self, flux):
-    #     flux_wrong = np.delete(flux, [0, -1])
-    #
-    #     flux_wrong = np.copy(self.removed_citys_repeat(flux_wrong))
-    #
-    #     city_s
-    #
-    #
-    #     while True:
-    #         coust_flux_wrong = self.mede_custo(np.concatenate([self.start_point, flux_wrong, self.end_point]))
-    #
-    #         if coust_flux_wrong > self.max_coust:
-    #             city_remove = np.random.randint(flux_wrong.size, 1)
 
 
     def plota_rotas(self,cidades, rota, size=8, font_size=20):
@@ -142,6 +129,10 @@ class GA_TSPKP:
         self.mapa = np.loadtxt(self.map_points)
         self.distance_matrix_calculate()
 
+        self.FunctionObject = FunctionObjective(self.mapa, self.prizes)
+        self.function_objective = self.FunctionObject.FO
+        self.med_custo = self.FunctionObject.med_custo
+
         # todos os pontos de um mapa
         self.all_elements = np.arange(self.mapa.shape[0])
 
@@ -182,7 +173,7 @@ class GA_TSPKP:
             best_element_generation = list()
             for g in range(self.generation_size):
 
-                print(g, best_coust, best_count, self.med_custo(best_always))
+                print(g, best_coust, best_count)
 
                 # calculo do custo
                 cousts_population = [self.function_objective(value) for value in population]
@@ -211,8 +202,8 @@ class GA_TSPKP:
                     coust = self.med_custo(new_population[i])
                     if coust > self.max_coust:
                         new_population[i] = self.mutation_object.remove_pior_custo(new_population[i], self.med_custo)
-                    elif coust < self.max_coust:
-                        if np.unique(new_population[i]).size < self.all_elements.size:
+                    if coust < self.max_coust:
+                        if np.unique(new_population[i]).size != self.all_elements.size:
                             new_population[i] = self.mutation_object.insert_individualin_cromossome(new_population[i], self.all_elements, self.med_custo)
 
                 for i in range(rand.size):
@@ -241,14 +232,16 @@ class GA_TSPKP:
 
                             min_mut = np.argmin(cousts_mut)
                             new_population[i] = list_mut[min_mut]
-
-
                 new_population = new_population + population
 
                 fitness_values = np.zeros(len(new_population))
+                cousts_values = np.zeros(len(new_population))
+
+
 
                 for i in range(fitness_values.size):
                     fitness_values[i] = self.function_objective(new_population[i])
+                    cousts_values[i] = self.med_custo(new_population[i])
 
                 population_select = np.zeros(self.population_size)
                 population = list()
@@ -275,10 +268,6 @@ class GA_TSPKP:
                     del new_population[min_index]
                     fitness_values = np.delete(fitness_values,[min_index])
 
-
-                # for i in range(self.population_size):
-                #     population[i] = self.mutation_object.insert_individualin_cromossome(population[i], self.all_elements, self.med_custo)
-
                 for i in range(len(population)):
                     if np.unique(population[i]).size < population[i].size - 1:
                         print('error')
@@ -300,6 +289,25 @@ class GA_TSPKP:
 
 
 
+        # if self.max_coust > 0:
+        #     new_population = list()
+        #     for i in range(round(self.population_size/4)):
+        #         cousts_mut = np.zeros(2)
+        #         list_mut = list()
+        #         s = np.copy(self.best_route)
+        #         list_mut.append(self.mutation_object.remove_random(s, self.med_custo))
+        #         list_mut.append(self.mutation_object.remove_pior_premio(s, self.med_custo))
+        #         cousts_mut[0] = self.function_objective(list_mut[0])
+        #         cousts_mut[1] = self.function_objective(list_mut[1])
+        #
+        #         index_min = np.argmin(cousts_mut)
+        #         print(cousts_mut[index_min])
+        #         print(self.prizes.take(list_mut[index_min]).sum())
+        #         new_population.append(list_mut[index_min])
+
+
+
+
         print(best_element_generation)
         return best_elements_coust, best_elements
 
@@ -309,24 +317,24 @@ class GA_TSPKP:
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
-        genetarion = 200,
-        population = 50,
+        genetarion = 250,
+        population = 10,
         limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_3.txt',
-        prizes = '../novos_premios_3.txt',
-        max_coust =73,
+        map_points = '../novas_cidades.txt',
+        prizes = '../novos_premios.txt',
+        max_coust = 18,
         start_point = 0,
         end_point = 0,
         individual= 0)
     a , b = ga.run()
 
     for i in range(4):
-        ga.plota_rotas(ga.mapa, b[i])
+        # ga.plota_rotas(ga.mapa, b[i])
         print(a[i])
         print(ga.med_custo(b[i]))
 
-    input()
+    # input()

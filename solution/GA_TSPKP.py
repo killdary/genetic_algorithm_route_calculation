@@ -323,14 +323,14 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 300,
-        population = 100,
+        population = 10,
         limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_3.txt',
-        prizes = '../novos_premios_3.txt',
+        map_points = '../novas_cidades.txt',
+        prizes = '../novos_premios.txt',
         max_coust = 0,
         start_point = 0,
         end_point = 0,

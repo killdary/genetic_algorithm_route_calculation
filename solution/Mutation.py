@@ -158,6 +158,22 @@ class Mutation:
         chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
         return chromossome_generate
 
+    def insert_individualin_cromossome_2(self, City, chromossome, med_custo, function_aux):
+        citys_fall = np.delete(chromossome, City)
+        chromossome_generate = self.__trata_crhomossomo(City)
+        chromossome_generate_tmp = np.copy(chromossome_generate)
+
+        city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+        element_insert = citys_fall[city_rmv]
+        for i in range(chromossome_generate.size):
+            pass
+
+
+
+        chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+        return chromossome_generate
+
+
     def remove_pior_custo(self, City, med_custo):
         value_worst = 0
         index_worst = 0
