@@ -161,12 +161,30 @@ class Mutation:
     def insert_individualin_cromossome_2(self, City, chromossome, med_custo, function_aux):
         citys_fall = np.delete(chromossome, City)
         chromossome_generate = self.__trata_crhomossomo(City)
-        chromossome_generate_tmp = np.copy(chromossome_generate)
 
-        city_rmv = np.random.randint(citys_fall.size - 1, size=1)
-        element_insert = citys_fall[city_rmv]
-        for i in range(chromossome_generate.size):
-            pass
+        idx_best = 0
+        value_best = 0
+        if citys_fall.size > 0:
+            if citys_fall.size > 1:
+                city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+            else:
+                city_rmv = 0
+            idx_best = -1
+            value_best = -1
+            element_insert = citys_fall[city_rmv]
+
+            for i in range(chromossome_generate.size+1):
+                tmp = np.insert(chromossome_generate, i, element_insert)
+                tmp = self.__corrige_chromossomo(tmp)
+                coust = med_custo(tmp)
+                if coust <= self.max_coust:
+                    value_function = function_aux(chromossome)
+                    if value_function > value_best:
+                        idx_best = i
+                        value_best = value_function
+
+            if idx_best != -1:
+                chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
 
 
 
@@ -186,6 +204,33 @@ class Mutation:
                     value_worst = value
                     index_worst = i
             individual = np.delete(individual,[index_worst])
+            individual = self.__corrige_chromossomo(individual)
+
+        return individual
+
+
+    def remove_pior_custo_2(self, City, med_custo, function_aux):
+
+        individual = np.copy(City)
+
+        coust = med_custo(City)
+        if coust > self.max_coust:
+            individual = self.__trata_crhomossomo(individual)
+
+            idx_worst = -1
+            value_worst = -1
+            for i in range(individual.size):
+                tmp = np.copy(individual)
+                tmp = np.delete(tmp, [i])
+
+                tmp_coust = function_aux(self.__corrige_chromossomo(tmp))
+
+                if value_worst < tmp_coust:
+                    idx_worst = i
+                    value_worst = tmp_coust
+
+
+            individual = np.delete(individual,[idx_worst])
             individual = self.__corrige_chromossomo(individual)
 
         return individual

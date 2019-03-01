@@ -132,6 +132,7 @@ class GA_TSPKP:
         self.FunctionObject = FunctionObjective(self.mapa, self.prizes)
         self.function_objective = self.FunctionObject.FO
         self.med_custo = self.FunctionObject.med_custo
+        self.function_insert_remove = self.FunctionObject.coust_insert
 
         # todos os pontos de um mapa
         self.all_elements = np.arange(self.mapa.shape[0])
@@ -201,10 +202,14 @@ class GA_TSPKP:
                 for i in range(len(new_population)):
                     coust = self.med_custo(new_population[i])
                     if coust > self.max_coust:
-                        new_population[i] = self.mutation_object.remove_pior_custo(new_population[i], self.med_custo)
+                        new_population[i] = self.mutation_object.remove_pior_custo_2(new_population[i],
+                                                                                     self.med_custo,
+                                                                                     self.function_insert_remove)
                     if coust < self.max_coust:
-                        if np.unique(new_population[i]).size != self.all_elements.size:
-                            new_population[i] = self.mutation_object.insert_individualin_cromossome(new_population[i], self.all_elements, self.med_custo)
+                        new_population[i] = self.mutation_object.insert_individualin_cromossome_2(new_population[i],
+                                                                                              self.all_elements,
+                                                                                              self.med_custo,
+                                                                                              self.function_insert_remove)
 
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
@@ -236,8 +241,6 @@ class GA_TSPKP:
 
                 fitness_values = np.zeros(len(new_population))
                 cousts_values = np.zeros(len(new_population))
-
-
 
                 for i in range(fitness_values.size):
                     fitness_values[i] = self.function_objective(new_population[i])
@@ -289,36 +292,14 @@ class GA_TSPKP:
 
 
 
-        # if self.max_coust > 0:
-        #     new_population = list()
-        #     for i in range(round(self.population_size/4)):
-        #         cousts_mut = np.zeros(2)
-        #         list_mut = list()
-        #         s = np.copy(self.best_route)
-        #         list_mut.append(self.mutation_object.remove_random(s, self.med_custo))
-        #         list_mut.append(self.mutation_object.remove_pior_premio(s, self.med_custo))
-        #         cousts_mut[0] = self.function_objective(list_mut[0])
-        #         cousts_mut[1] = self.function_objective(list_mut[1])
-        #
-        #         index_min = np.argmin(cousts_mut)
-        #         print(cousts_mut[index_min])
-        #         print(self.prizes.take(list_mut[index_min]).sum())
-        #         new_population.append(list_mut[index_min])
-
-
-
-
         print(best_element_generation)
         return best_elements_coust, best_elements
-
-
-
 
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 250,
-        population = 10,
+        population = 25,
         limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
@@ -332,9 +313,9 @@ if __name__ == '__main__':
         individual= 0)
     a , b = ga.run()
 
-    for i in range(4):
-        # ga.plota_rotas(ga.mapa, b[i])
-        print(a[i])
+    for i in range(1):
         print(ga.med_custo(b[i]))
+        ga.plota_rotas(ga.mapa, b[i])
+        # print(a[i])
 
     # input()

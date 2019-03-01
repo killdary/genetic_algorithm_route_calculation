@@ -44,7 +44,7 @@ class FunctionObjective:
     def FO(self, chromosome):
         prizes_total = self.prizes.take(chromosome).sum()
         coust_total = self.med_custo(chromosome)
-        return ((prizes_total ** 3)/ coust_total) * -1
+        return ((prizes_total * 3) - coust_total) * -1
 
     def coust_insert(self, chromosome):
         prizes_total = self.prizes.take(chromosome).sum()
