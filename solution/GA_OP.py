@@ -76,7 +76,11 @@ class GA_TSPKP:
         all_x = self.mapa[rota.astype(int), 0]
         all_y = self.mapa[rota.astype(int), 1]
 
-        cid_nome = range(len(all_x))
+        elements = self.mapa[:,0]
+        x = self.mapa[:, 0]
+        y = self.mapa[:,1]
+
+        cid_nome = range(elements.size)
 
         plt.figure(num=None,
                    figsize=(size, size),
@@ -88,7 +92,7 @@ class GA_TSPKP:
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
         for i, txt in enumerate(cid_nome):
-            plt.annotate(txt, (all_x[i], all_y[i]), fontsize=font_size)
+            plt.annotate(txt,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
 
         plt.title('Mapa GA')
         plt.show()
@@ -211,6 +215,8 @@ class GA_TSPKP:
                                                                                               self.med_custo,
                                                                                               self.function_insert_remove)
 
+                    coust = self.med_custo(new_population[i])
+
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
                         if new_population[i].size > 3:
@@ -249,25 +255,28 @@ class GA_TSPKP:
                 population_select = np.zeros(self.population_size)
                 population = list()
                 for i in range(self.population_size):
+                    if len(new_population) == 0:
+                        break
                     min_index = np.argmin(fitness_values)
-                    population_select[i] = min_index
+                    if cousts_values[i] <= self.max_coust :
+                        population_select[i] = min_index
 
-                    exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
+                        exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
 
-                    crhomossome = new_population[min_index]
-                    if len(exist_menor) > 0:
-                        flag_possui = [np.array_equal(element, crhomossome) for element in best_elements]
-                        if True not in flag_possui:
-                            best_tmp = best_elements
-                            best_tmp.append(crhomossome)
+                        crhomossome = new_population[min_index]
+                        if len(exist_menor) > 0:
+                            flag_possui = [np.array_equal(element, crhomossome) for element in best_elements]
+                            if True not in flag_possui:
+                                best_tmp = best_elements
+                                best_tmp.append(crhomossome)
 
-                            new_cousts = np.array([self.function_objective(tmp) for tmp in best_tmp])
-                            indexes_tmp = np.argsort(new_cousts)
+                                new_cousts = np.array([self.function_objective(tmp) for tmp in best_tmp])
+                                indexes_tmp = np.argsort(new_cousts)
 
-                            best_elements_coust = new_cousts[indexes_tmp[0:4]]
-                            best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
+                                best_elements_coust = new_cousts[indexes_tmp[0:4]]
+                                best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
 
-                    population.append(new_population[min_index])
+                        population.append(new_population[min_index])
                     del new_population[min_index]
                     fitness_values = np.delete(fitness_values,[min_index])
 
@@ -298,16 +307,18 @@ class GA_TSPKP:
 
 if __name__ == '__main__':
     ga = GA_TSPKP(
-        genetarion = 250,
-        population = 25,
+        genetarion = 1000,
+        population = 100,
         limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades.txt',
-        prizes = '../novos_premios.txt',
-        max_coust = 18,
+        # map_points = '../novas_cidades.txt',
+        # prizes = '../novos_premios.txt',
+        map_points = '../adilson_cidades.txt',
+        prizes = '../adilson_premios.txt',
+        max_coust = 10,
         start_point = 0,
         end_point = 0,
         individual= 0)

@@ -55,9 +55,11 @@ class Population:
             cromossome_default = np.copy(initial)
             chromossome_generate = np.copy(cromossome_default)
             np.random.shuffle(chromossome_generate)
+
+
             while True:
                 mede_custo_rota = self.function_mensure_coust(np.concatenate([self.start, chromossome_generate, self.end]))
-                if mede_custo_rota <= self.max_coust/2:
+                if mede_custo_rota <= self.max_coust:
                     break
                 if chromossome_generate.size -1 == 0:
                     chromossome_generate = np.copy(cromossome_default)
