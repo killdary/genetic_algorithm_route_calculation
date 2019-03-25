@@ -92,7 +92,7 @@ class GA_TSPKP:
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
         for i, txt in enumerate(cid_nome):
-            plt.annotate(txt,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
+            plt.annotate(txt ,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
 
         plt.title('Mapa GA')
         plt.show()
@@ -318,13 +318,14 @@ if __name__ == '__main__':
         # prizes = '../novos_premios.txt',
         map_points = '../adilson_cidades.txt',
         prizes = '../adilson_premios.txt',
-        max_coust = 10,
+        max_coust = 5.9,
         start_point = 0,
         end_point = 0,
         individual= 0)
     a , b = ga.run()
 
     for i in range(1):
+        print(ga.prizes.take(b[i]).sum())
         print(ga.med_custo(b[i]))
         ga.plota_rotas(ga.mapa, b[i])
         # print(a[i])
