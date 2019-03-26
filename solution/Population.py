@@ -49,7 +49,14 @@ class Population:
 
         return population_init
 
+
     def initialize_OP(self, initial, size):
+        """
+        funcao responsavel por iniciar uma populacao para o orieteering problem
+        :param initial:
+        :param size:
+        :return:
+        """
         new_population = list()
         for i in range(size):
             cromossome_default = np.copy(initial)
@@ -72,13 +79,46 @@ class Population:
 
         return new_population
 
+    '''observar a forma de geracao da população para melhoria dos métodos anteriores'''
+    def initialize_TOP(self, initial, size, number_agents=3):
+        new_population = list()
+        range_agents = range(number_agents)
+        for n in range(size):
+            all_points = np.copy(initial)
+
+            points = np.random.choice(np.arange(all_points.size), number_agents)
+
+            all_points = np.delete(all_points, points)
+
+            chromossome = list()
+            for n_ag in range_agents:
+                chromossome.append(np.array([points[n_ag]]))
+
+            for n_ag in range_agents:
+                while True:
+                    point_add = np.random.choice(np.arange(all_points.size), 1)
+                    tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
+                    coust_route = self.function_mensure_coust(np.concatenate([self.start, tmp_agent, self.end]))
+
+                    if coust_route > self.max_coust:
+                        break
+                    else:
+                        chromossome[n_ag] = np.copy(tmp_agent)
+                        all_points = np.delete(all_points, [point_add])
+
+            new_population.append(chromossome)
+
+        return  new_population
 
 if __name__ == '__main__':
     start = np.array([0])
     end = np.array([15])
     pop = Population(start, end)
     init = np.arange(1,10)
+
     cromossomes = np.concatenate([start, init ,end])
+
+
 
 
     population = pop.initialize(cromossomes,10)

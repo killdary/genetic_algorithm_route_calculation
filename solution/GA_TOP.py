@@ -118,7 +118,7 @@ class GA_TSPKP:
         self.distance_matrix_calculate()
 
         self.FunctionObject = FunctionObjective(self.mapa, self.prizes)
-        self.function_objective = self.FunctionObject.FO
+        self.function_objective = self.FunctionObject.TOP_FO
         self.med_custo = self.FunctionObject.med_custo
         self.function_insert_remove = self.FunctionObject.coust_insert
 
@@ -150,7 +150,7 @@ class GA_TSPKP:
 
         if not self.receive_route:
             # gerando uma população inicial
-            population = self.Population.initialize_OP(self.initial_cromossome, self.population_size)
+            population = self.Population.initialize_TOP(self.initial_cromossome, self.population_size)
 
             # selecionando os 4melhores como os indivíduos iniciais
             best_elements = population[0:4]

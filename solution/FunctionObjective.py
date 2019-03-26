@@ -29,6 +29,11 @@ class FunctionObjective:
 
         self.distancias = distancias
 
+    def med_custo_TOP(self, chromossome):
+        chromossome_dists = [self.med_custo(c) for c in chromossome]
+
+        return chromossome_dists
+
     def med_custo(self, flux):
         dist_total = 0
         rota = flux.astype(int)
@@ -40,6 +45,11 @@ class FunctionObjective:
             cidade_atual = cidade
 
         return dist_total
+
+    def TOP_FO(self, chromossome):
+        couts = [self.FO(c) for c in chromossome]
+
+        return couts
 
     def FO(self, chromosome):
         prizes_total = self.prizes.take(chromosome).sum()
