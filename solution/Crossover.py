@@ -191,6 +191,40 @@ class Crossover:
 
         return offspring_1.astype(int), offspring_2.astype(int)
 
+    def cross_TOP(self, parent_1, parent_2, function_objective):
+        start = parent_1[0][0]
+        end = parent_1[0][-1]
+
+        parent_1_tmp = [ np.delete(value,[0, value.size-1]) for value in parent_1]
+        parent_2_tmp = [ np.delete(value,[0, value.size-1]) for value in parent_2]
+
+        cousts_route_1 = np.array([function_objective(value) for value in parent_1_tmp])
+        cousts_route_2 = np.array([function_objective(value) for value in parent_2_tmp])
+
+        ind_min_coust_1 = np.argmin(cousts_route_1)
+        ind_min_coust_2 = np.argmin(cousts_route_2)
+
+        ind_max_coust_1 = np.argmax(cousts_route_1)
+        ind_max_coust_2 = np.argmax(cousts_route_2)
+
+        offspring_1 = [np.copy(parent_1_tmp[ind_min_coust_1])]
+
+        for n in np.arange(len(parent_2_tmp)):
+            if n!= ind_max_coust_2:
+                contais_1 = np.isin(parent_2_tmp[n], offspring_1[0], invert=True)
+                offspring_1.append(parent_2_tmp[n][contais_1])
+
+
+        offspring_2 = [np.copy(parent_2_tmp[ind_min_coust_2])]
+
+        for n in np.arange(len(parent_1_tmp)):
+            if n!= ind_max_coust_1:
+                contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
+                offspring_2.append(parent_1_tmp[n][contais_2])
+
+        return offspring_1, offspring_2
+
+
 if __name__ == '__main__':
     start = np.array([0])
     end = np.array([30])

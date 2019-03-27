@@ -79,6 +79,16 @@ class GA_TSPKP:
         plt.title('Mapa GA')
         plt.show()
 
+    '''metodo auxilixar para replicar o metodo sempre que possivel'''
+    def reply_method_TOP(self, method, chromossome):
+        size = len(chromossome)
+        result = np.zeros(size)
+        for n in np.arange(size):
+            result[n] = method(chromossome[n])
+
+        return result
+
+
     def __init__(self, **kwargs):
 
         for key, value in kwargs.items():
@@ -118,7 +128,7 @@ class GA_TSPKP:
         self.distance_matrix_calculate()
 
         self.FunctionObject = FunctionObjective(self.mapa, self.prizes)
-        self.function_objective = self.FunctionObject.TOP_FO
+        self.function_objective = self.FunctionObject.FO
         self.med_custo = self.FunctionObject.med_custo
         self.function_insert_remove = self.FunctionObject.coust_insert
 
@@ -139,7 +149,7 @@ class GA_TSPKP:
         self.mutation = self.mutation_object.scramble
 
         self.crossover_class = Crossover()
-        self.crossover = self.crossover_class.PMX
+        self.crossover = self.crossover_class.cross_TOP
 
         self.Population = Population(self.start_point, self.end_point, self.med_custo, self.max_coust)
 
@@ -154,7 +164,9 @@ class GA_TSPKP:
 
             # selecionando os 4melhores como os indivíduos iniciais
             best_elements = population[0:4]
-            best_elements_coust = np.array([self.function_objective(element) for element in best_elements])
+            best_elements_coust = np.array([self.reply_method_TOP(self.function_objective, element)
+                                                                    for element in best_elements])
+            # best_elements_coust = self.reply_method_TOP(self.function_objective, best_elements)
 
             best_count = 0
             best_always = np.copy( best_elements[0])
@@ -165,7 +177,10 @@ class GA_TSPKP:
                 print(g, best_coust, best_count)
 
                 # calculo do custo
-                cousts_population = [self.function_objective(value) for value in population]
+                cousts_population = [self.reply_method_TOP(self.function_objective, value) for value in population]
+                '''ealizando a soma do custo de todos os crhomossomos'''
+                cousts_population = [value.sum() for value in cousts_population]
+
                 cousts_population = np.array(cousts_population)
 
                 # selecionano os pais para cruzamento
@@ -179,7 +194,7 @@ class GA_TSPKP:
                     #
                     select_2_parents = np.random.randint(selected_parents_index.size, size=2)
 
-                    offspring_1,offspring_2 = self.crossover(parents_select[select_2_parents[0]],parents_select[select_2_parents[1]])
+                    offspring_1,offspring_2 = self.crossover(parents_select[select_2_parents[0]],parents_select[select_2_parents[1]], function_objective=self.function_objective)
 
                     new_population.append(offspring_1)
                     new_population.append(offspring_2)

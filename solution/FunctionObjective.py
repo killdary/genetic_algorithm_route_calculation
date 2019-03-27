@@ -47,6 +47,7 @@ class FunctionObjective:
         return dist_total
 
     def TOP_FO(self, chromossome):
+        print(len(chromossome))
         couts = [self.FO(c) for c in chromossome]
 
         return couts
