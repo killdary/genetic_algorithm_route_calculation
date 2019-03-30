@@ -55,8 +55,8 @@ class GA_TSPKP:
         pos_x = cidades[rota.astype(int), 0]
         pos_y = cidades[rota.astype(int), 1]
 
-        all_x = self.mapa[rota.astype(int), 0]
-        all_y = self.mapa[rota.astype(int), 1]
+        # all_x = self.mapa[rota.astype(int), 0]
+        # all_y = self.mapa[rota.astype(int), 1]
 
         elements = self.mapa[:,0]
         x = self.mapa[:, 0]
@@ -85,6 +85,15 @@ class GA_TSPKP:
         result = np.zeros(size)
         for n in np.arange(size):
             result[n] = method(chromossome[n])
+
+        return result
+
+    def reply_method_mutation_TOP(self, method, chromossome):
+        size = len(chromossome)
+        result = [0] * 3
+        for n in np.arange(size):
+            if chromossome[n].size > 3:
+                result[n] = method(chromossome[n])
 
         return result
 
@@ -144,7 +153,7 @@ class GA_TSPKP:
         else:
             self.initial_cromossome = np.delete(self.initial_cromossome, [self.start_point])
 
-        self.mutation_object = Mutation(self.max_coust, self.prizes)
+        self.mutation_object = Mutation( self.med_custo, self.max_coust, self.prizes)
 
         self.mutation = self.mutation_object.scramble
 
@@ -203,45 +212,38 @@ class GA_TSPKP:
                 rand = np.random.uniform(0,1, len(new_population))
 
                 for i in range(len(new_population)):
-                    coust = self.med_custo(new_population[i])
-                    if coust > self.max_coust:
-                        new_population[i] = self.mutation_object.remove_pior_custo_2(new_population[i],
-                                                                                     self.med_custo,
-                                                                                     self.function_insert_remove)
-                    if coust < self.max_coust:
-                        new_population[i] = self.mutation_object.insert_individualin_cromossome_2(new_population[i],
-                                                                                              self.all_elements,
-                                                                                              self.med_custo,
-                                                                                              self.function_insert_remove)
+                    new_population[i] = self.mutation_object.insert_remove_points_TOP(self.med_custo,
+                                                                                       self.function_insert_remove,
+                                                                                       self.all_elements,
+                                                                                       new_population[i])
 
-                    coust = self.med_custo(new_population[i])
 
+                # aqui não foi atualizado####################
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
-                        if new_population[i].size > 3:
-                            list_mut = list()
-                            list_mut.append(self.mutation_object.swap(new_population[i]))
-                            list_mut.append(self.mutation_object.insertion(new_population[i]))
-                            list_mut.append(self.mutation_object.reverse(new_population[i]))
-                            list_mut.append(self.mutation_object.scramble(new_population[i]))
-                            list_mut.append(self.mutation_object.swap(new_population[i]))
-                            list_mut.append(self.mutation_object.WGWRGM(new_population[i], self.med_custo))
-                            list_mut.append(self.mutation_object.WGWWGM(new_population[i], self.med_custo))
-                            list_mut.append(self.mutation_object.WGWNNM(new_population[i], self.med_custo))
+                        list_mut = list()
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.insertion,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.reverse,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.scramble,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWRGM,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWWGM,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWNNM,new_population[i]))
 
-                            cousts_mut = np.zeros(len(list_mut))
+                        cousts_mut = np.zeros(len(list_mut))
 
-                            cousts_mut[0] = self.med_custo(list_mut[0])
-                            cousts_mut[1] = self.med_custo(list_mut[1])
-                            cousts_mut[2] = self.med_custo(list_mut[2])
-                            cousts_mut[3] = self.med_custo(list_mut[3])
-                            cousts_mut[4] = self.med_custo(list_mut[4])
-                            cousts_mut[5] = self.med_custo(list_mut[5])
-                            cousts_mut[6] = self.med_custo(list_mut[6])
-                            cousts_mut[7] = self.med_custo(list_mut[7])
+                        cousts_mut[0] = self.med_custo(list_mut[0])
+                        cousts_mut[1] = self.med_custo(list_mut[1])
+                        cousts_mut[2] = self.med_custo(list_mut[2])
+                        cousts_mut[3] = self.med_custo(list_mut[3])
+                        cousts_mut[4] = self.med_custo(list_mut[4])
+                        cousts_mut[5] = self.med_custo(list_mut[5])
+                        cousts_mut[6] = self.med_custo(list_mut[6])
+                        cousts_mut[7] = self.med_custo(list_mut[7])
 
-                            min_mut = np.argmin(cousts_mut)
-                            new_population[i] = list_mut[min_mut]
+                        min_mut = np.argmin(cousts_mut)
+                        new_population[i] = list_mut[min_mut]
                 new_population = new_population + population
 
                 fitness_values = np.zeros(len(new_population))
@@ -317,7 +319,7 @@ if __name__ == '__main__':
         prizes = '../novos_premios_3.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        max_coust = 20,
+        max_coust = 40,
         start_point = 0,
         end_point = 0,
         individual= 0)

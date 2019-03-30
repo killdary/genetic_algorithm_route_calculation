@@ -86,9 +86,9 @@ class Population:
         for n in range(size):
             all_points = np.copy(initial)
 
-            points = np.random.choice(np.arange(all_points.size), number_agents)
+            points = np.random.choice(all_points, number_agents)
 
-            all_points = np.delete(all_points, points)
+            all_points = np.setdiff1d(all_points, points)
 
             chromossome = list()
             for n_ag in range_agents:
@@ -103,8 +103,10 @@ class Population:
                     if coust_route > self.max_coust:
                         break
                     else:
-                        chromossome[n_ag] = np.copy(tmp_agent)
-                        all_points = np.delete(all_points, [point_add])
+                        chromossome[n_ag] = tmp_agent
+                        all_points = np.setdiff1d(all_points, tmp_agent)
+
+                chromossome[n_ag] = np.concatenate([self.start, chromossome[n_ag], self.end])
 
             new_population.append(chromossome)
 
