@@ -201,18 +201,19 @@ class Mutation:
         return chromossome_generate
 
 
-    def insert_individualin_cromossome_TOP(self, City, all_elements_chromossome, chromossome, med_custo, function_aux):
+    def insert_individualin_cromossome_TOP(self, chromossome, all_elements_chromossome, elements_chromossome, med_custo, function_aux):
         """
 
-        :param City: all points oh the map
+        :param chromossome: all points oh the map
         :param all_elements_chromossome: elements of the team of routes
-        :param chromossome: route
+        :param elements_chromossome: route
         :param med_custo: function with mensure of the couste
         :param function_aux: function with mensure the coust of the route, not only coust but prize too
         :return:
         """
-        citys_fall = np.setdiff1d(all_elements_chromossome, City)
-        chromossome_generate = self.__trata_crhomossomo(City)
+        citys_fall = np.setdiff1d(all_elements_chromossome, elements_chromossome)
+        citys_fall = np.setdiff1d(citys_fall, chromossome)
+        chromossome_generate = self.__trata_crhomossomo(chromossome)
 
         idx_best = 0
         value_best = 0
@@ -230,18 +231,19 @@ class Mutation:
                 tmp = self.__corrige_chromossomo(tmp)
                 coust = med_custo(tmp)
                 if coust <= self.max_coust:
-                    value_function = function_aux(chromossome)
+                    value_function = function_aux(tmp)
                     if value_function > value_best:
                         idx_best = i
                         value_best = value_function
 
             if idx_best != -1:
                 chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
+                elements_chromossome = np.concatenate([elements_chromossome, element_insert])
 
 
 
         chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
-        return chromossome_generate
+        return chromossome_generate, elements_chromossome
 
 
 
@@ -356,11 +358,20 @@ class Mutation:
                                                              med_custo,
                                                              function_insert_remove)
             if coust < self.max_coust:
-                chromossome[i] = self.insert_individualin_cromossome_TOP(chromossome[i],
+                chromossome[i], elements_chromossome = self.insert_individualin_cromossome_TOP(chromossome[i],
                                                                          all_elements,
                                                                          elements_chromossome,
                                                                          med_custo,
                                                                          function_insert_remove)
+
+        x = chromossome
+        if True in np.isin(x[0][1:-1], x[1][1:-1]):
+            print('error')
+        if True in np.isin(x[0][1:-1], x[2][1:-1]):
+            print('error')
+        if True in np.isin(x[1][1:-1], x[2][1:-1]):
+            print('error')
+
         return chromossome
 
     def SWGLM(self, City, med_custo):

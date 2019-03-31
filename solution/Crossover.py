@@ -212,19 +212,45 @@ class Crossover:
 
         for n in np.arange(len(parent_2_tmp)):
             if n!= ind_max_coust_2:
-                contais_1 = np.isin(parent_2_tmp[n], offspring_1[0], invert=True)
-                offspring_1.append(parent_2_tmp[n][contais_1])
+                tmp = parent_2_tmp[n]
+                for x in offspring_1:
+                    c = np.isin(tmp, x, invert=True)
+                    tmp = tmp[c]
+
+                # contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
+                offspring_1.append(tmp)
 
         offspring_1 = [np.concatenate([start, val, end]) for val in offspring_1]
+
+
+        if True in np.isin(offspring_1[0][1:-2], offspring_1[1][1:-2]):
+            print('error')
+        if True in np.isin(offspring_1[0][1:-2], offspring_1[2][1:-2]):
+            print('error')
+        if True in np.isin(offspring_1[2][1:-2], offspring_1[1][1:-2]):
+            print('error')
+
 
         offspring_2 = [np.copy(parent_2_tmp[ind_min_coust_2])]
 
         for n in np.arange(len(parent_1_tmp)):
             if n!= ind_max_coust_1:
-                contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
-                offspring_2.append(parent_1_tmp[n][contais_2])
+                tmp = parent_1_tmp[n]
+                for x in offspring_2:
+                    c = np.isin(tmp, x, invert=True)
+                    tmp = tmp[c]
+
+                # contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
+                offspring_2.append(tmp)
 
         offspring_2 = [np.concatenate([start, val, end]) for val in offspring_2]
+
+        if True in np.isin(offspring_2[0][1:-2], offspring_2[1][1:-2]):
+            print('error')
+        if True in np.isin(offspring_2[0][1:-2], offspring_2[2][1:-2]):
+            print('error')
+        if True in np.isin(offspring_2[2][1:-2], offspring_2[1][1:-2]):
+            print('error')
 
         return offspring_1, offspring_2
 
