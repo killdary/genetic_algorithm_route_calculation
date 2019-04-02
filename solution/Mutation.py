@@ -364,13 +364,6 @@ class Mutation:
                                                                          med_custo,
                                                                          function_insert_remove)
 
-        x = chromossome
-        if True in np.isin(x[0][1:-1], x[1][1:-1]):
-            print('error')
-        if True in np.isin(x[0][1:-1], x[2][1:-1]):
-            print('error')
-        if True in np.isin(x[1][1:-1], x[2][1:-1]):
-            print('error')
 
         return chromossome
 

@@ -85,11 +85,16 @@ class Crossover:
                 if parent_2[value] not in offspring_2:
                     elements_2.append(parent_2[value])
 
+            elements_tmp = np.setdiff1d(parent_1, offspring_1)
+            elements_tmp2 = np.setdiff1d(parent_2, offspring_2)
+            test = np.setdiff1d(np.concatenate([elements_tmp, elements_tmp2]), offspring_1)
+            test2 = np.setdiff1d(test, offspring_2)
+
             # elements_1 = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
             # elements_2 = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
 
             offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
-            offspring_2[index_fall_2] = np.array(elements_2[:index_fall_2.size])
+            offspring_2[index_fall_2] = np.array(test2[:index_fall_2.size])
 
         else:
             offspring_1 = parent_1
@@ -208,49 +213,65 @@ class Crossover:
         ind_max_coust_1 = np.argmax(cousts_route_1)
         ind_max_coust_2 = np.argmax(cousts_route_2)
 
-        offspring_1 = [np.copy(parent_1_tmp[ind_min_coust_1])]
+        offspring_1 = [val for val in parent_1_tmp]
 
-        for n in np.arange(len(parent_2_tmp)):
-            if n!= ind_max_coust_2:
-                tmp = parent_2_tmp[n]
-                for x in offspring_1:
-                    c = np.isin(tmp, x, invert=True)
-                    tmp = tmp[c]
+        tmp = parent_2_tmp[ind_min_coust_2]
+        for x in offspring_1:
+            c = np.isin(tmp, x, invert=True)
+            tmp = tmp[c]
 
-                # contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
-                offspring_1.append(tmp)
+        offspring_1.append(tmp)
 
         offspring_1 = [np.concatenate([start, val, end]) for val in offspring_1]
+        cousts_route_1 = np.array([function_objective(value) for value in offspring_1])
 
+        indexes_tmp = np.argsort(cousts_route_1)
+        size = len(parent_1)
+        offspring_1 = [ offspring_1[val] for val in indexes_tmp[:size]]
 
-        if True in np.isin(offspring_1[0][1:-2], offspring_1[1][1:-2]):
-            print('error')
-        if True in np.isin(offspring_1[0][1:-2], offspring_1[2][1:-2]):
-            print('error')
-        if True in np.isin(offspring_1[2][1:-2], offspring_1[1][1:-2]):
-            print('error')
+        # offspring_1 = [np.copy(parent_1_tmp[ind_min_coust_1])]
+        #
+        # for n in np.arange(len(parent_2_tmp)):
+        #     if n!= ind_max_coust_2:
+        #         tmp = parent_2_tmp[n]
+        #         for x in offspring_1:
+        #             c = np.isin(tmp, x, invert=True)
+        #             tmp = tmp[c]
+        #
+        #         # contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
+        #         offspring_1.append(tmp)
+        #
+        # offspring_1 = [np.concatenate([start, val, end]) for val in offspring_1]
 
+        offspring_2 = [val for val in parent_2_tmp]
 
-        offspring_2 = [np.copy(parent_2_tmp[ind_min_coust_2])]
+        tmp = parent_1_tmp[ind_min_coust_1]
+        for x in offspring_2:
+            c = np.isin(tmp, x, invert=True)
+            tmp = tmp[c]
 
-        for n in np.arange(len(parent_1_tmp)):
-            if n!= ind_max_coust_1:
-                tmp = parent_1_tmp[n]
-                for x in offspring_2:
-                    c = np.isin(tmp, x, invert=True)
-                    tmp = tmp[c]
-
-                # contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
-                offspring_2.append(tmp)
+        offspring_2.append(tmp)
 
         offspring_2 = [np.concatenate([start, val, end]) for val in offspring_2]
+        cousts_route_2 = np.array([function_objective(value) for value in offspring_2])
 
-        if True in np.isin(offspring_2[0][1:-2], offspring_2[1][1:-2]):
-            print('error')
-        if True in np.isin(offspring_2[0][1:-2], offspring_2[2][1:-2]):
-            print('error')
-        if True in np.isin(offspring_2[2][1:-2], offspring_2[1][1:-2]):
-            print('error')
+        indexes_tmp = np.argsort(cousts_route_2)
+
+        offspring_2 = [ offspring_2[val] for val in indexes_tmp[:size]]
+
+        # offspring_2 = [np.copy(parent_2_tmp[ind_min_coust_2])]
+        #
+        # for n in np.arange(len(parent_1_tmp)):
+        #     if n!= ind_max_coust_1:
+        #         tmp = parent_1_tmp[n]
+        #         for x in offspring_2:
+        #             c = np.isin(tmp, x, invert=True)
+        #             tmp = tmp[c]
+        #
+        #         # contais_2 = np.isin(parent_1_tmp[n], offspring_2[0], invert=True)
+        #         offspring_2.append(tmp)
+        #
+        # offspring_2 = [np.concatenate([start, val, end]) for val in offspring_2]
 
         return offspring_1, offspring_2
 

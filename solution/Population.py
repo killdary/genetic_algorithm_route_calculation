@@ -110,15 +110,6 @@ class Population:
 
             new_population.append(chromossome)
 
-
-            i =chromossome
-            if True in np.isin(i[0][1:-2], i[1][1:-2]):
-                print('error')
-            if True in np.isin(i[0][1:-2], i[2][1:-2]):
-                print('error')
-            if True in np.isin(i[2][1:-2], i[1][1:-2]):
-                print('error')
-
         return new_population
 
 if __name__ == '__main__':

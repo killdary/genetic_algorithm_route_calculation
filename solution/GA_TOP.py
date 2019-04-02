@@ -126,14 +126,38 @@ class GA_TSPKP:
 
     def reply_method_mutation_TOP(self, method, chromossome):
         size = len(chromossome)
-        result = [0] * 3
+        result = [0] * size
         for n in np.arange(size):
             if chromossome[n].size > 3:
                 result[n] = method(chromossome[n])
             else:
                 result[n] = chromossome[n]
 
-        return result
+        return chromossome
+
+    def reply_crossover_inner_agents(self, method, chromossome):
+        size = len(chromossome)
+        number_cross = int(size/2)
+        ids = np.random.choice(size,size, replace=False)
+        new_chromossome = list()
+        for i in range(0,size-1, 2):
+            x,y = method(chromossome[ids[i]], chromossome[ids[i+1]])
+            new_chromossome.append(x)
+            new_chromossome.append(y)
+
+        new_chromossome.append(chromossome[ids[-1]])
+
+
+        if True in np.isin(new_chromossome[0][1:-2], new_chromossome[1][1:-2]):
+            print('error')
+        if True in np.isin(new_chromossome[0][1:-2], new_chromossome[2][1:-2]):
+            print('error')
+        if True in np.isin(new_chromossome[2][1:-2], new_chromossome[1][1:-2]):
+            print('error')
+
+
+        return  new_chromossome
+
 
 
     def __init__(self, **kwargs):
@@ -207,15 +231,7 @@ class GA_TSPKP:
 
         if not self.receive_route:
             # gerando uma população inicial
-            population = self.Population.initialize_TOP(self.initial_cromossome, self.population_size)
-
-            for i in population:
-                if True in np.isin(i[0][1:-1], i[1][1:-1]):
-                    print('error')
-                if True in np.isin(i[0][1:-1], i[2][1:-1]):
-                    print('error')
-                if True in np.isin(i[1][1:-1], i[2][1:-1]):
-                    print('error')
+            population = self.Population.initialize_TOP(self.initial_cromossome, self.population_size, self.number_agents)
 
             # selecionando os 4melhores como os indivíduos iniciais
             best_elements = population[0:4]
@@ -230,16 +246,6 @@ class GA_TSPKP:
             for g in range(self.generation_size):
 
                 print(g, best_coust, best_count)
-                x = np.isin(best_always[0][1:-1], best_always[1][1:-1])
-                y = np.isin(best_always[0][1:-1], best_always[2][1:-1])
-                z = np.isin(best_always[1][1:-1], best_always[2][1:-1])
-
-                if True in np.isin(best_always[0][1:-1], best_always[1][1:-1]):
-                    print('error')
-                if True in np.isin(best_always[0][1:-1], best_always[2][1:-1]):
-                    print('error')
-                if True in np.isin(best_always[1][1:-1], best_always[2][1:-1]):
-                    print('error')
 
                 # calculo do custo
                 cousts_population = [self.reply_method_TOP(self.function_objective, value) for value in population]
@@ -264,13 +270,9 @@ class GA_TSPKP:
                     new_population.append(offspring_1)
                     new_population.append(offspring_2)
 
-                for i in new_population:
-                    if True in np.isin(i[0][1:-1], i[1][1:-1]):
-                        print('error')
-                    if True in np.isin(i[0][1:-1], i[2][1:-1]):
-                        print('error')
-                    if True in np.isin(i[1][1:-1], i[2][1:-1]):
-                        print('error')
+                # for i in range(len(new_population)):
+                #     new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
+
 
                 # gerando lista de probabilidades para os novos indivíduos sofrerem mutações
                 rand = np.random.uniform(0,1, len(new_population))
@@ -282,13 +284,6 @@ class GA_TSPKP:
                                                                                        self.all_elements,
                                                                                        new_population[i])
 
-                for i in new_population:
-                    if True in np.isin(i[0][1:-1], i[1][1:-1]):
-                        print('error')
-                    if True in np.isin(i[0][1:-1], i[2][1:-1]):
-                        print('error')
-                    if True in np.isin(i[1][1:-1], i[2][1:-1]):
-                        print('error')
 
 
                 # aqui não foi atualizado####################
@@ -345,7 +340,7 @@ class GA_TSPKP:
                                 best_tmp = best_elements
                                 best_tmp.append(crhomossome)
 
-                                new_cousts = np.array([self.reply_method_TOP(self.function_objective,tmp).sum() for tmp in best_tmp])
+                                new_cousts = np.array([self.reply_method_TOP(self.function_objective, tmp).sum() for tmp in best_tmp])
                                 indexes_tmp = np.argsort(new_cousts)
 
                                 best_elements_coust = new_cousts[indexes_tmp[0:4]]
@@ -384,19 +379,19 @@ if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
         population = 100,
-        limit_population = 100,
+        limit_population = 30,
         crossover_rate = 100,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_3.txt',
-        prizes = '../novos_premios_3.txt',
+        map_points = '../novas_cidades_4.txt',
+        prizes = '../novos_premios_4.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents = 3,
-        max_coust = 15,
-        start_point = 14,
-        end_point = 14,
+        number_agents = 1,
+        max_coust = 30,
+        start_point = 21,
+        end_point = 21,
         individual= 0)
     a , b = ga.run()
 
@@ -410,12 +405,7 @@ if __name__ == '__main__':
         y = np.isin(b[0][1:-2], b[2][1:-2])
         z = np.isin(b[2][1:-2], b[1][1:-2])
 
-        if True in np.isin(b[0][1:-2], b[1][1:-2]):
-            print('error')
-        if True in np.isin(b[0][1:-2], b[2][1:-2]):
-            print('error')
-        if True in np.isin(b[2][1:-2], b[1][1:-2]):
-            print('error')
+        print(b[i])
         print('premios')
         for j in range(len(b[i])):
             print(ga.prizes.take(b[i][j]).sum())
