@@ -148,12 +148,6 @@ class GA_TSPKP:
         new_chromossome.append(chromossome[ids[-1]])
 
 
-        if True in np.isin(new_chromossome[0][1:-2], new_chromossome[1][1:-2]):
-            print('error')
-        if True in np.isin(new_chromossome[0][1:-2], new_chromossome[2][1:-2]):
-            print('error')
-        if True in np.isin(new_chromossome[2][1:-2], new_chromossome[1][1:-2]):
-            print('error')
 
 
         return  new_chromossome
@@ -246,7 +240,7 @@ class GA_TSPKP:
             for g in range(self.generation_size):
 
                 print(g, best_coust, best_count)
-
+                population += self.Population.initialize_TOP(self.initial_cromossome, self.population_size-len(population), self.number_agents)
                 # calculo do custo
                 cousts_population = [self.reply_method_TOP(self.function_objective, value) for value in population]
                 '''ealizando a soma do custo de todos os crhomossomos'''
@@ -270,6 +264,7 @@ class GA_TSPKP:
                     new_population.append(offspring_1)
                     new_population.append(offspring_2)
 
+
                 # for i in range(len(new_population)):
                 #     new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
 
@@ -284,6 +279,15 @@ class GA_TSPKP:
                                                                                        self.all_elements,
                                                                                        new_population[i])
 
+
+                fitness_values = np.zeros(len(new_population))
+                cousts_values = np.zeros(len(new_population))
+
+                for i in range(fitness_values.size):
+                    fitness_values[i] = self.reply_method_TOP(self.function_objective,new_population[i]).sum()
+                    cousts_values[i] =  self.reply_method_TOP(self.med_custo,new_population[i]).sum()
+
+                test = fitness_values[np.argmin(fitness_values)]
 
 
                 # aqui não foi atualizado####################
@@ -322,14 +326,13 @@ class GA_TSPKP:
                     fitness_values[i] = self.reply_method_TOP(self.function_objective,new_population[i]).sum()
                     cousts_values[i] =  self.reply_method_TOP(self.med_custo,new_population[i]).sum()
 
-                population_select = np.zeros(self.population_size)
+                population_select = list()
                 population = list()
                 for i in range(self.population_size):
                     if len(new_population) == 0:
                         break
                     min_index = np.argmin(fitness_values)
                     if cousts_values[i] <= self.max_coust*self.number_agents:
-                        population_select[i] = min_index
 
                         exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
 
@@ -345,8 +348,10 @@ class GA_TSPKP:
 
                                 best_elements_coust = new_cousts[indexes_tmp[0:4]]
                                 best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
-
-                        population.append(new_population[min_index])
+                        else:
+                            if fitness_values[min_index] not in population_select:
+                                population.append(new_population[min_index])
+                                population_select.append(fitness_values[min_index])
                     del new_population[min_index]
                     fitness_values = np.delete(fitness_values,[min_index])
 
@@ -378,20 +383,20 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-        population = 100,
-        limit_population = 30,
-        crossover_rate = 100,
+        population = 50,
+        limit_population = 15,
+        crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_4.txt',
-        prizes = '../novos_premios_4.txt',
+        map_points = '../rota_team_17.txt',
+        prizes = '../rota_team_17_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents = 1,
-        max_coust = 30,
-        start_point = 21,
-        end_point = 21,
+        number_agents=2,
+        max_coust=9,
+        start_point = 0,
+        end_point = 0,
         individual= 0)
     a , b = ga.run()
 
@@ -399,6 +404,9 @@ if __name__ == '__main__':
         print('custo')
         for j in range(len(b[i])):
             print(ga.med_custo(b[i][j]))
+        print('premios')
+        for j in range(len(b[i])):
+            print(ga.prizes.take(b[i][j]).sum())
         ga.plota_rotas_TOP(ga.mapa, b[i])
 
         x = np.isin(b[0][1:-2], b[1][1:-2])
@@ -406,9 +414,6 @@ if __name__ == '__main__':
         z = np.isin(b[2][1:-2], b[1][1:-2])
 
         print(b[i])
-        print('premios')
-        for j in range(len(b[i])):
-            print(ga.prizes.take(b[i][j]).sum())
         # print(a[i])
 
     input()

@@ -1,4 +1,6 @@
 import numpy as np
+from sympy import elliptic_e
+
 
 class Mutation:
 
@@ -238,7 +240,8 @@ class Mutation:
 
             if idx_best != -1:
                 chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
-                elements_chromossome = np.concatenate([elements_chromossome, element_insert])
+                elements_chromossome = np.insert(elements_chromossome,0, element_insert)
+                # elements_chromossome = np.concatenate([elements_chromossome, element_insert])
 
 
 
