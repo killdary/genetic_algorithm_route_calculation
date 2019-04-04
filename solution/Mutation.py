@@ -1,5 +1,4 @@
 import numpy as np
-from sympy import elliptic_e
 
 
 class Mutation:

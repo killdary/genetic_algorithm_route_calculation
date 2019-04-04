@@ -384,7 +384,7 @@ if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
         population = 50,
-        limit_population = 15,
+        limit_population = 30,
         crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
@@ -393,8 +393,8 @@ if __name__ == '__main__':
         prizes = '../rota_team_17_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents=2,
-        max_coust=9,
+        number_agents=3,
+        max_coust=10,
         start_point = 0,
         end_point = 0,
         individual= 0)
