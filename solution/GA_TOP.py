@@ -265,8 +265,8 @@ class GA_TSPKP:
                     new_population.append(offspring_2)
 
 
-                # for i in range(len(new_population)):
-                #     new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
+                #for i in range(len(new_population)):
+                #    new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
 
 
                 # gerando lista de probabilidades para os novos indivíduos sofrerem mutações
@@ -294,11 +294,11 @@ class GA_TSPKP:
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
                         list_mut = list()
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.insertion,new_population[i]))
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.reverse,new_population[i]))
+#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
+#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.insertion,new_population[i]))
+#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.reverse,new_population[i]))
                         list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.scramble,new_population[i]))
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
+#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
                         list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWRGM,new_population[i]))
                         list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWWGM,new_population[i]))
                         list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWNNM,new_population[i]))
@@ -309,10 +309,10 @@ class GA_TSPKP:
                         cousts_mut[1] = sum(self.reply_method_TOP(self.med_custo,list_mut[1]))
                         cousts_mut[2] = sum(self.reply_method_TOP(self.med_custo,list_mut[2]))
                         cousts_mut[3] = sum(self.reply_method_TOP(self.med_custo,list_mut[3]))
-                        cousts_mut[4] = sum(self.reply_method_TOP(self.med_custo,list_mut[4]))
-                        cousts_mut[5] = sum(self.reply_method_TOP(self.med_custo,list_mut[5]))
-                        cousts_mut[6] = sum(self.reply_method_TOP(self.med_custo,list_mut[6]))
-                        cousts_mut[7] = sum(self.reply_method_TOP(self.med_custo,list_mut[7]))
+#                        cousts_mut[4] = sum(self.reply_method_TOP(self.med_custo,list_mut[4]))
+#                        cousts_mut[5] = sum(self.reply_method_TOP(self.med_custo,list_mut[5]))
+#                        cousts_mut[6] = sum(self.reply_method_TOP(self.med_custo,list_mut[6]))
+#                        cousts_mut[7] = sum(self.reply_method_TOP(self.med_custo,list_mut[7]))
 
                         min_mut = np.argmin(cousts_mut)
                         new_population[i] = list_mut[min_mut]
@@ -383,18 +383,18 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-        population = 50,
-        limit_population = 15,
+        population = 300,
+        limit_population = 30,
         crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../rota_team_17.txt',
-        prizes = '../rota_team_17_p.txt',
+        map_points = '../rota_team_57.txt',
+        prizes = '../rota_team_57_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents=2,
-        max_coust=9,
+        number_agents=4,
+        max_coust=23,
         start_point = 0,
         end_point = 0,
         individual= 0)
@@ -415,5 +415,3 @@ if __name__ == '__main__':
 
         print(b[i])
         # print(a[i])
-
-    input()
