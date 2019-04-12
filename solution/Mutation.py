@@ -202,7 +202,13 @@ class Mutation:
         return chromossome_generate
 
 
-    def insert_individualin_cromossome_TOP(self, chromossome, all_elements_chromossome, elements_chromossome, med_custo, function_aux):
+    def insert_individualin_cromossome_TOP(self, 
+                                           chromossome, 
+                                           all_elements_chromossome, 
+                                           elements_chromossome, 
+                                           med_custo, 
+                                           function_aux,
+                                           max_coust):
         """
 
         :param chromossome: all points oh the map
@@ -231,7 +237,7 @@ class Mutation:
                 tmp = np.insert(chromossome_generate, i, element_insert)
                 tmp = self.__corrige_chromossomo(tmp)
                 coust = med_custo(tmp)
-                if coust <= self.max_coust:
+                if coust <= max_coust:
                     value_function = function_aux(tmp)
                     if value_function > value_best:
                         idx_best = i
@@ -266,12 +272,12 @@ class Mutation:
         return individual
 
 
-    def remove_pior_custo_2(self, City, med_custo, function_aux):
+    def remove_pior_custo_2(self, City, med_custo, function_aux, max_coust):
 
         individual = np.copy(City)
 
         coust = med_custo(City)
-        if coust > self.max_coust:
+        if coust > max_coust:
             individual = self.__trata_crhomossomo(individual)
 
             idx_worst = -1
@@ -345,7 +351,11 @@ class Mutation:
 
         return individual
 
-    def insert_remove_points_TOP(self, med_custo, function_insert_remove, all_elements, chromossome):
+    def insert_remove_points_TOP(self, 
+                                 med_custo, 
+                                 function_insert_remove, 
+                                 all_elements, 
+                                 chromossome):
         elements_chromossome = np.array([])
 
         for i in chromossome:
@@ -355,16 +365,21 @@ class Mutation:
         for i in range(len(chromossome)):
             coust = med_custo(chromossome[i])
 
-            if coust > self.max_coust:
+            if coust > self.max_coust[i]:
                 chromossome[i] = self.remove_pior_custo_2(chromossome[i],
                                                              med_custo,
-                                                             function_insert_remove)
-            if coust < self.max_coust:
+                                                             function_insert_remove,
+                                                             self.max_coust[i])
+            if coust < self.max_coust[i]:
                 chromossome[i], elements_chromossome = self.insert_individualin_cromossome_TOP(chromossome[i],
                                                                          all_elements,
                                                                          elements_chromossome,
                                                                          med_custo,
-                                                                         function_insert_remove)
+                                                                         function_insert_remove,
+                                                                         self.max_coust[i])
+            # tmp = med_custo(chromossome[i])
+            # if tmp > self.max_coust[i]:
+            #     print(tmp, self.max_coust)
 
 
         return chromossome

@@ -104,7 +104,7 @@ class GA_TSPKP:
                    edgecolor='k')
 
         for i in range(len(rota)):
-            plt.plot(pos_x[i], pos_y[i], 'C3', lw=3)
+            plt.plot(pos_x[i], pos_y[i], 'C'+str(i), lw=3)
 
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
@@ -170,7 +170,7 @@ class GA_TSPKP:
             elif key == 'map_points':
                 self.map_points = value
             elif key == 'max_coust':
-                self.max_coust = value
+                self.max_coust = np.array(value)
             elif key == 'coust_rate':
                 self.coust_rate = value
             elif key == 'prizes_rate':
@@ -269,6 +269,8 @@ class GA_TSPKP:
                 #     new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
 
 
+
+
                 # gerando lista de probabilidades para os novos indivíduos sofrerem mutações
                 rand = np.random.uniform(0,1, len(new_population))
 
@@ -278,6 +280,12 @@ class GA_TSPKP:
                                                                                        self.function_insert_remove,
                                                                                        self.all_elements,
                                                                                        new_population[i])
+                #
+                # custo = [self.reply_method_TOP(self.med_custo, val) for val in new_population]
+                # for i in custo:
+                #     for j in range(self.number_agents):
+                #         if i[j] > self.max_coust[j]:
+                #             print(i[j] ,self.max_coust[j])
 
 
                 fitness_values = np.zeros(len(new_population))
@@ -332,26 +340,33 @@ class GA_TSPKP:
                     if len(new_population) == 0:
                         break
                     min_index = np.argmin(fitness_values)
-                    if cousts_values[i] <= self.max_coust*self.number_agents:
+                    if cousts_values[i] <= self.max_coust.sum():
+                        passa = True
+                        custo = self.reply_method_TOP(self.med_custo, new_population[min_index])
+                        for j in range(self.number_agents):
+                            if custo[j] > self.max_coust[j]:
+                                passa = False
+                                break
+                        if passa:
 
-                        exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
+                            exist_menor = [best for best in range(4) if fitness_values[min_index] < best_elements_coust[best]]
 
-                        crhomossome = new_population[min_index]
-                        if len(exist_menor) > 0:
-                            flag_possui = [np.array_equal(element, crhomossome) for element in best_elements]
-                            if True not in flag_possui:
-                                best_tmp = best_elements
-                                best_tmp.append(crhomossome)
+                            crhomossome = new_population[min_index]
+                            if len(exist_menor) > 0:
+                                flag_possui = [np.array_equal(element, crhomossome) for element in best_elements]
+                                if True not in flag_possui:
+                                    best_tmp = best_elements
+                                    best_tmp.append(crhomossome)
 
-                                new_cousts = np.array([self.reply_method_TOP(self.function_objective, tmp).sum() for tmp in best_tmp])
-                                indexes_tmp = np.argsort(new_cousts)
+                                    new_cousts = np.array([self.reply_method_TOP(self.function_objective, tmp).sum() for tmp in best_tmp])
+                                    indexes_tmp = np.argsort(new_cousts)
 
-                                best_elements_coust = new_cousts[indexes_tmp[0:4]]
-                                best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
-                        else:
-                            if fitness_values[min_index] not in population_select:
-                                population.append(new_population[min_index])
-                                population_select.append(fitness_values[min_index])
+                                    best_elements_coust = new_cousts[indexes_tmp[0:4]]
+                                    best_elements = [best_tmp[best_index] for best_index in indexes_tmp]
+                            else:
+                                if fitness_values[min_index] not in population_select:
+                                    population.append(new_population[min_index])
+                                    population_select.append(fitness_values[min_index])
                     del new_population[min_index]
                     fitness_values = np.delete(fitness_values,[min_index])
 
@@ -384,7 +399,7 @@ if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
         population = 50,
-        limit_population = 30,
+        limit_population = 50,
         crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
@@ -393,8 +408,8 @@ if __name__ == '__main__':
         prizes = '../rota_team_17_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents=3,
-        max_coust=10,
+        number_agents=4,
+        max_coust=[10,10,10,10],
         start_point = 0,
         end_point = 0,
         individual= 0)
@@ -406,14 +421,8 @@ if __name__ == '__main__':
             print(ga.med_custo(b[i][j]))
         print('premios')
         for j in range(len(b[i])):
-            print(ga.prizes.take(b[i][j]).sum())
+            print(ga.prizes.take(b[i][j].astype(int)).sum())
         ga.plota_rotas_TOP(ga.mapa, b[i])
-
-        x = np.isin(b[0][1:-2], b[1][1:-2])
-        y = np.isin(b[0][1:-2], b[2][1:-2])
-        z = np.isin(b[2][1:-2], b[1][1:-2])
 
         print(b[i])
         # print(a[i])
-
-    input()

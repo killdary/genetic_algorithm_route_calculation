@@ -53,7 +53,7 @@ class FunctionObjective:
         return couts
 
     def FO(self, chromosome):
-        prizes_total = self.prizes.take(chromosome).sum()
+        prizes_total = self.prizes.take(chromosome.astype(int)).sum()
         coust_total = self.med_custo(chromosome)
         return ((prizes_total ** 3) - coust_total) * -1
 
