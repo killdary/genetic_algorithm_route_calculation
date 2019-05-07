@@ -104,14 +104,22 @@ class GA_TSPKP:
                    edgecolor='k')
 
         for i in range(len(rota)):
-            plt.plot(pos_x[i], pos_y[i], 'C'+str(i), lw=3)
+            plt.plot(pos_x[i],
+                     pos_y[i], 
+                     'C'+str(i), 
+                     lw=3, 
+                     label='agente '+str(i+1) )
+            
+        plt.rc('font', size=font_size)
+        
+        plt.legend(loc='lower left')
 
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
         for i, txt in enumerate(cid_nome):
-            plt.annotate(txt ,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
+            plt.annotate(str(self.prizes[i]) ,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
 
-        plt.title('Mapa GA')
+#        plt.title('Mapa GA')
         plt.show()
 
 
@@ -398,27 +406,18 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-<<<<<<< HEAD
-        population = 50,
+        population = 150,
         limit_population = 50,
-=======
-        population = 300,
-        limit_population = 30,
->>>>>>> 83dbacf3deb9c2f7a9f30803cb4172068974afd4
         crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../rota_team_57.txt',
-        prizes = '../rota_team_57_p.txt',
+        map_points = '../rota_team_17.txt',
+        prizes = '../rota_team_17_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents=4,
-<<<<<<< HEAD
-        max_coust=[10,10,10,10],
-=======
-        max_coust=23,
->>>>>>> 83dbacf3deb9c2f7a9f30803cb4172068974afd4
+        number_agents=1,
+        max_coust=[30],
         start_point = 0,
         end_point = 0,
         individual= 0)
