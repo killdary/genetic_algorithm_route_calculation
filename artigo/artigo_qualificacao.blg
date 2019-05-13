@@ -1,4 +1,6 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: artigo_qualificacao.aux
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: artigo_qualificacao.aux
 The style file: sbc.bst
 Database file #1: sbc-template.bib
 Warning--entry type for "Nasa:17" isn't style-file defined
@@ -17,4 +19,45 @@ Warning--I didn't find a database entry for "10.1590/S0100-69162011000100013"
 Warning--empty journal in article:Candido
 Warning--empty booktitle in Singh2013StudyOV
 Warning--empty journal in article
+You've used 20 entries,
+            1935 wiz_defined-function locations,
+            578 strings with 6691 characters,
+and the built_in function-call counts, 6641 in all, are:
+= -- 623
+> -- 303
+< -- 15
++ -- 103
+- -- 102
+* -- 526
+:= -- 1238
+add.period$ -- 52
+call.type$ -- 20
+change.case$ -- 149
+chr.to.int$ -- 19
+cite$ -- 23
+duplicate$ -- 252
+empty$ -- 431
+format.name$ -- 128
+if$ -- 1252
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 18
+newline$ -- 95
+num.names$ -- 60
+pop$ -- 138
+preamble$ -- 1
+purify$ -- 151
+quote$ -- 0
+skip$ -- 196
+stack$ -- 0
+substring$ -- 342
+swap$ -- 10
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 110
+warning$ -- 3
+while$ -- 44
+width$ -- 0
+write$ -- 235
 (There was 1 error message)

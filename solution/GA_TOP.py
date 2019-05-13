@@ -398,27 +398,18 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-<<<<<<< HEAD
         population = 50,
         limit_population = 50,
-=======
-        population = 300,
-        limit_population = 30,
->>>>>>> 83dbacf3deb9c2f7a9f30803cb4172068974afd4
         crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../rota_team_57.txt',
-        prizes = '../rota_team_57_p.txt',
+        map_points = '../rota_team_17.txt',
+        prizes = '../rota_team_17_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents=4,
-<<<<<<< HEAD
-        max_coust=[10,10,10,10],
-=======
-        max_coust=23,
->>>>>>> 83dbacf3deb9c2f7a9f30803cb4172068974afd4
+        number_agents= 2,
+        max_coust=[10,10],
         start_point = 0,
         end_point = 0,
         individual= 0)
