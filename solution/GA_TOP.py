@@ -104,14 +104,22 @@ class GA_TSPKP:
                    edgecolor='k')
 
         for i in range(len(rota)):
-            plt.plot(pos_x[i], pos_y[i], 'C'+str(i), lw=3)
+            plt.plot(pos_x[i],
+                     pos_y[i], 
+                     'C'+str(i), 
+                     lw=3, 
+                     label='agente '+str(i+1) )
+            
+        plt.rc('font', size=font_size)
+        
+        plt.legend(loc='lower left')
 
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
         for i, txt in enumerate(cid_nome):
-            plt.annotate(txt ,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
+            plt.annotate(str(self.prizes[i]) ,  (x[i]-0.01, y[i]+0.3), fontsize=font_size)
 
-        plt.title('Mapa GA')
+#        plt.title('Mapa GA')
         plt.show()
 
 
@@ -398,7 +406,7 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-        population = 50,
+        population = 150,
         limit_population = 50,
         crossover_rate = 80,
         mutation_rate = 0.8,
