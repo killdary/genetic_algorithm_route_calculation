@@ -3,8 +3,8 @@ import numpy as np
 
 class Population:
     def __init__(self, start_city, end_city, function_mensure_coust, max_coust):
-        self.start = np.array([start_city])
-        self.end = np.array([end_city])
+        self.start = np.array(start_city)
+        self.end = np.array(end_city)
         self.function_mensure_coust = function_mensure_coust
         self.max_coust = max_coust
 
@@ -101,7 +101,7 @@ class Population:
                     tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
                     x = self.start[n_ag]
                     x = self.end[n_ag]
-                    coust_route = self.function_mensure_coust(np.concatenate([self.start[n_ag], tmp_agent, self.end[n_ag]]))
+                    coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, self.end[[n_ag]]]))
 
                     if coust_route > max_coust:
                         break
@@ -109,8 +109,8 @@ class Population:
                         chromossome[n_ag] = tmp_agent
                         all_points = np.setdiff1d(all_points, tmp_agent)
 
-                coust_route =  self.function_mensure_coust(np.concatenate([self.start[n_ag], chromossome[n_ag], self.end[n_ag]]))
-                chromossome[n_ag] = np.concatenate([self.start[n_ag], chromossome[n_ag], self.end[n_ag]])
+                coust_route =  self.function_mensure_coust(np.concatenate([[self.start[n_ag]], chromossome[n_ag], [self.end[n_ag]]]))
+                chromossome[n_ag] = np.concatenate([[self.start[n_ag]], chromossome[n_ag], [self.end[n_ag]]])
 
 
             new_population.append(chromossome)

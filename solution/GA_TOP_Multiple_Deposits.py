@@ -425,9 +425,9 @@ if __name__ == '__main__':
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
         number_agents= 2,
-        max_coust=[10,10],
-        start_point = [0,8],
-        end_point = [0,8],
+        max_coust=[12,12],
+        start_point = [0,0],
+        end_point = [0,0],
         individual= 0,
         deposits = [0,10,11])
     a , b = ga.run()
