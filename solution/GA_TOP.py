@@ -105,14 +105,14 @@ class GA_TSPKP:
 
         for i in range(len(rota)):
             plt.plot(pos_x[i],
-                     pos_y[i], 
-                     'C'+str(i), 
-                     lw=3, 
+                     pos_y[i],
+                     'C'+str(i),
+                     lw=5,
                      label='agente '+str(i+1) )
             
         plt.rc('font', size=font_size)
         
-        plt.legend(loc='lower left')
+        plt.legend(loc='center left')
 
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
@@ -310,14 +310,14 @@ class GA_TSPKP:
                 for i in range(rand.size):
                     if rand[i] >= self.mutation_rate:
                         list_mut = list()
-#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
-#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.insertion,new_population[i]))
-#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.reverse,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.insertion,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.reverse,new_population[i]))
                         list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.scramble,new_population[i]))
-#                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWRGM,new_population[i]))
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWWGM,new_population[i]))
-                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWNNM,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.swap,new_population[i]))
+                        # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWRGM,new_population[i]))
+                        # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWWGM,new_population[i]))
+                        # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWNNM,new_population[i]))
 
                         cousts_mut = np.zeros(len(list_mut))
 
@@ -325,8 +325,8 @@ class GA_TSPKP:
                         cousts_mut[1] = sum(self.reply_method_TOP(self.med_custo,list_mut[1]))
                         cousts_mut[2] = sum(self.reply_method_TOP(self.med_custo,list_mut[2]))
                         cousts_mut[3] = sum(self.reply_method_TOP(self.med_custo,list_mut[3]))
-#                        cousts_mut[4] = sum(self.reply_method_TOP(self.med_custo,list_mut[4]))
-#                        cousts_mut[5] = sum(self.reply_method_TOP(self.med_custo,list_mut[5]))
+                        cousts_mut[4] = sum(self.reply_method_TOP(self.med_custo,list_mut[4]))
+                        # cousts_mut[5] = sum(self.reply_method_TOP(self.med_custo,list_mut[5]))
 #                        cousts_mut[6] = sum(self.reply_method_TOP(self.med_custo,list_mut[6]))
 #                        cousts_mut[7] = sum(self.reply_method_TOP(self.med_custo,list_mut[7]))
 
@@ -406,18 +406,18 @@ class GA_TSPKP:
 if __name__ == '__main__':
     ga = GA_TSPKP(
         genetarion = 1000,
-        population = 150,
+        population = 500,
         limit_population = 50,
         crossover_rate = 80,
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../rota_team_17.txt',
-        prizes = '../rota_team_17_p.txt',
+        map_points = '../novas_cidades_5.txt',
+        prizes = '../novos_premios_5.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents= 2,
-        max_coust=[10,10],
+        number_agents= 3,
+        max_coust=[50, 25, 15],
         start_point = 0,
         end_point = 0,
         individual= 0)
@@ -427,7 +427,7 @@ if __name__ == '__main__':
         print('custo')
         for j in range(len(b[i])):
             print(ga.med_custo(b[i][j]))
-        print('premios')
+        print(' - ')
         for j in range(len(b[i])):
             print(ga.prizes.take(b[i][j].astype(int)).sum())
         ga.plota_rotas_TOP(ga.mapa, b[i])

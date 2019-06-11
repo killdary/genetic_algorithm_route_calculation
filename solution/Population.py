@@ -99,9 +99,9 @@ class Population:
                 while True:
                     point_add = np.random.choice(np.arange(all_points.size), 1)
                     tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
-                    x = self.start[n_ag]
-                    x = self.end[n_ag]
-                    coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, self.end[[n_ag]]]))
+                    x = self.start
+                    x = self.end
+                    coust_route = self.function_mensure_coust(np.concatenate([[self.start], tmp_agent, [self.end]]))
 
                     if coust_route > max_coust:
                         break
@@ -109,8 +109,8 @@ class Population:
                         chromossome[n_ag] = tmp_agent
                         all_points = np.setdiff1d(all_points, tmp_agent)
 
-                coust_route =  self.function_mensure_coust(np.concatenate([[self.start[n_ag]], chromossome[n_ag], [self.end[n_ag]]]))
-                chromossome[n_ag] = np.concatenate([[self.start[n_ag]], chromossome[n_ag], [self.end[n_ag]]])
+                coust_route =  self.function_mensure_coust(np.concatenate([[self.start], chromossome[n_ag], [self.end]]))
+                chromossome[n_ag] = np.concatenate([[self.start], chromossome[n_ag], [self.end]])
 
 
             new_population.append(chromossome)
