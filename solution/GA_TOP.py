@@ -416,8 +416,8 @@ if __name__ == '__main__':
         prizes = '../novos_premios_6.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents= 3,
-        max_coust=[50,40,30],
+        number_agents= 4,
+        max_coust=[35,34,33,33],
         start_point = 0,
         end_point = 0,
         individual= 0)
