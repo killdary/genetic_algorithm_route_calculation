@@ -112,7 +112,7 @@ class GA_TSPKP:
             
         plt.rc('font', size=font_size)
         
-        plt.legend(loc='center left')
+        plt.legend(loc='lower left')
 
         plt.scatter(self.mapa[:, 0], self.mapa[:, 1], s=120, marker="s")
 
@@ -412,12 +412,12 @@ if __name__ == '__main__':
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../novas_cidades_6.txt',
-        prizes = '../novos_premios_6.txt',
+        map_points = '../rota_team_17.txt',
+        prizes = '../rota_team_17_p.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents= 4,
-        max_coust=[35,34,33,33],
+        number_agents= 2,
+        max_coust=[10, 8],
         start_point = 0,
         end_point = 0,
         individual= 0)
