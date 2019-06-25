@@ -61,7 +61,7 @@ class GaTopMd:
         self.mutation = self.mutationObject.scramble
 
         self.crossoverObject = Crossover()
-        self.crossover = self.crossoverObject.cross_TOP
+        self.crossover = self.crossoverObject.cross_TOPMD
 
         self.PopulationObject = Population(self.start_point, self.end_point, self.mensureCost, self.max_cost)
 
@@ -130,11 +130,14 @@ class GaTopMd:
 
             # Realizando o cruzamento entre os genees
             for cross in range(select_parents_index.size):
-                select_2_parents = np.random.randint(select_parents_index, size=2)
+                select_2_parents = np.random.randint(select_parents_index.size, size=2)
 
                 offspring1, offspring2 = self.crossover(parents_selected[select_2_parents[0]],
                                                         parents_selected[select_2_parents[1]],
                                                         function_objective=self.FO)
+
+                new_population.append(offspring1)
+                new_population.append(offspring2)
 
 
 if __name__ == '__main__':

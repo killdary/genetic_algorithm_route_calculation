@@ -276,7 +276,48 @@ class Crossover:
         return offspring_1, offspring_2
 
     def cross_TOPMD(self, parent_1, parent_2, function_objective):
-        pass
+        start = np.array([deposit_start[0] for deposit_start in parent_1])
+        end = np.array([deposit_start[-1] for deposit_start in parent_1])
+
+        cousts_route_1 = np.array([function_objective(value) for value in parent_1])
+        cousts_route_2 = np.array([function_objective(value) for value in parent_2])
+
+        parent_1_tmp = [np.delete(value, [0, value.size - 1]) for value in parent_1]
+        parent_2_tmp = [np.delete(value, [0, value.size - 1]) for value in parent_2]
+
+        ind_min_coust_1 = np.argmin(cousts_route_1)
+        ind_min_coust_2 = np.argmin(cousts_route_2)
+
+
+        ind_max_coust_1 = np.argmax(cousts_route_1)
+        ind_max_coust_2 = np.argmax(cousts_route_2)
+
+        offspring_1 = [val for val in parent_1_tmp]
+
+        tmp = parent_2_tmp[ind_min_coust_2]
+        for x in offspring_1:
+            c = np.isin(tmp, x, invert=True)
+            tmp = tmp[c]
+
+        offspring_1[ind_max_coust_1] = np.copy(tmp)
+
+        offspring_1 = [np.concatenate([[start[idx]], offspring_1[idx], [end[idx]]]) for idx in range(len(offspring_1))]
+        cousts_route_1 = np.array([function_objective(value) for value in offspring_1])
+
+        offspring_2 = [val for val in parent_2_tmp]
+
+        tmp = parent_1_tmp[ind_min_coust_1]
+        for x in offspring_2:
+            c = np.isin(tmp, x, invert=True)
+            tmp = tmp[c]
+
+        offspring_2[ind_max_coust_2] = np.copy(tmp)
+
+        offspring_2 = [np.concatenate([[start[idx]], offspring_2[idx], [end[idx]]]) for idx in range(len(offspring_2))]
+        cousts_route_2 = np.array([function_objective(value) for value in offspring_2])
+
+        return offspring_1, offspring_2
+
 
 if __name__ == '__main__':
     start = np.array([0])
