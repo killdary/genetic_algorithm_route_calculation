@@ -275,6 +275,8 @@ class Crossover:
 
         return offspring_1, offspring_2
 
+    def cross_TOPMD(self, parent_1, parent_2, function_objective):
+        pass
 
 if __name__ == '__main__':
     start = np.array([0])

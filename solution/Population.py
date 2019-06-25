@@ -117,6 +117,34 @@ class Population:
 
         return new_population
 
+    def initializeTopMd(self, initial, size, numberAgents):
+        newPopulation = list()
+        listAgents = range(numberAgents)
+        for n in range(size):
+            all_points = np.copy(initial)
+
+            chromossome = list()
+            for n_ag in listAgents:
+                chromossome.append(np.array([]))
+                max_cost = self.max_coust[n_ag]
+                while True:
+                    point_add = np.random.choice(np.arange(all_points.size), 1)
+                    tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
+                    coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
+
+                    if coust_route > max_cost:
+                        break
+                    if coust_route <= max_cost:
+                        chromossome[n_ag] = tmp_agent
+                        all_points = np.setdiff1d(all_points, tmp_agent)
+
+                coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
+                chromossome[n_ag] = np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]])
+
+            newPopulation.append(chromossome)
+
+        return newPopulation
+
 if __name__ == '__main__':
     start = np.array([0])
     end = np.array([15])
