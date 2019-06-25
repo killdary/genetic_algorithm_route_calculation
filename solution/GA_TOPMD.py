@@ -36,7 +36,7 @@ class GaTopMd:
         self.prizes_rate = prizes_rate
         self.map_points = np.loadtxt(map_points)
         self.prizes = np.loadtxt(prizes)[:, 1]
-        self.max_cost = max_cost
+        self.max_cost = np.array(max_cost)
         self.start_point = start_point
         self.end_point = end_point
 
@@ -47,7 +47,7 @@ class GaTopMd:
 
         self.FO = self.functionObject.FO
         self.mensureCost = self.functionObject.med_custo
-        self.methodInsertRemoveChromossome = self.functionObject.coust_insert
+        self.methodInsertRemoveChromosome = self.functionObject.coust_insert
 
         self.allElementsMap = np.arange(self.map_points.shape[0])
 
@@ -98,6 +98,17 @@ class GaTopMd:
 
         return result
 
+    def reply_method_mutation_top(self, method, chromossome):
+        size = len(chromossome)
+        result = [0] * size
+        for n in np.arange(size):
+            if chromossome[n].size > 3:
+                result[n] = method(chromossome[n])
+            else:
+                result[n] = chromossome[n]
+
+        return chromossome
+
     def run(self):
         population = self.PopulationObject.initializeTopMd(self.initialChromossome,
                                                            self.populationSize,
@@ -107,15 +118,17 @@ class GaTopMd:
         bestElementsCosts = np.array([self.reply_method_top(self.FO, element).sum() for element in bestElements])
 
         countGenaration = 0
-        bestElementGenaration = np.copy(bestElements[0])
-        bestElementGenarationCost = np.copy(bestElementsCosts[0])
+        bestCost = bestElementsCosts[0]
+        bestElementAlways = bestElements[0]
+        bestElementGenaration = list()
+        bestElementGenarationCost = list()
 
         for g in range(self.generationSize):
 
-            print(g, countGenaration, bestElementGenarationCost)
+            print(g, bestCost, countGenaration)
 
             # completando populacao depois que apenas os melhores individuos restaram
-            population += self.PopulationObject.initialize_TOP(self.initialChromossome,
+            population += self.PopulationObject.initializeTopMd(self.initialChromossome,
                                                               self.populationSize - len(population),
                                                               self.number_agents)
 
@@ -138,6 +151,119 @@ class GaTopMd:
 
                 new_population.append(offspring1)
                 new_population.append(offspring2)
+
+
+            # gerando lista de probabilidades para os novos indivíduos sofrerem mutações
+            rand = np.random.uniform(0,1, len(new_population))
+
+
+            for i in range(len(new_population)):
+                new_population[i] = self.mutationObject.insert_remove_points_TOP(self.mensureCost,
+                                                                                 self.methodInsertRemoveChromosome,
+                                                                                 self.allElementsMap,
+                                                                                 new_population[i])
+            fitness_values = np.zeros(len(new_population))
+            cousts_values = np.zeros(len(new_population))
+
+            for i in range(fitness_values.size):
+                fitness_values[i] = self.reply_method_top(self.FO,new_population[i]).sum()
+                cousts_values[i] =  self.reply_method_top(self.mensureCost,new_population[i]).sum()
+
+            # aqui não foi atualizado####################
+            for i in range(rand.size):
+                if rand[i] <= self.mutation_rate:
+                    list_mut = list()
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.insertion,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWRGM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWWGM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWNNM,new_population[i]))
+
+                    cousts_mut = np.zeros(len(list_mut))
+
+                    cousts_mut[0] = sum(self.reply_method_top(self.mensureCost,list_mut[0]))
+                    cousts_mut[1] = sum(self.reply_method_top(self.mensureCost,list_mut[1]))
+                    cousts_mut[2] = sum(self.reply_method_top(self.mensureCost,list_mut[2]))
+                    cousts_mut[3] = sum(self.reply_method_top(self.mensureCost,list_mut[3]))
+                    cousts_mut[4] = sum(self.reply_method_top(self.mensureCost,list_mut[4]))
+                    # cousts_mut[5] = sum(self.reply_method_TOP(self.med_custo,list_mut[5]))
+#                        cousts_mut[6] = sum(self.reply_method_TOP(self.med_custo,list_mut[6]))
+#                        cousts_mut[7] = sum(self.reply_method_TOP(self.med_custo,list_mut[7]))
+
+                    min_mut = np.argmin(cousts_mut)
+                    new_population[i] = list_mut[min_mut]
+            new_population = new_population + population
+
+            fitness_values = np.zeros(len(new_population))
+            cousts_values = np.zeros(len(new_population))
+
+            for i in range(fitness_values.size):
+                fitness_values[i] = self.reply_method_top(self.FO, new_population[i]).sum()
+                cousts_values[i] = self.reply_method_top(self.mensureCost, new_population[i]).sum()
+
+
+            population_select = list()
+            population = list()
+            for i in range(self.populationSize):
+                if len(new_population) == 0:
+                    break
+                min_index = np.argmin(fitness_values)
+                if cousts_values[i] <= self.max_cost.sum():
+                    passa = True
+                    custo = self.reply_method_top(self.mensureCost, new_population[min_index])
+                    for j in range(self.number_agents):
+                        if custo[j] > self.max_cost[j]:
+                            passa = False
+                            break
+
+                    if passa:
+
+                        exist_menor = [best for best in range(4) if
+                                       fitness_values[min_index] < bestElementsCosts[best]]
+
+                        crhomossome = new_population[min_index]
+                        if len(exist_menor) > 0:
+                            flag_possui = [np.array_equal(element, crhomossome) for element in bestElements]
+                            if True not in flag_possui:
+                                best_tmp = bestElements
+                                best_tmp.append(crhomossome)
+
+                                new_cousts = np.array(
+                                    [self.reply_method_top(self.FO, tmp).sum() for tmp in best_tmp])
+                                indexes_tmp = np.argsort(new_cousts)
+
+                                bestElementsCosts = new_cousts[indexes_tmp[0:4]]
+                                bestElements = [best_tmp[best_index] for best_index in indexes_tmp]
+                        else:
+                            if fitness_values[min_index] not in population_select:
+                                population.append(new_population[min_index])
+                                population_select.append(fitness_values[min_index])
+                    del new_population[min_index]
+                    fitness_values = np.delete(fitness_values, [min_index])
+
+
+                # for i in range(len(population)):
+                #     if np.unique(population[i]).size < population[i].size - 1:
+                #         print('error')
+
+            if bestElementsCosts[0] < bestCost:
+                bestCost = bestElementsCosts[0]
+                bestElementAlways = np.copy(bestElements[0])
+                countGenaration = 0
+
+            elif bestElementsCosts[0] == bestCost:
+                countGenaration += 1
+
+            bestElementGenarationCost.append(bestElementsCosts[0])
+
+            if countGenaration >= self.limit_population:
+                break
+
+        self.bestRoute = bestElements[0]
+
 
 
 if __name__ == '__main__':
