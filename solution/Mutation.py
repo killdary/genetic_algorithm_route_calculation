@@ -271,7 +271,6 @@ class Mutation:
 
         return individual
 
-
     def remove_pior_custo_2(self, City, med_custo, function_aux, max_coust):
 
         individual = np.copy(City)
@@ -298,7 +297,6 @@ class Mutation:
 
         return individual
 
-
     def remove_pior_custo_TOP(self, City, med_custo, function_aux):
 
         individual = np.copy(City)
@@ -324,7 +322,6 @@ class Mutation:
             individual = self.__corrige_chromossomo(individual)
 
         return individual
-
 
     def remove_random(self, City, med_custo):
         individual = np.copy(City)
@@ -381,6 +378,95 @@ class Mutation:
             # if tmp > self.max_coust[i]:
             #     print(tmp, self.max_coust)
 
+
+        return chromossome
+
+    ''' Teste de metodo paenas pa inserção para melhorar a rota criada'''
+    def insert_points_TOP(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        elements_chromossome = np.array([])
+
+        for i in chromossome:
+            tmp = self.__trata_crhomossomo(i)
+            elements_chromossome = np.concatenate([elements_chromossome, tmp])
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust < self.max_coust[i]:
+                chromossome[i], elements_chromossome = self.insert_individualin_cromossome_TOP(chromossome[i],
+                                                                                               all_elements,
+                                                                                               elements_chromossome,
+                                                                                               med_custo,
+                                                                                               function_insert_remove,
+                                                                                               self.max_coust[i])
+
+        return chromossome
+
+    def insert_points_TOP_2(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        elements_chromossome = np.array([])
+
+        for i in chromossome:
+            tmp = self.__trata_crhomossomo(i)
+            elements_chromossome = np.concatenate([elements_chromossome, tmp])
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust < self.max_coust[i]:
+
+                citys_fall = np.setdiff1d(all_elements, elements_chromossome)
+                citys_fall = np.setdiff1d(citys_fall, chromossome[i])
+                chromossome_generate = self.__trata_crhomossomo(chromossome[i])
+
+                idx_best = 0
+                value_best = 0
+                if citys_fall.size > 0:
+                    if citys_fall.size > 1:
+                        city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+                    else:
+                        city_rmv = 0
+                    idx_best = np.random.randint(chromossome_generate.size - 1, size=1) if chromossome_generate.size > 2 else 0
+                    element_insert = citys_fall[city_rmv]
+
+                    chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
+                    elements_chromossome = np.insert(elements_chromossome, 0, element_insert)
+                    # elements_chromossome = np.concatenate([elements_chromossome, element_insert])
+
+                chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+
+
+
+                chromossome[i] = chromossome_generate
+
+        return chromossome
+
+
+
+
+    def remove_points_TOP(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust > self.max_coust[i]:
+                chromossome[i] = self.remove_pior_custo_2(chromossome[i],
+                                                          med_custo,
+                                                          function_insert_remove,
+                                                          self.max_coust[i])
 
         return chromossome
 

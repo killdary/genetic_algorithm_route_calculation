@@ -68,7 +68,7 @@ class GaTopMd:
         self.SelectionObject = Selection()
         self.selection = self.SelectionObject.tournament
 
-    def plota_rotas_TOP(self, cidades, rota, size=8, font_size=20):
+    def plota_rotas_TOP(self, cidades, rota, size=8, font_size=20, file_plot=False, name_file_plot='plt'):
         """
         Method to create a chart with the best routes found
         :param cidades: all points of the route
@@ -109,7 +109,10 @@ class GaTopMd:
             plt.annotate(str(self.prizes[i]), (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
 
         #        plt.title('Mapa GA')
-        plt.show()
+        if file_plot:
+            plt.savefig(name_file_plot+'.png')
+        else:
+            plt.show()
 
     def calculate_distances(self):
         size = self.map_points.shape[0]
@@ -201,10 +204,10 @@ class GaTopMd:
 
 
             for i in range(len(new_population)):
-                new_population[i] = self.mutationObject.insert_remove_points_TOP(self.mensureCost,
-                                                                                 self.methodInsertRemoveChromosome,
-                                                                                 self.allElementsMap,
-                                                                                 new_population[i])
+                new_population[i] = self.mutationObject.insert_points_TOP_2(self.mensureCost,
+                                                                         self.methodInsertRemoveChromosome,
+                                                                         self.allElementsMap,
+                                                                         new_population[i])
             fitness_values = np.zeros(len(new_population))
             cousts_values = np.zeros(len(new_population))
 
@@ -238,6 +241,14 @@ class GaTopMd:
 
                     min_mut = np.argmin(cousts_mut)
                     new_population[i] = list_mut[min_mut]
+
+
+            for i in range(len(new_population)):
+                new_population[i] = self.mutationObject.remove_points_TOP(self.mensureCost,
+                                                                         self.methodInsertRemoveChromosome,
+                                                                         self.allElementsMap,
+                                                                         new_population[i])
+
             new_population = new_population + population
 
             fitness_values = np.zeros(len(new_population))
@@ -308,17 +319,14 @@ class GaTopMd:
         self.bestRoute = bestElements[0]
 
 
-        print(bestElementGenaration)
-        return bestElementsCosts, bestElements
+        return bestElementsCosts, bestElements, bestElementGenaration
 
 
 
 if __name__ == '__main__':
-    import os
-    print(os.system('cat GATOPMD/path_2.txt'))
     ga = GaTopMd(
         generation = 1000,
-        population = 800,
+        population = 300,
         limit_population = 50,
         crossover_rate = 0.8,
         mutation_rate = 0.8,
@@ -330,7 +338,7 @@ if __name__ == '__main__':
         start_point = [0, 1],
         end_point = [0, 1])
         # individual= 0)
-    a, b = ga.run()
+    a, b, c = ga.run()
 
     for i in range(1):
         print('custo')
