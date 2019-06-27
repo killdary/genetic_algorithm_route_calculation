@@ -68,6 +68,49 @@ class GaTopMd:
         self.SelectionObject = Selection()
         self.selection = self.SelectionObject.tournament
 
+    def plota_rotas_TOP(self, cidades, rota, size=8, font_size=20):
+        """
+        Method to create a chart with the best routes found
+        :param cidades: all points of the route
+        :param rota: the sequence with the best route
+        :param size: size of the chart
+        :param font_size: size of the label of the points
+        """
+
+        pos_x = [cidades[val.astype(int), 0] for val in rota]
+        pos_y = [cidades[val.astype(int), 1] for val in rota]
+
+        elements = self.map_points[:, 0]
+        x = self.map_points[:, 0]
+        y = self.map_points[:, 1]
+
+        cid_nome = range(elements.size)
+
+        plt.figure(num=None,
+                   figsize=(size, size),
+                   dpi=40,
+                   facecolor='w',
+                   edgecolor='k')
+
+        for i in range(len(rota)):
+            plt.plot(pos_x[i],
+                     pos_y[i],
+                     'C' + str(i),
+                     lw=5,
+                     label='agente ' + str(i + 1))
+
+        plt.rc('font', size=font_size)
+
+        plt.legend(loc='lower left')
+
+        plt.scatter(self.map_points[:, 0], self.map_points[:, 1], s=120, marker="s")
+
+        for i, txt in enumerate(cid_nome):
+            plt.annotate(str(self.prizes[i]), (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
+
+        #        plt.title('Mapa GA')
+        plt.show()
+
     def calculate_distances(self):
         size = self.map_points.shape[0]
         distances = np.zeros([size, size])
@@ -178,9 +221,9 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWRGM,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWWGM,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_TOP(self.mutation_object.WGWNNM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
 
                     cousts_mut = np.zeros(len(list_mut))
 
@@ -189,9 +232,9 @@ class GaTopMd:
                     cousts_mut[2] = sum(self.reply_method_top(self.mensureCost,list_mut[2]))
                     cousts_mut[3] = sum(self.reply_method_top(self.mensureCost,list_mut[3]))
                     cousts_mut[4] = sum(self.reply_method_top(self.mensureCost,list_mut[4]))
-                    # cousts_mut[5] = sum(self.reply_method_TOP(self.med_custo,list_mut[5]))
-#                        cousts_mut[6] = sum(self.reply_method_TOP(self.med_custo,list_mut[6]))
-#                        cousts_mut[7] = sum(self.reply_method_TOP(self.med_custo,list_mut[7]))
+                    # cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
+                    # cousts_mut[6] = sum(self.reply_method_top(self.mensureCost,list_mut[6]))
+                    # cousts_mut[7] = sum(self.reply_method_top(self.mensureCost,list_mut[7]))
 
                     min_mut = np.argmin(cousts_mut)
                     new_population[i] = list_mut[min_mut]
@@ -265,22 +308,38 @@ class GaTopMd:
         self.bestRoute = bestElements[0]
 
 
+        print(bestElementGenaration)
+        return bestElementsCosts, bestElements
+
+
 
 if __name__ == '__main__':
+    import os
+    print(os.system('cat GATOPMD/path_2.txt'))
     ga = GaTopMd(
         generation = 1000,
-        population = 500,
+        population = 800,
         limit_population = 50,
-        crossover_rate = 80,
+        crossover_rate = 0.8,
         mutation_rate = 0.8,
         cost_rate = 5,
         prizes_rate = 2,
-        map_points = '../rota_team_17.txt',
-        prizes = '../rota_team_17_p.txt',
-        # map_points = '../adilson_cidades.txt',
-        # prizes = '../adilson_premios.txt',
-        max_cost=[10, 8],
+        map_points = 'GATOPMD/path_2.txt',
+        prizes = './GATOPMD/prize_2.txt',
+        max_cost=[25, 30],
         start_point = [0, 1],
         end_point = [0, 1])
         # individual= 0)
-    ga.run()
+    a, b = ga.run()
+
+    for i in range(1):
+        print('custo')
+        for j in range(len(b[i])):
+            print(ga.mensureCost(b[i][j]))
+        print(' - ')
+        for j in range(len(b[i])):
+            print(ga.prizes.take(b[i][j].astype(int)).sum())
+        ga.plota_rotas_TOP(ga.map_points, b[i])
+
+        print(b[i])
+        # print(a[i])
