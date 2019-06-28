@@ -3,37 +3,38 @@ from GA_TOPMD import GaTopMd
 
 paths = [
     'GATOPMD/path_2.txt',
-    # 'GATOPMD/path_3.txt',
-    # 'GATOPMD/path_4.txt'
+    'GATOPMD/path_3.txt',
+    'GATOPMD/path_4.txt'
 ]
 
 prizes = [
     'GATOPMD/prize_2.txt',
-    # 'GATOPMD/prize_3.txt',
-    # 'GATOPMD/prize_4.txt'
+    'GATOPMD/prize_3.txt',
+    'GATOPMD/prize_4.txt'
 ]
 
 costs=[
-    [20,20],
-    # [25,30, 35],
-    # [25,30, 35, 40]
+    [30,30],
+    [25,27, 30],
+    [25,27, 28, 30]
 ]
 
 points_init = [
     [0,1],
-    # [0,1,2],
-    # [0,1,2,3]
+    [0,1,2],
+    [0,1,2,3]
 ]
 
 points_end = [
     [0,1],
-    # [0,1,2],
-    # [0,1,2,3]
+    [0,1,2],
+    [0,1,2,3]
 ]
 
-number_executions = 10
+number_executions = 30
 
 for i in range(len(paths)):
+    name = 'path_'+str(i)
     path_current = paths[i]
     prize_current = prizes[i]
 
@@ -65,14 +66,14 @@ for i in range(len(paths)):
 
         with open('./GATOPMD/Result/Results_Execution.txt', 'a+') as out:
             out.write(' - Execucao ' + str(numberExecution) + '\n')
-            out.write(' - BestCostGenaration: ' + str(bestElementGenaration) + '\n')
-            out.write(' - BestCostElement: ' + str(bestElementsCosts) + '\n')
-            out.write(' - BestRoute: ' + str(bestElements) + '\n')
-            out.write(' - Premio: \n')
+            out.write(' -- BestCostGenaration: ' + str(bestElementGenaration) + '\n')
+            out.write(' -- BestCostElement: ' + str(bestElementsCosts) + '\n')
+            out.write(' -- BestRoute: ' + str(bestElements[0]) + '\n')
+            out.write(' -- Premio: \n')
             for j in range(len(bestElements[i])):
                 out.write(' ---------' + str(ga_execution.mensureCost(bestElements[i][j])) + '\n')
 
-            out.write(' - Custo: \n')
+            out.write(' -- Custo: \n')
             for j in range(len(bestElements[i])):
                 out.write(' ---------' + str(ga_execution.prizes.take(bestElements[i][j].astype(int)).sum())+ '\n')
 
@@ -84,6 +85,6 @@ for i in range(len(paths)):
             for j in range(len(bestElements[i])):
                 print(ga_execution.prizes.take(bestElements[i][j].astype(int)).sum())
             ga_execution.plota_rotas_TOP(cidades=ga_execution.map_points, rota = bestElements[i], file_plot=True,
-                                          name_file_plot='./GATOPMD/Result/PlotExecution_' + str(numberExecution))
+                                          name_file_plot='./GATOPMD/Result/Plot_Path_'+ name+'_execution_'+ str(numberExecution))
 
         print('####### Fim Execucao: '+str(numberExecution))

@@ -191,13 +191,27 @@ class GaTopMd:
             for cross in range(select_parents_index.size):
                 select_2_parents = np.random.randint(select_parents_index.size, size=2)
 
-                offspring1, offspring2 = self.crossover(parents_selected[select_2_parents[0]],
-                                                        parents_selected[select_2_parents[1]],
-                                                        function_objective=self.FO)
+                # offspring1, offspring2 = self.crossover(parents_selected[select_2_parents[0]],
+                #                                         parents_selected[select_2_parents[1]],
+                #                                         function_objective=self.FO)
+
+                offspring1, offspring2 = list(), list()
+                for i in range(len(parents_selected[select_2_parents[0]])):
+                    x,y = self.crossoverObject.PMX(parents_selected[select_2_parents[0]][i],
+                                                   parents_selected[select_2_parents[1]][i])
+                    offspring1.append(x)
+                    offspring2.append(y)
+
+                # offspring3, offspring4 = self.crossoverObject.PMX_2(parents_selected[select_2_parents[0]],
+                #                                                     parents_selected[select_2_parents[1]])
+
 
                 new_population.append(offspring1)
                 new_population.append(offspring2)
 
+
+            # for i in range(len(new_population)):
+            #    new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
 
             # gerando lista de probabilidades para os novos indivíduos sofrerem mutações
             rand = np.random.uniform(0,1, len(new_population))
@@ -224,9 +238,9 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
 
                     cousts_mut = np.zeros(len(list_mut))
 
@@ -235,9 +249,9 @@ class GaTopMd:
                     cousts_mut[2] = sum(self.reply_method_top(self.mensureCost,list_mut[2]))
                     cousts_mut[3] = sum(self.reply_method_top(self.mensureCost,list_mut[3]))
                     cousts_mut[4] = sum(self.reply_method_top(self.mensureCost,list_mut[4]))
-                    # cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
-                    # cousts_mut[6] = sum(self.reply_method_top(self.mensureCost,list_mut[6]))
-                    # cousts_mut[7] = sum(self.reply_method_top(self.mensureCost,list_mut[7]))
+                    cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
+                    cousts_mut[6] = sum(self.reply_method_top(self.mensureCost,list_mut[6]))
+                    cousts_mut[7] = sum(self.reply_method_top(self.mensureCost,list_mut[7]))
 
                     min_mut = np.argmin(cousts_mut)
                     new_population[i] = list_mut[min_mut]
@@ -307,6 +321,7 @@ class GaTopMd:
                 bestCost = bestElementsCosts[0]
                 bestElementAlways = np.copy(bestElements[0])
                 countGenaration = 0
+                bestElementGenaration.append(bestCost)
 
             elif bestElementsCosts[0] == bestCost:
                 countGenaration += 1
@@ -325,7 +340,7 @@ class GaTopMd:
 
 if __name__ == '__main__':
     ga = GaTopMd(
-        generation = 1000,
+        generation = 1,
         population = 300,
         limit_population = 50,
         crossover_rate = 0.8,
@@ -334,7 +349,7 @@ if __name__ == '__main__':
         prizes_rate = 2,
         map_points = 'GATOPMD/path_2.txt',
         prizes = './GATOPMD/prize_2.txt',
-        max_cost=[25, 30],
+        max_cost=[25, 40],
         start_point = [0, 1],
         end_point = [0, 1])
         # individual= 0)

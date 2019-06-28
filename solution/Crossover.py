@@ -54,6 +54,8 @@ class Crossover:
         parent_1 = np.delete(parent_1_tmp, [0, parent_1_tmp.size-1])
         parent_2 = np.delete(parent_2_tmp, [0, parent_2_tmp.size-1])
 
+        all_elemnts = np.unique(np.concatenate([parent_1, parent_2]))
+
         if parent_1.size > 1 and parent_2.size > 1:
 
             self.__point_mutation(parent_1, parent_2)
@@ -88,7 +90,7 @@ class Crossover:
             elements_tmp = np.setdiff1d(parent_1, offspring_1)
             elements_tmp2 = np.setdiff1d(parent_2, offspring_2)
             test = np.setdiff1d(np.concatenate([elements_tmp, elements_tmp2]), offspring_1)
-            test2 = np.setdiff1d(test, offspring_2)
+            test2 = np.setdiff1d(all_elemnts, offspring_2)
 
             # elements_1 = [parent_1[value] for value in np.arange(parent_1.size) if parent_1[value] not in offspring_1]
             # elements_2 = [parent_2[value] for value in np.arange(parent_2.size) if parent_2[value] not in offspring_2]
@@ -102,6 +104,65 @@ class Crossover:
 
         offspring_1 = np.concatenate([start, offspring_1, end])
         offspring_2 = np.concatenate([start, offspring_2, end])
+
+        return offspring_1.astype(int), offspring_2.astype(int)
+
+
+    def PMX_2(self, parent_1_tmp, parent_2_tmp):
+        start = np.array([deposit_start[0] for deposit_start in parent_1_tmp])
+        end = np.array([deposit_start[-1] for deposit_start in parent_1_tmp])
+
+        parent_1 = [ p[1:-1] for p in parent_1_tmp]
+        parent_2 = [ p[1:-1] for p in parent_2_tmp]
+
+        offspring_1 = [np.ones(parent_1[i].size).astype(int) * -1 for i in range(len(parent_1))]
+        offspring_2 = [np.ones(parent_1[i].size).astype(int) * -1 for i in range(len(parent_2))]
+        for pidx in range(len(parent_1)):
+
+            if parent_1[pidx].size > 1 and parent_2[pidx].size > 1:
+
+                self.__point_mutation(parent_1[pidx], parent_2[pidx])
+                offspring_1[pidx][self.I:self.J] = parent_2[pidx][self.I:self.J]
+                offspring_2[pidx][self.I:self.J] = parent_1[pidx][self.I:self.J]
+
+                for i in np.arange(offspring_1[pidx].size):
+                    if i < self.I or i >= self.J:
+                        if parent_1[pidx][i] not in offspring_1[pidx]:
+                            offspring_1[pidx][i] = parent_1[pidx][i]
+
+                for i in np.arange(offspring_2[pidx].size):
+                    if i < self.I or i > self.J:
+                        if parent_2[pidx][i] not in offspring_2[pidx]:
+                            offspring_2[pidx][i] = parent_2[pidx][i]
+
+                index_fall_1 = np.where(offspring_1[pidx] == -1)[0]
+                index_fall_2 = np.where(offspring_2[pidx] == -1)[0]
+                #
+                elements_1 = list()
+                for value in range(parent_1[pidx].size):
+                    if parent_1[pidx][value] not in offspring_1[pidx]:
+                        elements_1.append(parent_1[pidx][value])
+
+                elements_2 = list()
+                for value in range(parent_2[pidx].size):
+                    if parent_2[pidx][value] not in offspring_2[pidx]:
+                        elements_2.append(parent_2[pidx][value])
+
+                elements_tmp = np.setdiff1d(parent_1[pidx], offspring_1[pidx])
+                elements_tmp2 = np.setdiff1d(parent_2[pidx], offspring_2[pidx])
+                test = np.setdiff1d(np.concatenate([elements_tmp, elements_tmp2]), offspring_1[pidx])
+                test2 = np.setdiff1d(test, offspring_2[pidx])
+
+
+                offspring_1[pidx][index_fall_1] = np.array(elements_1[:index_fall_1.size])
+                offspring_2[pidx][index_fall_2] = np.array(test2[:index_fall_2.size])
+
+            else:
+                offspring_1[pidx] = parent_1[pidx]
+                offspring_2[pidx] = parent_2[pidx]
+
+        offspring_1 = [np.concatenate([start[i], offspring_1[i], end[i]] for i in range(len(offspring_1)))]
+        offspring_2 = [np.concatenate([start[i], offspring_2[i], end[i]] for i in range(len(offspring_2)))]
 
         return offspring_1.astype(int), offspring_2.astype(int)
 
@@ -317,7 +378,6 @@ class Crossover:
         cousts_route_2 = np.array([function_objective(value) for value in offspring_2])
 
         return offspring_1, offspring_2
-
 
 if __name__ == '__main__':
     start = np.array([0])
