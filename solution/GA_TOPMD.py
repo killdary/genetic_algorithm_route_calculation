@@ -196,9 +196,16 @@ class GaTopMd:
                 #                                         function_objective=self.FO)
 
                 offspring1, offspring2 = list(), list()
+                all_elements_1, all_elements_2 = np.array([]), np.array([])
                 for i in range(len(parents_selected[select_2_parents[0]])):
                     x,y = self.crossoverObject.PMX(parents_selected[select_2_parents[0]][i],
                                                    parents_selected[select_2_parents[1]][i])
+
+                    all_elements_1 = np.unique(np.concatenate([all_elements_1, x[1:-1]])) \
+                        if all_elements_1.size > 1 else np.unique(x[1:-1])
+                    all_elements_2 = np.unique(np.concatenate([all_elements_2, y[1:-1]])) \
+                        if all_elements_2.size > 1 else np.unique(y[1:-1])
+
                     offspring1.append(x)
                     offspring2.append(y)
 
