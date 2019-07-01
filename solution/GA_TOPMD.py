@@ -198,8 +198,9 @@ class GaTopMd:
                 offspring1, offspring2 = list(), list()
                 all_elements_1, all_elements_2 = np.array([]), np.array([])
                 for i in range(len(parents_selected[select_2_parents[0]])):
-                    x,y = self.crossoverObject.PMX(parents_selected[select_2_parents[0]][i],
-                                                   parents_selected[select_2_parents[1]][i])
+                    x,y = self.crossoverObject.PMX_2(parents_selected[select_2_parents[0]][i],
+                                                     parents_selected[select_2_parents[1]][i],
+                                                     all_elements_1, all_elements_2 )
 
                     all_elements_1 = np.unique(np.concatenate([all_elements_1, x[1:-1]])) \
                         if all_elements_1.size > 1 else np.unique(x[1:-1])
@@ -347,7 +348,7 @@ class GaTopMd:
 
 if __name__ == '__main__':
     ga = GaTopMd(
-        generation = 1,
+        generation = 1000,
         population = 300,
         limit_population = 50,
         crossover_rate = 0.8,
@@ -356,7 +357,7 @@ if __name__ == '__main__':
         prizes_rate = 2,
         map_points = 'GATOPMD/path_2.txt',
         prizes = './GATOPMD/prize_2.txt',
-        max_cost=[25, 40],
+        max_cost=[25, 35],
         start_point = [0, 1],
         end_point = [0, 1])
         # individual= 0)
