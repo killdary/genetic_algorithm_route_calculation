@@ -350,16 +350,16 @@ if __name__ == '__main__':
     ga = GaTopMd(
         generation = 1000,
         population = 300,
-        limit_population = 50,
+        limit_population = 60,
         crossover_rate = 0.8,
         mutation_rate = 0.8,
         cost_rate = 5,
         prizes_rate = 2,
-        map_points = 'GATOPMD/path_2.txt',
-        prizes = './GATOPMD/prize_2.txt',
-        max_cost=[25, 35],
-        start_point = [0, 1],
-        end_point = [0, 1])
+        map_points = 'GATOPMD/path_4.txt',
+        prizes = './GATOPMD/prize_4.txt',
+        max_cost=[25, 35, 35, 35],
+        start_point = [0, 1, 2, 3],
+        end_point = [0, 1, 2, 3])
         # individual= 0)
     a, b, c = ga.run()
 
