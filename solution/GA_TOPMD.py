@@ -50,6 +50,7 @@ class GaTopMd:
         self.methodInsertRemoveChromosome = self.functionObject.coust_insert
 
         self.allElementsMap = np.arange(self.map_points.shape[0])
+        self.allElementsMap = self.allElementsMap[self.number_agents:]
 
         # removendo depositos
         deposits = [x for x in self.start_point]
@@ -68,7 +69,7 @@ class GaTopMd:
         self.SelectionObject = Selection()
         self.selection = self.SelectionObject.tournament
 
-    def plota_rotas_TOP(self, cidades, rota, size=8, font_size=20, file_plot=False, name_file_plot='plt'):
+    def plota_rotas_TOP(self, cidades, rota, size=12, font_size=20, file_plot=False, name_file_plot='plt'):
         """
         Method to create a chart with the best routes found
         :param cidades: all points of the route
@@ -88,7 +89,7 @@ class GaTopMd:
 
         plt.figure(num=None,
                    figsize=(size, size),
-                   dpi=40,
+                   dpi=80,
                    facecolor='w',
                    edgecolor='k')
 
@@ -101,7 +102,7 @@ class GaTopMd:
 
         plt.rc('font', size=font_size)
 
-        plt.legend(loc='lower left')
+        plt.legend(loc='center left')
 
         plt.scatter(self.map_points[:, 0], self.map_points[:, 1], s=120, marker="s")
 
@@ -186,6 +187,7 @@ class GaTopMd:
             parents_selected = [population[idx] for idx in select_parents_index]
 
             new_population = list()
+            bestElementsTeste = bestElements
 
             # Realizando o cruzamento entre os genees
             for cross in range(select_parents_index.size):
@@ -230,6 +232,7 @@ class GaTopMd:
                                                                          self.methodInsertRemoveChromosome,
                                                                          self.allElementsMap,
                                                                          new_population[i])
+
             fitness_values = np.zeros(len(new_population))
             cousts_values = np.zeros(len(new_population))
 
@@ -270,6 +273,7 @@ class GaTopMd:
                                                                          self.methodInsertRemoveChromosome,
                                                                          self.allElementsMap,
                                                                          new_population[i])
+
 
             new_population = new_population + population
 
@@ -339,6 +343,17 @@ class GaTopMd:
             if countGenaration >= self.limit_population:
                 break
 
+            bestElementsTeste = self.mutationObject.insert_points_TOP_2(self.mensureCost,
+                                                                        self.methodInsertRemoveChromosome,
+                                                                        self.allElementsMap,
+                                                                        bestElementsTeste[0])
+
+            bestElementsTeste = self.mutationObject.remove_points_TOP(self.mensureCost,
+                                                                      self.methodInsertRemoveChromosome,
+                                                                      self.allElementsMap,
+                                                                      bestElementsTeste)
+
+
         self.bestRoute = bestElements[0]
 
 
@@ -355,11 +370,11 @@ if __name__ == '__main__':
         mutation_rate = 0.8,
         cost_rate = 5,
         prizes_rate = 2,
-        map_points = 'GATOPMD/path_4.txt',
-        prizes = './GATOPMD/prize_4.txt',
-        max_cost=[25, 35, 35, 35],
-        start_point = [0, 1, 2, 3],
-        end_point = [0, 1, 2, 3])
+        map_points = 'GATOPMD/path_2.txt',
+        prizes = './GATOPMD/prize_2.txt',
+        max_cost=[25, 35, ],
+        start_point = [0, 1],
+        end_point = [0, 1])
         # individual= 0)
     a, b, c = ga.run()
 
