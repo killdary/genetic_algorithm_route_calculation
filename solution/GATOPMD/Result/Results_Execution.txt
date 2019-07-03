@@ -6,3 +6,8 @@ Cenario: GATOPMD/path_2.txt
 Cenario: GATOPMD/path_3.txt
 Cenario: GATOPMD/path_3.txt
 Cenario: GATOPMD/path_3.txt
+Cenario: GATOPMD/path_3.txt
+Cenario: GATOPMD/path_3.txt
+Cenario: GATOPMD/path_4.txt
+Cenario: GATOPMD/path_4.txt
+Cenario: GATOPMD/path_4.txt
