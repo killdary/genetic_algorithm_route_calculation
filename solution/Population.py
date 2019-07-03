@@ -137,6 +137,8 @@ class Population:
                     if coust_route <= max_cost:
                         chromossome[n_ag] = tmp_agent
                         all_points = np.setdiff1d(all_points, tmp_agent)
+                    if all_points.size > 0:
+                        break
 
                 coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
                 chromossome[n_ag] = np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]])

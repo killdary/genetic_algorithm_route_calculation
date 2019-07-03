@@ -186,7 +186,7 @@ class GaTopMd:
             select_parents_index = self.selection(self.populationSize, cost_population, 5)
             parents_selected = [population[idx] for idx in select_parents_index]
 
-            new_population = list()
+            new_population = bestElements[:4]
             bestElementsTeste = bestElements
 
             # Realizando o cruzamento entre os genees
@@ -249,9 +249,10 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
+                    if(countGenaration > self.limit_population * 0.6):
+                        list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
+                        list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
 
                     cousts_mut = np.zeros(len(list_mut))
 
@@ -260,9 +261,11 @@ class GaTopMd:
                     cousts_mut[2] = sum(self.reply_method_top(self.mensureCost,list_mut[2]))
                     cousts_mut[3] = sum(self.reply_method_top(self.mensureCost,list_mut[3]))
                     cousts_mut[4] = sum(self.reply_method_top(self.mensureCost,list_mut[4]))
-                    cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
-                    cousts_mut[6] = sum(self.reply_method_top(self.mensureCost,list_mut[6]))
-                    cousts_mut[7] = sum(self.reply_method_top(self.mensureCost,list_mut[7]))
+
+                    if(countGenaration > self.limit_population * 0.6):
+                        cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
+                        cousts_mut[6] = sum(self.reply_method_top(self.mensureCost,list_mut[6]))
+                        cousts_mut[7] = sum(self.reply_method_top(self.mensureCost,list_mut[7]))
 
                     min_mut = np.argmin(cousts_mut)
                     new_population[i] = list_mut[min_mut]
@@ -335,7 +338,10 @@ class GaTopMd:
                 countGenaration = 0
                 bestElementGenaration.append(bestCost)
 
-            elif bestElementsCosts[0] == bestCost:
+            # elif bestElementsCosts[0] == bestCost:
+            #     countGenaration += 1
+
+            else:
                 countGenaration += 1
 
             bestElementGenarationCost.append(bestElementsCosts[0])
