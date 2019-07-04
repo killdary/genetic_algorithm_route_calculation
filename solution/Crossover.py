@@ -109,8 +109,10 @@ class Crossover:
 
 
     def PMX_2(self, parent_1_tmp, parent_2_tmp, all_elements_1, all_elements_2):
-        start = np.array([parent_1_tmp[0]])
-        end = np.array([parent_1_tmp[-1]])
+        start_parent_1 = np.array([parent_1_tmp[0]])
+        end_parent_1 = np.array([parent_1_tmp[-1]])
+        start_parent_2 = np.array([parent_2_tmp[0]])
+        end_parent_2 = np.array([parent_2_tmp[-1]])
 
         parent_1 = np.delete(parent_1_tmp, [0, parent_1_tmp.size - 1])
         parent_2 = np.delete(parent_2_tmp, [0, parent_2_tmp.size - 1])
@@ -178,8 +180,8 @@ class Crossover:
             offspring_1 = parent_1
             offspring_2 = parent_2
 
-        offspring_1 = np.concatenate([start, offspring_1, end])
-        offspring_2 = np.concatenate([start, offspring_2, end])
+        offspring_1 = np.concatenate([start_parent_1, offspring_1, end_parent_1])
+        offspring_2 = np.concatenate([start_parent_2, offspring_2, end_parent_2])
 
         return offspring_1.astype(int), offspring_2.astype(int)
 

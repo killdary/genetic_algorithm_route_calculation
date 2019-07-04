@@ -249,10 +249,21 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
+
+                    ind = np.random.choice(range(self.number_agents), 2, replace=False)
+                    if ind[0] == ind[1]:
+                        print('')
+                    elemento = [np.copy(chromossome) for chromossome in new_population[i]]
+                    elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
+                        elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
+                    list_mut.append(elemento)
+
+
                     if(countGenaration > self.limit_population * 0.6):
                         list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
                         list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
                         list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
+
 
                     cousts_mut = np.zeros(len(list_mut))
 
@@ -261,14 +272,23 @@ class GaTopMd:
                     cousts_mut[2] = sum(self.reply_method_top(self.mensureCost,list_mut[2]))
                     cousts_mut[3] = sum(self.reply_method_top(self.mensureCost,list_mut[3]))
                     cousts_mut[4] = sum(self.reply_method_top(self.mensureCost,list_mut[4]))
+                    cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
 
                     if(countGenaration > self.limit_population * 0.6):
-                        cousts_mut[5] = sum(self.reply_method_top(self.mensureCost,list_mut[5]))
                         cousts_mut[6] = sum(self.reply_method_top(self.mensureCost,list_mut[6]))
                         cousts_mut[7] = sum(self.reply_method_top(self.mensureCost,list_mut[7]))
+                        cousts_mut[8] = sum(self.reply_method_top(self.mensureCost,list_mut[8]))
 
                     min_mut = np.argmin(cousts_mut)
                     new_population[i] = list_mut[min_mut]
+
+                    # if self.number_agents > 1:
+                    #     ind = np.random.choice(range(self.number_agents), 2)
+                    #     elemento = [np.copy(chromossome) for chromossome in  new_population[i]]
+                    #     elemento[ind[0]], elemento[ind[1]] = self.crossoverObject.PMX_2(
+                    #         elemento[ind[0]], elemento[ind[1]],np.array([]), np.array([]))
+
+
 
 
             for i in range(len(new_population)):
