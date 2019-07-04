@@ -128,7 +128,7 @@ for i in range(len(paths)):
 
     ga_execution = GaTopMd(
         generation = 1000,
-        population = 800,
+        population = 1000,
         limit_population = 50,
         crossover_rate = 0.8,
         mutation_rate = 0.8,
@@ -140,7 +140,7 @@ for i in range(len(paths)):
         start_point = current_init,
         end_point = current_end)
 
-    with open('./GATOPMD/ResultWindows/Results_Execution.txt', 'a+') as out:
+    with open('./GATOPMD/ResultLinux/Results_Execution.txt', 'a+') as out:
         out.write('Cenario: ' + path_current + '\n')
 
     print('Cenario: ' + path_current + '\n')
@@ -148,7 +148,7 @@ for i in range(len(paths)):
         print('####### Inicio Execucao: '+str(numberExecution))
         bestElementsCosts, bestElements, bestElementGenaration = ga_execution.run()
 
-        with open('./GATOPMD/ResultWindows/Results_Execution_' + name + '.txt', 'a+') as out:
+        with open('./GATOPMD/ResultLinux/Results_Execution_' + name + '.txt', 'a+') as out:
             out.write(' - Execucao ' + str(numberExecution) + '\n')
             out.write(' -- BestCostGenaration: ' + str(bestElementGenaration) + '\n')
             out.write(' -- BestCostElement: ' + str(bestElementsCosts) + '\n')
@@ -169,7 +169,7 @@ for i in range(len(paths)):
             for j in range(len(bestElements[i])):
                 print(ga_execution.prizes.take(bestElements[i][j].astype(int)).sum())
             ga_execution.plota_rotas_TOP(cidades=ga_execution.map_points, rota = bestElements[i], file_plot=True,
-                                          name_file_plot='./GATOPMD/ResultWindows/Plot_Path_'+ name+'_execution_'+ str(numberExecution))
+                                          name_file_plot='./GATOPMD/ResultLinux/Plot_Path_'+ name+'_execution_'+ str(numberExecution))
 
         print('####### Fim Execucao: '+str(numberExecution))
 
