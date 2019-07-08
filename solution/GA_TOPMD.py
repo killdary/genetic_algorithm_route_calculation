@@ -72,7 +72,7 @@ class GaTopMd:
     def plota_rotas_TOP(self, cidades, rota, size=12, font_size=20, file_plot=False, name_file_plot='plt'):
         """
         Method to create a chart with the best routes found
-        :param cidades: all points of the route
+        :param cidades: all points of the route300
         :param rota: the sequence with the best route
         :param size: size of the chart
         :param font_size: size of the label of the points
@@ -250,13 +250,15 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
 
-                    ind = np.random.choice(range(self.number_agents), 2, replace=False)
-                    if ind[0] == ind[1]:
-                        print('')
-                    elemento = [np.copy(chromossome) for chromossome in new_population[i]]
-                    elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
-                        elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
-                    list_mut.append(elemento)
+                    if self.number_agents > 1:
+                        ind = np.random.choice(range(self.number_agents), 2, replace=False)
+                        elemento = [np.copy(chromossome) for chromossome in new_population[i]]
+                        elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
+                            elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
+                        list_mut.append(elemento)
+                    else: 
+                        list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
+
 
 
                     if(countGenaration > self.limit_population * 0.6):
@@ -290,7 +292,6 @@ class GaTopMd:
 
 
 
-
             for i in range(len(new_population)):
                 new_population[i] = self.mutationObject.remove_points_TOP(self.mensureCost,
                                                                          self.methodInsertRemoveChromosome,
@@ -314,7 +315,7 @@ class GaTopMd:
                 if len(new_population) == 0:
                     break
                 min_index = np.argmin(fitness_values)
-                if cousts_values[i] <= self.max_cost.sum():
+                if cousts_values[i].sum() <= self.max_cost.sum():
                     passa = True
                     custo = self.reply_method_top(self.mensureCost, new_population[min_index])
                     for j in range(self.number_agents):
@@ -331,6 +332,12 @@ class GaTopMd:
                         if len(exist_menor) > 0:
                             flag_possui = [np.array_equal(element, crhomossome) for element in bestElements]
                             if True not in flag_possui:
+                                custo = self.reply_method_top(self.mensureCost, crhomossome)
+                                for j in range(self.number_agents):
+                                    if custo[j] > self.max_cost[j]:
+                                        passa = False
+                                        break
+
                                 best_tmp = bestElements
                                 best_tmp.append(crhomossome)
 
@@ -391,7 +398,7 @@ if __name__ == '__main__':
     ga = GaTopMd(
         generation = 1000,
         population = 300,
-        limit_population = 60,
+        limit_population = 50,
         crossover_rate = 0.8,
         mutation_rate = 0.8,
         cost_rate = 5,

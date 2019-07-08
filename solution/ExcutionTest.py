@@ -1,41 +1,51 @@
 from GA_TOPMD import GaTopMd
 import gc
+from datetime import datetime
+import os
 
 paths = [
-    # 'GATOPMD/path_2.txt',
-    # 'GATOPMD/path_2.txt',
-    # 'GATOPMD/path_2.txt',
-    # 'GATOPMD/path_2.txt',
-    # 'GATOPMD/path_2.txt',
-    # 'GATOPMD/path_3.txt',
-    # 'GATOPMD/path_3.txt',
-    # 'GATOPMD/path_3.txt',
-    # 'GATOPMD/path_3.txt',
-    # 'GATOPMD/path_3.txt',
+     # 'GATOPMD/path_2.txt',
+     # 'GATOPMD/path_2.txt',
+     # 'GATOPMD/path_2.txt',
+     # 'GATOPMD/path_2.txt',
+     # 'GATOPMD/path_2.txt',
+     # 'GATOPMD/path_2.txt',
+     #
+     # 'GATOPMD/path_3.txt',
+     # 'GATOPMD/path_3.txt',
+     # 'GATOPMD/path_3.txt',
+     # 'GATOPMD/path_3.txt',
+     # 'GATOPMD/path_3.txt',
+     # 'GATOPMD/path_3.txt',
+     
     'GATOPMD/path_4.txt',
-    'GATOPMD/path_4.txt',
-    'GATOPMD/path_4.txt',
-    'GATOPMD/path_4.txt',
-    'GATOPMD/path_4.txt',
-    'GATOPMD/path_4.txt'
+    # 'GATOPMD/path_4.txt',
+    # 'GATOPMD/path_4.txt',
+    # 'GATOPMD/path_4.txt',
+    # 'GATOPMD/path_4.txt',
+    # 'GATOPMD/path_4.txt'
 ]
 
 prizes = [
-    # 'GATOPMD/prize_2.txt',
-    # 'GATOPMD/prize_2.txt',
-    # 'GATOPMD/prize_2.txt',
-    # 'GATOPMD/prize_2.txt',
-    # 'GATOPMD/prize_2.txt',
-    # 'GATOPMD/prize_3.txt',
-    # 'GATOPMD/prize_3.txt',
-    # 'GATOPMD/prize_3.txt',
-    # 'GATOPMD/prize_3.txt',
-    # 'GATOPMD/prize_3.txt',
-    'GATOPMD/prize_4.txt',
-    'GATOPMD/prize_4.txt',
-    'GATOPMD/prize_4.txt',
-    'GATOPMD/prize_4.txt',
-    'GATOPMD/prize_4.txt',
+    #  'GATOPMD/prize_2.txt',
+    #  'GATOPMD/prize_2.txt',
+    #  'GATOPMD/prize_2.txt',
+    #  'GATOPMD/prize_2.txt',
+    #  'GATOPMD/prize_2.txt',
+    #  'GATOPMD/prize_2.txt',
+    #
+    #  'GATOPMD/prize_3.txt',
+    #  'GATOPMD/prize_3.txt',
+    #  'GATOPMD/prize_3.txt',
+    #  'GATOPMD/prize_3.txt',
+    #  'GATOPMD/prize_3.txt',
+    #  'GATOPMD/prize_3.txt',
+    #
+    # 'GATOPMD/prize_4.txt',
+    # 'GATOPMD/prize_4.txt',
+    # 'GATOPMD/prize_4.txt',
+    # 'GATOPMD/prize_4.txt',
+    # 'GATOPMD/prize_4.txt',
     'GATOPMD/prize_4.txt'
 ]
 
@@ -57,63 +67,84 @@ size_population = [200,
                    ]
 
 costs=[
-    # [30,30],
+    # [80],
+    # [28,30],
     # [15,10],
     # [20,15],
-    # [10,10],
-    # [20,20],
+    # [10,12],
+    # [20,10],
+    #
+    # [30, 40],
     # [25, 27, 27],
     # [20, 19, 18],
     # [20, 15, 25],
     # [5, 10, 12],
     # [10, 11, 12],
+    #
     [40, 40, 40],
-    [25,27, 28, 30],
-    [20,20, 20, 20],
-    [15,5, 12, 20],
-    [10,11, 12, 13],
-    [20,5, 15, 25]
+    # [25,27, 28, 30],
+    # [20,20, 20, 20],
+    # [15,5, 12, 20],
+    # [10,11, 12, 13],
+    # [20,5, 15, 25]
 ]
 
 points_init = [
-    # [0,1],
-    # [0,1],
-    # [0,1],
-    # [0,1],
-    # [0,1],
-    # [0,1,2],
-    # [0,1,2],
-    # [0,1,2],
-    # [0,1,2],
-    # [0,1,2],
-    [0,1,2],
-    [0,1,2,3],
-    [0,1,2,3],
-    [0,1,2,3],
-    [0,1,2,3],
-    [0,1,2,3]
+     # [0],
+     # [0,1],
+     # [0,1],
+     # [0,1],
+     # [0,1],
+     # [0,1],
+     #
+     # [1,2],
+     # [0,1,2],
+     # [0,1,2],
+     # [0,1,2],
+     # [0,1,2],
+     # [0,1,2],
+     
+     [0,1,2],
+     # [0,1,2,3],
+     # [0,1,2,3],
+     # [0,1,2,3],
+     # [0,1,2,3],
+     # [0,1,2,3]
 ]
 
 points_end = [
-    # [0,1],
-    # [0,1],
-    # [0,1],
-    # [0,1],
-    # [0,1],
-    # [0,1,2],
-    # [0,1,2],
-    # [0,1,2],
-    # [0,1,2],
-    # [0,1,2],
+ #     [0],
+ # [0,1],
+ # [0,1],
+ # [0,1],
+ # [0,1],
+ # [0,1],
+ #
+ # [1,2],
+ # [0,1,2],
+ # [0,1,2],
+ # [0,1,2],
+ # [0,1,2],
+ # [0,1,2],
+ #
     [0,1,2],
-    [0,1,2,3],
-    [0,1,2,3],
-    [0,1,2,3],
-    [0,1,2,3],
-    [0,1,2,3]
+    # [0,1,2,3],
+    # [0,1,2,3],
+    # [0,1,2,3],
+    # [0,1,2,3],
+    # [0,1,2,3]
 ]
 
-number_executions = 5
+number_executions = 10
+
+main_path='./GATOPMD/Result/'
+data = datetime.now()
+execucao = str(data.strftime(("%d-%m-%Y_%H-%M-%S_execucao")))
+
+result_folder = main_path+'_'+execucao
+    
+os.mkdir(result_folder)
+
 
 for i in range(len(paths)):
     name = 'path_'+str(i+1)
@@ -127,7 +158,7 @@ for i in range(len(paths)):
 
     ga_execution = GaTopMd(
         generation = 1000,
-        population = 300,
+        population = 400,
         limit_population = 50,
         crossover_rate = 0.8,
         mutation_rate = 0.8,
@@ -138,8 +169,10 @@ for i in range(len(paths)):
         max_cost= cost_current,
         start_point = current_init,
         end_point = current_end)
+    
+    
 
-    with open('./GATOPMD/ResultWindows/Results_Execution.txt', 'a+') as out:
+    with open(result_folder+'/Results_Execution.txt', 'a+') as out:
         out.write('Cenario: ' + path_current + '\n')
 
     print('Cenario: ' + path_current + '\n')
@@ -147,7 +180,7 @@ for i in range(len(paths)):
         print('####### Inicio Execucao: '+str(numberExecution))
         bestElementsCosts, bestElements, bestElementGenaration = ga_execution.run()
 
-        with open('./GATOPMD/ResultWindows/Results_Execution_' + name + '.txt', 'a+') as out:
+        with open(result_folder+'/Results_Execution_' + name + '.txt', 'a+') as out:
             out.write(' - Execucao ' + str(numberExecution) + '\n')
             out.write(' -- BestCostGenaration: ' + str(bestElementGenaration) + '\n')
             out.write(' -- BestCostElement: ' + str(bestElementsCosts) + '\n')
@@ -174,7 +207,7 @@ for i in range(len(paths)):
             for j in range(len(bestElements[i])):
                 print(ga_execution.prizes.take(bestElements[i][j].astype(int)).sum())
             ga_execution.plota_rotas_TOP(cidades=ga_execution.map_points, rota = bestElements[i], file_plot=True,
-                                          name_file_plot='./GATOPMD/ResultWindows/Plot_Path_'+ name+'_execution_'+ str(numberExecution))
+                                          name_file_plot=result_folder+'/Plot_Path_'+ name+'_execution_'+ str(numberExecution))
 
         print('####### Fim Execucao: '+str(numberExecution))
 
