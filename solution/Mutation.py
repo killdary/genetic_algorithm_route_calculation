@@ -429,6 +429,7 @@ class Mutation:
                           chromossome):
 
         elements_chromossome = np.array([])
+        resultado = list()
 
         for i in chromossome:
             tmp = self.__trata_crhomossomo(i)
@@ -436,7 +437,6 @@ class Mutation:
 
         for i in range(len(chromossome)):
             coust = med_custo(chromossome[i])
-
             if coust < self.max_coust[i]:
 
                 citys_fall = np.setdiff1d(all_elements, elements_chromossome)
@@ -459,11 +459,11 @@ class Mutation:
 
                 chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
 
+                resultado.append(chromossome_generate)
+            else:
+                resultado.append(chromossome[i])
 
-
-                chromossome[i] = chromossome_generate
-
-        return chromossome
+        return resultado
 
 
 
