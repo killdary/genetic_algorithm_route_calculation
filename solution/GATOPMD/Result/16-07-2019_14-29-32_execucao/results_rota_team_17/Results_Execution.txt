@@ -1,0 +1,6 @@
+Cenario: GATOPMD/mapas/rota_team_17.txt
+Cenario: GATOPMD/mapas/rota_team_17.txt
+Cenario: GATOPMD/mapas/rota_team_17.txt
+Cenario: GATOPMD/mapas/rota_team_17.txt
+Cenario: GATOPMD/mapas/rota_team_17.txt
+Cenario: GATOPMD/mapas/rota_team_17.txt

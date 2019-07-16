@@ -435,7 +435,11 @@ class Mutation:
             tmp = self.__trata_crhomossomo(i)
             elements_chromossome = np.concatenate([elements_chromossome, tmp])
 
-        for i in range(len(chromossome)):
+
+        range_chormosome = np.arange(len(chromossome))
+        np.random.shuffle(range_chormosome)
+
+        for i in range_chormosome:
             coust = med_custo(chromossome[i])
             if coust < self.max_coust[i]:
 
@@ -522,51 +526,87 @@ class Mutation:
             index_fall_1 = np.where(offspring_1 == -1)[0]
             index_fall_2 = np.where(offspring_2 == -1)[0]
             #
-            elements_1 = list()
-            for value in range(parent_1.size):
-                if parent_1[value] not in offspring_1:
-                    elements_1.append(parent_1[value])
+            # elements_1 = list()
+            # for value in range(parent_1.size):
+            #     if parent_1[value] not in offspring_1:
+            #         elements_1.append(parent_1[value])
 
-            elements_1 = np.array(elements_1)
 
-            elements_2 = list()
-            for value in range(parent_2.size):
-                if parent_2[value] not in offspring_2:
-                    elements_2.append(parent_2[value])
+            # elements_1 = np.array(elements_1)
 
-            elements_tmp = np.setdiff1d(parent_1, offspring_1)
-            elements_tmp2 = np.setdiff1d(parent_2, offspring_2)
-            test = np.setdiff1d(np.concatenate([elements_tmp, elements_tmp2]), offspring_1)
-            test2 = np.setdiff1d(all_elemnts, offspring_2)
-            test2 = np.setdiff1d(elements_1, test2)
+            # elements_2 = list()
+            # for value in range(parent_2.size):
+            #     if parent_2[value] not in offspring_2:
+            #         elements_2.append(parent_2[value])
+            #
+            # elements_2 = np.array(elements_2)
 
-            if (all_elements_1.size > 0):
-                elements_1 = np.setdiff1d(elements_1, all_elements_1)
-                test2 = np.setdiff1d(test2, all_elements_2)
-                if elements_1.size < index_fall_1.size:
-                    index_fall_1 = index_fall_1[:elements_1.size]
-                if test2.size < index_fall_2.size:
-                    index_fall_2 = index_fall_2[:test2.size]
 
-            offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
-            offspring_1 = offspring_1[offspring_1 != -1]
+            # elements_tmp = np.setdiff1d(parent_1, offspring_1)
+            # elements_tmp2 = np.setdiff1d(parent_2, offspring_2)
+            # test = np.setdiff1d(np.concatenate([elements_tmp, elements_tmp2]), offspring_1)
+            # test2 = np.setdiff1d(all_elemnts, offspring_2)
+            # test2 = np.setdiff1d(test2, offspring_1)
 
-            if test2.size == 0 or index_fall_2.size == 0:
-                offspring_2 = offspring_2[test2 != -1]
+            # if (all_elements_1.size > 0):
+            #     elements_1 = np.setdiff1d(elements_1, all_elements_1)
+            #     test2 = np.setdiff1d(test2, all_elements_2)
+            #     if elements_1.size < index_fall_1.size:
+            #         index_fall_1 = index_fall_1[:elements_1.size]
+            #     if test2.size < index_fall_2.size:
+            #         index_fall_2 = index_fall_2[:test2.size]
+
+            # offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
+            # offspring_1 = offspring_1[offspring_1 != -1]
+            #
+            # if test2.size == 0 or index_fall_2.size == 0:
+            #     offspring_2 = offspring_2[offspring_2 != -1]
+            # elif test2.size < index_fall_2.size:
+            #     offspring_2[index_fall_2[:test2.size]] = np.array(test2)
+            #     offspring_2 = offspring_2[offspring_2 !=-1]
+            # else:
+            #     offspring_2[index_fall_2] = np.array(test2[:index_fall_2.size])
+            #     # offspring_2 = test2[test2 != -1]
+
+
+
+            elements_1_teste = np.setdiff1d(all_elemnts, offspring_1)
+            elements_2_teste = np.setdiff1d(all_elemnts, offspring_2)
+
+            # offspring_1[offspring_1 == -1] = elements_1_teste[:offspring_1[offspring_1 == -1].size]
+
+            if elements_1_teste.size == 0:
+                offspring_1 = offspring_1[offspring_1 != -1]
+            elif elements_1_teste.size < offspring_1[offspring_1 == -1].size:
+                indixes = np.where(offspring_1 == -1)[0]
+                offspring_1[indixes[:elements_1_teste.size]] = elements_1_teste
+                offspring_1 = offspring_1[offspring_1 != -1]
             else:
-                offspring_2[index_fall_2] = np.array(test2[:index_fall_2.size])
-                offspring_2 = test2[test2 != -1]
+                offspring_1[offspring_1 == -1] = elements_1_teste[:offspring_1[offspring_1 == -1].size]
 
-            if True in np.isin(offspring_1, all_elements_1) or \
-                    True in np.isin(offspring_2, all_elements_2):
+            elements_2_teste = np.setdiff1d(elements_2_teste, offspring_1)
+
+            if elements_2_teste.size == 0:
+                offspring_2 = offspring_2[offspring_2 !=-1]
+            elif elements_2_teste.size < offspring_2[offspring_2 == -1].size:
+                indixes = np.where(offspring_2 == -1)[0]
+                offspring_2[indixes[:elements_2_teste.size]] = elements_2_teste
+                offspring_2 = offspring_2[offspring_2 !=-1]
+            else:
+                offspring_2[offspring_2 == -1] = elements_2_teste[:offspring_2[offspring_2 == -1].size]
+
+            elements_1_teste = np.setdiff1d(all_elemnts, elements_1_teste)
+
+            if True in np.isin(offspring_1, all_elements_1) or True in np.isin(offspring_2, all_elements_2):
                 offspring_1 = np.setdiff1d(offspring_1, all_elements_1)
                 offspring_2 = np.setdiff1d(offspring_2, all_elements_2)
-
-
 
         else:
             offspring_1 = parent_1
             offspring_2 = parent_2
+
+        if np.intersect1d(offspring_1, offspring_2).size > 0:
+            offspring_1 = offspring_1[np.isin(offspring_1, offspring_2, invert=True)]
 
         offspring_1 = np.concatenate([start_parent_1, offspring_1, end_parent_1])
         offspring_2 = np.concatenate([start_parent_2, offspring_2, end_parent_2])

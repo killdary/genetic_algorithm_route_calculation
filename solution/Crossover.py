@@ -107,8 +107,8 @@ class Crossover:
 
         return offspring_1.astype(int), offspring_2.astype(int)
 
-
     def PMX_2(self, parent_1_tmp, parent_2_tmp, all_elements_1, all_elements_2):
+
         start_parent_1 = np.array([parent_1_tmp[0]])
         end_parent_1 = np.array([parent_1_tmp[-1]])
         start_parent_2 = np.array([parent_2_tmp[0]])
@@ -176,6 +176,10 @@ class Crossover:
                 offspring_1 = np.setdiff1d(offspring_1,all_elements_1)
                 offspring_2 = np.setdiff1d(offspring_2,all_elements_2)
 
+
+
+
+
         else:
             offspring_1 = parent_1
             offspring_2 = parent_2
@@ -184,6 +188,86 @@ class Crossover:
         offspring_2 = np.concatenate([start_parent_2, offspring_2, end_parent_2])
 
         return offspring_1.astype(int), offspring_2.astype(int)
+
+    def PMX_3(self, parent_1_tmp, parent_2_tmp, all_elements_1, all_elements_2):
+
+        start_parent_1 = np.array([parent_1_tmp[0]])
+        end_parent_1 = np.array([parent_1_tmp[-1]])
+        start_parent_2 = np.array([parent_2_tmp[0]])
+        end_parent_2 = np.array([parent_2_tmp[-1]])
+
+        parent_1 = np.delete(parent_1_tmp, [0, parent_1_tmp.size - 1])
+        parent_2 = np.delete(parent_2_tmp, [0, parent_2_tmp.size - 1])
+
+        all_elemnts = np.unique(np.concatenate([parent_1, parent_2]))
+
+        if parent_1.size > 1 and parent_2.size > 1:
+
+            self.__point_mutation(parent_1, parent_2)
+            offspring_1 = np.ones(parent_1.size).astype(int) * -1
+            offspring_2 = np.ones(parent_2.size).astype(int) * -1
+            offspring_1[self.I:self.J] = parent_2[self.I:self.J]
+            offspring_2[self.I:self.J] = parent_1[self.I:self.J]
+
+            for i in np.arange(offspring_1.size):
+                if i < self.I or i >= self.J:
+                    if parent_1[i] not in offspring_1:
+                        offspring_1[i] = parent_1[i]
+
+            for i in np.arange(offspring_2.size):
+                if i < self.I or i > self.J:
+                    if parent_2[i] not in offspring_2:
+                        offspring_2[i] = parent_2[i]
+
+
+            elements_1_teste = np.setdiff1d(all_elemnts, all_elements_1)
+            elements_1_teste = np.setdiff1d(elements_1_teste, offspring_1)
+
+
+            if elements_1_teste.size == 0:
+                offspring_1 = offspring_1[offspring_1 !=-1]
+            elif elements_1_teste.size < offspring_1[offspring_1 == -1].size:
+                try:
+                    indixes = np.where(offspring_1 == -1)[0]
+                    offspring_1[indixes[:elements_1_teste.size]] = elements_1_teste
+                    offspring_1 = offspring_1[offspring_1 !=-1]
+                except:
+                    print(indixes, elements_1_teste, offspring_1)
+                    raise
+            else:
+                offspring_1[offspring_1 == -1] = elements_1_teste[:offspring_1[offspring_1 == -1].size]
+
+            elements_2_teste = np.setdiff1d(all_elemnts, all_elements_2)
+            elements_2_teste = np.setdiff1d(elements_2_teste, offspring_2)
+
+            if elements_2_teste.size == 0:
+                offspring_2 = offspring_2[offspring_2 !=-1]
+            elif elements_2_teste.size < offspring_2[offspring_2 == -1].size:
+                try:
+                    indixes = np.where(offspring_2 == -1)[0]
+                    offspring_2[indixes[:elements_2_teste.size]] = elements_2_teste
+                    offspring_2 = offspring_2[offspring_2 != -1]
+                except:
+                    print(indixes, elements_2_teste, offspring_2)
+                    raise
+            else:
+                offspring_2[offspring_2 == -1] = elements_2_teste[:offspring_2[offspring_2 == -1].size]
+
+        else:
+            offspring_1 = parent_1
+            offspring_2 = parent_2
+
+        if np.intersect1d(all_elements_1, offspring_1).size > 0:
+            offspring_1 = offspring_1[np.isin(offspring_1, all_elements_1, invert=True)]
+
+        if np.intersect1d(all_elements_2, offspring_2).size > 0:
+            offspring_2 = offspring_2[np.isin(offspring_2, all_elements_2, invert=True)]
+
+        offspring_1 = np.concatenate([start_parent_1, offspring_1, end_parent_1])
+        offspring_2 = np.concatenate([start_parent_2, offspring_2, end_parent_2])
+
+        return offspring_1.astype(int), offspring_2.astype(int)
+
 
     def OX(self, parent_1, parent_2):
 

@@ -201,17 +201,31 @@ class GaTopMd:
                 offspring1, offspring2 = list(), list()
                 all_elements_1, all_elements_2 = np.array([]), np.array([])
                 for i in range(len(parents_selected[select_2_parents[0]])):
-                    x,y = self.crossoverObject.PMX_2(parents_selected[select_2_parents[0]][i],
+                    x,y = self.crossoverObject.PMX_3(parents_selected[select_2_parents[0]][i],
                                                      parents_selected[select_2_parents[1]][i],
                                                      all_elements_1, all_elements_2 )
 
-                    all_elements_1 = np.unique(np.concatenate([all_elements_1, x[1:-1]])) \
-                        if all_elements_1.size > 1 else np.unique(x[1:-1])
-                    all_elements_2 = np.unique(np.concatenate([all_elements_2, y[1:-1]])) \
-                        if all_elements_2.size > 1 else np.unique(y[1:-1])
+                    all_elements_1 = np.unique(np.concatenate([all_elements_1, x[1:-1]]))
+                    all_elements_2 = np.unique(np.concatenate([all_elements_2, y[1:-1]]))
 
                     offspring1.append(x)
                     offspring2.append(y)
+
+                for ii in range(len(offspring1)):
+                    for jj in range(len(offspring1)):
+                        if ii != jj:
+                            xxx = np.intersect1d(offspring1[ii], offspring1[jj])
+                            yyy = np.intersect1d(offspring2[ii], offspring2[jj])
+
+                            if xxx.size > 1:
+                                print('xxx')
+                                print(offspring1)
+                                # offspring1[jj] = offspring1[jj][np.isin(offspring1[jj],offspring1[ii], invert=True)]
+                            if yyy.size > 1:
+                                print('yyy')
+                                print(offspring2)
+                                # offspring2[jj] = offspring2[jj][np.isin(offspring2[jj],offspring2[ii], invert=True)]
+
 
                 # offspring3, offspring4 = self.crossoverObject.PMX_2(parents_selected[select_2_parents[0]],
                 #                                                     parents_selected[select_2_parents[1]])
@@ -250,7 +264,7 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.insertion,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
 
                     if self.number_agents > 1:
                         try:
@@ -262,7 +276,7 @@ class GaTopMd:
                         except:
                             print(ind, elemento)
                             raise
-                    else: 
+                    else:
                         list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble, new_population[i]))
 
 
@@ -337,6 +351,7 @@ class GaTopMd:
                                    fitness_values[min_index] < bestElementsCosts[best]]
 
                     crhomossome = new_population[min_index]
+
                     if len(exist_menor) > 0:
                         flag_possui = [np.array_equal(element, crhomossome) for element in bestElements]
                         if True not in flag_possui:
