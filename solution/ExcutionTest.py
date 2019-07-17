@@ -19,12 +19,12 @@ paths = [
      # 'GATOPMD/path_3.txt',
      # 'GATOPMD/path_3.txt',
 
-    'GATOPMD/mapas/rota_team_17.txt',
-    'GATOPMD/mapas/rota_team_17.txt',
-    'GATOPMD/mapas/rota_team_17.txt',
-    'GATOPMD/mapas/rota_team_17.txt',
-    'GATOPMD/mapas/rota_team_17.txt',
-    'GATOPMD/mapas/rota_team_17.txt',
+    'GATOPMD/mapas/novas_cidades_6.txt',
+    'GATOPMD/mapas/novas_cidades_6.txt',
+    'GATOPMD/mapas/novas_cidades_6.txt',
+    'GATOPMD/mapas/novas_cidades_6.txt',
+    'GATOPMD/mapas/novas_cidades_6.txt',
+    'GATOPMD/mapas/novas_cidades_6.txt',
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt',
@@ -48,12 +48,12 @@ prizes = [
      # 'GATOPMD/prize_3.txt',
      # 'GATOPMD/prize_3.txt',
 
-    'GATOPMD/mapas/rota_team_17_p.txt',
-    'GATOPMD/mapas/rota_team_17_p.txt',
-    'GATOPMD/mapas/rota_team_17_p.txt',
-    'GATOPMD/mapas/rota_team_17_p.txt',
-    'GATOPMD/mapas/rota_team_17_p.txt',
-    'GATOPMD/mapas/rota_team_17_p.txt',
+    'GATOPMD/mapas/novos_premios_6.txt',
+    'GATOPMD/mapas/novos_premios_6.txt',
+    'GATOPMD/mapas/novos_premios_6.txt',
+    'GATOPMD/mapas/novos_premios_6.txt',
+    'GATOPMD/mapas/novos_premios_6.txt',
+    'GATOPMD/mapas/novos_premios_6.txt',
 
     # 'GATOPMD/prize_4.txt',
     # 'GATOPMD/prize_4.txt',
@@ -103,11 +103,11 @@ costs=[
     # [15,5, 12, 20],
     # [10,11, 12, 13],
     # [20,5, 15, 25]
-    [11,10,11,10],
-    [15,10],
-    [10,10],
-    [10,10,10],
-    [8,9,10,11],
+    [20,21,22,23,20,21,22,23],
+    [40,45],
+    [35,40],
+    [40,40,40],
+    [35,40,45,50],
     [11,10,11,10]
 
 ]
@@ -133,7 +133,7 @@ points_init = [
      # [0,1,2,3],
      # [0,1,2,3],
      # [0,1,2,3]
-    [0,0,0,0],
+    [0,0,0,0,0,0,0,0],
     [0,0],
     [0,0],
     [0,0,0],
@@ -163,12 +163,12 @@ points_end = [
      # [0,1,2,3],
      # [0,1,2,3],
      # [0,1,2,3]
-    [0,0,0,0],
-    [0,0],
-    [0,0],
-    [0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
+    [2,4,40,37,2,4,40,37],
+    [2,37],
+    [2,37],
+    [2,4,37],
+    [2,4,40,37],
+    [2,4,40,37],
 ]
 
 number_executions = 10
@@ -195,10 +195,10 @@ for i in range(len(paths)):
 
     ga_execution = GaTopMd(
         generation = 1000,
-        population = 100,
-        limit_population = 50,
-        crossover_rate = 0.5,
-        mutation_rate = 0.7,
+        population = 175,
+        limit_population = 25,
+        crossover_rate = 0.3,
+        mutation_rate = 0.6,
         cost_rate = 5,
         prizes_rate = 2,
         map_points = path_current,

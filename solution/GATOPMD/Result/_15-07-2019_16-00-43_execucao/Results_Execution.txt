@@ -1,2 +1,0 @@
-Cenario: ../rota_team_17.txt
-Cenario: ../rota_team_17.txt

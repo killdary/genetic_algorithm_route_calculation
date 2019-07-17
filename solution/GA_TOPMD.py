@@ -211,20 +211,20 @@ class GaTopMd:
                     offspring1.append(x)
                     offspring2.append(y)
 
-                for ii in range(len(offspring1)):
-                    for jj in range(len(offspring1)):
-                        if ii != jj:
-                            xxx = np.intersect1d(offspring1[ii], offspring1[jj])
-                            yyy = np.intersect1d(offspring2[ii], offspring2[jj])
-
-                            if xxx.size > 1:
-                                print('xxx')
-                                print(offspring1)
-                                # offspring1[jj] = offspring1[jj][np.isin(offspring1[jj],offspring1[ii], invert=True)]
-                            if yyy.size > 1:
-                                print('yyy')
-                                print(offspring2)
-                                # offspring2[jj] = offspring2[jj][np.isin(offspring2[jj],offspring2[ii], invert=True)]
+                # for ii in range(len(offspring1)):
+                #     for jj in range(len(offspring1)):
+                #         if ii != jj:
+                #             xxx = np.intersect1d(offspring1[ii], offspring1[jj])
+                #             yyy = np.intersect1d(offspring2[ii], offspring2[jj])
+                #
+                #             if xxx.size > 1:
+                #                 print('xxx')
+                #                 print(offspring1)
+                #                 # offspring1[jj] = offspring1[jj][np.isin(offspring1[jj],offspring1[ii], invert=True)]
+                #             if yyy.size > 1:
+                #                 print('yyy')
+                #                 print(offspring2)
+                #                 # offspring2[jj] = offspring2[jj][np.isin(offspring2[jj],offspring2[ii], invert=True)]
 
 
                 # offspring3, offspring4 = self.crossoverObject.PMX_2(parents_selected[select_2_parents[0]],
@@ -282,9 +282,9 @@ class GaTopMd:
 
 
                     # if(countGenaration > self.limit_population * 0.6):
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWNNM,new_population[i]))
 
 
                     # cousts_mut = np.zeros(len(list_mut))
@@ -322,7 +322,7 @@ class GaTopMd:
                                                                          new_population[i])
 
 
-            new_population = new_population + population
+            # new_population = new_population + population
 
             fitness_values = np.zeros(len(new_population))
             cousts_values = np.zeros(len(new_population))
@@ -440,17 +440,17 @@ class GaTopMd:
 if __name__ == '__main__':
     ga = GaTopMd(
         generation = 1000,
-        population = 300,
-        limit_population = 50,
-        crossover_rate = 0.8,
-        mutation_rate = 0.8,
-        cost_rate = 5,
-        prizes_rate = 2,
-        map_points = 'GATOPMD/path_3.txt',
-        prizes = './GATOPMD/prize_3.txt',
-        max_cost=[30, 30, 30],
-        start_point = [0, 1, 2],
-        end_point = [0, 1, 2])
+        population = 175,
+        limit_population = 25,
+        crossover_rate = 0.3,
+        mutation_rate = 0.6,
+        cost_rate = 2,
+        prizes_rate = 5,
+        map_points = 'GATOPMD/mapas/novas_cidades_6.txt',
+        prizes = 'GATOPMD/mapas/novos_premios_6.txt',
+        max_cost=[25, 25 , 25, 25],
+        start_point = [0,0,0,0],
+        end_point = [2,4,40,37])
         # individual= 0)
     a, b, c, d = ga.run()
 
@@ -464,4 +464,5 @@ if __name__ == '__main__':
         ga.plota_rotas_TOP(ga.map_points, b[i])
 
         print(b[i])
+        input()
         # print(a[i])

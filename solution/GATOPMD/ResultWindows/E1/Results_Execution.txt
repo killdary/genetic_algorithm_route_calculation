@@ -1,2 +1,0 @@
-Cenario: GATOPMD/path_2.txt
-Cenario: GATOPMD/path_2.txt

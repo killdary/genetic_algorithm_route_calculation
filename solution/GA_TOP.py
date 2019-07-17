@@ -412,12 +412,12 @@ if __name__ == '__main__':
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        map_points = '../rota_team_17.txt',
-        prizes = '../rota_team_17_p.txt',
+        map_points = 'GATOPMD/mapas/novas_cidades_6.txt',
+        prizes = 'GATOPMD/mapas/novos_premios_6.txt',
         # map_points = '../adilson_cidades.txt',
         # prizes = '../adilson_premios.txt',
-        number_agents= 2,
-        max_coust=[10, 8],
+        number_agents= 4,
+        max_coust=[40,40,40,40],
         start_point = 0,
         end_point = 0,
         individual= 0)
@@ -433,4 +433,5 @@ if __name__ == '__main__':
         ga.plota_rotas_TOP(ga.mapa, b[i])
 
         print(b[i])
+        input()
         # print(a[i])
