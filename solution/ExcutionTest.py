@@ -24,7 +24,7 @@ paths = [
     'GATOPMD/mapas/novas_cidades_6.txt',
     'GATOPMD/mapas/novas_cidades_6.txt',
     'GATOPMD/mapas/novas_cidades_6.txt',
-    'GATOPMD/mapas/novas_cidades_6.txt',
+    # 'GATOPMD/mapas/novas_cidades_6.txt',
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt',
@@ -53,7 +53,7 @@ prizes = [
     'GATOPMD/mapas/novos_premios_6.txt',
     'GATOPMD/mapas/novos_premios_6.txt',
     'GATOPMD/mapas/novos_premios_6.txt',
-    'GATOPMD/mapas/novos_premios_6.txt',
+    # 'GATOPMD/mapas/novos_premios_6.txt',
 
     # 'GATOPMD/prize_4.txt',
     # 'GATOPMD/prize_4.txt',
@@ -97,18 +97,20 @@ costs=[
     # [5, 10, 12],
     # [10, 11, 12],
     # #
-    # [40, 40, 40],
-    # [25,27, 28, 30],
-    # [20,20, 20, 20],
+    [120],
+    [60,60],
+    [50,50,50,50],
+    [50,50,50],
+    [15,20,25,30],
     # [15,5, 12, 20],
     # [10,11, 12, 13],
     # [20,5, 15, 25]
-    [20,21,22,23,20,21,22,23],
-    [40,45],
-    [35,40],
-    [40,40,40],
-    [35,40,45,50],
-    [11,10,11,10]
+    # [20,21,22,23,20,21,22,23],
+    # [40,45],
+    # [35,40],
+    # [40,40,40],
+    # [35,40,45,50],
+    # [11,10,11,10]
 
 ]
 
@@ -133,8 +135,8 @@ points_init = [
      # [0,1,2,3],
      # [0,1,2,3],
      # [0,1,2,3]
-    [0,0,0,0,0,0,0,0],
-    [0,0],
+    # [0,0,0,0,0,0,0,0],
+    [0],
     [0,0],
     [0,0,0],
     [0,0,0,0],
@@ -163,8 +165,8 @@ points_end = [
      # [0,1,2,3],
      # [0,1,2,3],
      # [0,1,2,3]
-    [2,4,40,37,2,4,40,37],
-    [2,37],
+    # [2,4,40,37],
+    [0],
     [2,37],
     [2,4,37],
     [2,4,40,37],
@@ -195,10 +197,10 @@ for i in range(len(paths)):
 
     ga_execution = GaTopMd(
         generation = 1000,
-        population = 175,
-        limit_population = 25,
-        crossover_rate = 0.3,
-        mutation_rate = 0.6,
+        population = 300,
+        limit_population = 50,
+        crossover_rate = .8,
+        mutation_rate = .6,
         cost_rate = 5,
         prizes_rate = 2,
         map_points = path_current,

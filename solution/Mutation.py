@@ -1,3 +1,5 @@
+from itertools import chain
+
 import numpy as np
 
 
@@ -142,6 +144,32 @@ class Mutation:
 
         individual = self.__corrige_chromossomo(individual)
 
+        return individual
+
+    def SWGLM(self, City):
+        value_worst = 0
+        index_worst = 0
+        individual = self.__trata_crhomossomo(City)
+        # if individual.size > 3
+        for i in range(0, individual.size):
+            value = self.med_custo(individual[i:i + 2])
+            if value > value_worst:
+                value_worst = value
+                index_worst = i
+
+        best_cost_individual = self.med_custo(individual)
+        best_individual = individual
+        for i in range(0, individual.size):
+            if i != index_worst:
+                teste_individual = np.copy(individual)
+                teste_individual[i], teste_individual[index_worst] = teste_individual[index_worst], teste_individual[i]
+                cost_test = self.med_custo(teste_individual)
+                if cost_test < best_cost_individual:
+                    best_cost_individual = cost_test
+                    best_individual = teste_individual
+
+        individual = self.__corrige_chromossomo(best_individual)
+        # print('.', end='')
         return individual
 
     def insert_individualin_cromossome(self, City, chromossome, med_custo):
@@ -429,7 +457,7 @@ class Mutation:
                           chromossome):
 
         elements_chromossome = np.array([])
-        resultado = list()
+        resultado = [0]*len(chromossome)
 
         for i in chromossome:
             tmp = self.__trata_crhomossomo(i)
@@ -463,9 +491,9 @@ class Mutation:
 
                 chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
 
-                resultado.append(chromossome_generate)
+                resultado[i] = chromossome_generate
             else:
-                resultado.append(chromossome[i])
+                resultado[i] = chromossome[i]
 
         return resultado
 
@@ -489,10 +517,10 @@ class Mutation:
 
         return chromossome
 
-    def SWGLM(self, City, med_custo):
-        value_worst = 0
-        index_worst = 0
-        individual = self.__trata_crhomossomo(City)
+    # def SWGLM(self, City, med_custo):
+    #     value_worst = 0
+    #     index_worst = 0
+    #     individual = self.__trata_crhomossomo(City)
 
     def PMX_mutation(self, parent_1_tmp, parent_2_tmp, all_elements_1, all_elements_2):
         start_parent_1 = np.array([parent_1_tmp[0]])
