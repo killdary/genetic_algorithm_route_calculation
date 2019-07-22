@@ -329,6 +329,7 @@ class Mutation:
                 tmp = np.delete(tmp, [i])
 
                 tmp_coust = function_aux(self.__corrige_chromossomo(tmp))
+                tmp_c = med_custo(self.__corrige_chromossomo(tmp))
 
                 if value_worst < tmp_coust:
                     idx_worst = i

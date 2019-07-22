@@ -19,11 +19,11 @@ paths = [
      # 'GATOPMD/path_3.txt',
      # 'GATOPMD/path_3.txt',
 
-    'GATOPMD/mapas/novas_cidades_6.txt',
-    'GATOPMD/mapas/novas_cidades_6.txt',
-    'GATOPMD/mapas/novas_cidades_6.txt',
-    'GATOPMD/mapas/novas_cidades_6.txt',
-    'GATOPMD/mapas/novas_cidades_6.txt',
+    # 'GATOPMD/mapas/novas_cidades_6.txt',
+    # 'GATOPMD/mapas/novas_cidades_6.txt',
+    # 'GATOPMD/mapas/novas_cidades_6.txt',
+    # 'GATOPMD/mapas/novas_cidades_6.txt',
+    # 'GATOPMD/mapas/novas_cidades_6.txt',
     # 'GATOPMD/mapas/novas_cidades_6.txt',
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt',
@@ -31,6 +31,16 @@ paths = [
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt',
     # 'GATOPMD/path_4.txt'
+
+    # 'GATOPMD/mapas/artigo/mapa_4r_12_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_12_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_12_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_12_1d.txt',
+    'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_25_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_30_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_35_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_35_1d.txt',
 ]
 
 prizes = [
@@ -48,11 +58,11 @@ prizes = [
      # 'GATOPMD/prize_3.txt',
      # 'GATOPMD/prize_3.txt',
 
-    'GATOPMD/mapas/novos_premios_6.txt',
-    'GATOPMD/mapas/novos_premios_6.txt',
-    'GATOPMD/mapas/novos_premios_6.txt',
-    'GATOPMD/mapas/novos_premios_6.txt',
-    'GATOPMD/mapas/novos_premios_6.txt',
+    # 'GATOPMD/mapas/novos_premios_6.txt',
+    # 'GATOPMD/mapas/novos_premios_6.txt',
+    # 'GATOPMD/mapas/novos_premios_6.txt',
+    # 'GATOPMD/mapas/novos_premios_6.txt',
+    # 'GATOPMD/mapas/novos_premios_6.txt',
     # 'GATOPMD/mapas/novos_premios_6.txt',
 
     # 'GATOPMD/prize_4.txt',
@@ -61,6 +71,17 @@ prizes = [
     # 'GATOPMD/prize_4.txt',
     # 'GATOPMD/prize_4.txt',
     # 'GATOPMD/prize_4.txt'
+
+    # 'GATOPMD/mapas/artigo/premio_12.txt',
+    # 'GATOPMD/mapas/artigo/premio_12.txt',
+    # 'GATOPMD/mapas/artigo/premio_12.txt',
+    # 'GATOPMD/mapas/artigo/premio_12.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_12_1d.txt',
+    'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_25_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_30_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_35_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_35_1d.txt',
 ]
 
 size_population = [200,
@@ -97,11 +118,11 @@ costs=[
     # [5, 10, 12],
     # [10, 11, 12],
     # #
-    [120],
-    [60,60],
-    [50,50,50,50],
-    [50,50,50],
-    [15,20,25,30],
+    # [130],
+    # [50, 50],
+    # [30,30,45],
+    # [30,30,30,30],
+    # [15,20,25,30],
     # [15,5, 12, 20],
     # [10,11, 12, 13],
     # [20,5, 15, 25]
@@ -111,6 +132,17 @@ costs=[
     # [40,40,40],
     # [35,40,45,50],
     # [11,10,11,10]
+
+    # [60],
+    # [15,25,20],
+    # [20,20,20,20],
+    # [14,16,16,18],
+    # [18,23,18,18],
+    # [28,24,26,25],
+    # [28,26,28,26],
+    # [26,27,34,28],
+    # [24,25,26,28],
+    [35]*4,
 
 ]
 
@@ -136,11 +168,20 @@ points_init = [
      # [0,1,2,3],
      # [0,1,2,3]
     # [0,0,0,0,0,0,0,0],
-    [0],
-    [0,0],
-    [0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
+    # [0],
+    # [0,0],
+    # [0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+
+    # [0,0,0,0],
+    # # [0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+    [0,0,0,0]
 
 ]
 
@@ -166,14 +207,35 @@ points_end = [
      # [0,1,2,3],
      # [0,1,2,3]
     # [2,4,40,37],
-    [0],
-    [2,37],
-    [2,4,37],
-    [2,4,40,37],
-    [2,4,40,37],
+    # [1,2,3,4],
+    # [1,2,3,4],
+    # [1,2,3,4],
+    # [1,2,3,4],
+    # [4,2,37,40],
+    # [2,37],
+    # [2,4,37],
+    # [2,4,40,37],
+    # [2,4,40,37],
+    # [0],
+    # [1,2,3],
+    # [1,2,3,4],
+    # [1,2,3,4],
+    [1,2,3,4],
 ]
 
-number_executions = 10
+
+deposits = [
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,4,2,37,40],
+    # [0,1,2,3,4],
+    [0,1,2,3,4],
+]
+number_executions = 15
 
 main_path='./GATOPMD/Result/'
 data = datetime.now()
@@ -194,20 +256,22 @@ for i in range(len(paths)):
 
     current_init = points_init[i]
     current_end = points_end[i]
+    current_deposits = deposits[i]
 
     ga_execution = GaTopMd(
         generation = 1000,
-        population = 300,
-        limit_population = 50,
+        population = 210,
+        limit_population = 25,
         crossover_rate = .8,
-        mutation_rate = .6,
+        mutation_rate = .3,
         cost_rate = 5,
         prizes_rate = 2,
         map_points = path_current,
         prizes = prize_current,
         max_cost= cost_current,
         start_point = current_init,
-        end_point = current_end)
+        end_point = current_end,
+        depositos = current_deposits)
     
     folder_cenary = result_folder+'/results_'+re.findall('([\w]+)\.', path_current)[0]
     if not os.path.exists(folder_cenary):
@@ -265,11 +329,11 @@ for i in range(len(paths)):
             for j in range(len(bestElementAlways)):
                 out.write(str(ga_execution.mensureCost(bestElementAlways[j])) + ';')
                 custo = custo + ga_execution.mensureCost(bestElementAlways[j])
-            out.write(str(custo)+'\n')
+            out.write(str(custo)+';')
 
             premio = 0
             for j in range(len(bestElementAlways)):
-                out.write(str(ga_execution.prizes.take(bestElementAlways[j].astype(int)).sum())+ ',')
+                out.write(str(ga_execution.prizes.take(bestElementAlways[j].astype(int)).sum())+ ';')
                 premio = premio + ga_execution.prizes.take(bestElementAlways[j].astype(int)).sum()
             out.write(str(premio)+'\n')
 

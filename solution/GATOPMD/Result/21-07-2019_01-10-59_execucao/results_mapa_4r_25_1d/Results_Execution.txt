@@ -1,0 +1,1 @@
+Cenario: GATOPMD/mapas/artigo/mapa_4r_25_1d.txt

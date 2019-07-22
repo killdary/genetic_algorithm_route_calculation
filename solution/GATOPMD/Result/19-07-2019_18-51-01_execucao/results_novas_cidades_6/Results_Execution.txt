@@ -1,0 +1,1 @@
+Cenario: GATOPMD/mapas/novas_cidades_6.txt

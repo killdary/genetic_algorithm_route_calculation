@@ -20,12 +20,13 @@ class GaTopMd:
     max_cost: np.array
     start_point: list
     end_point: list
+    depositos: list
 
     distance = np.array
 
     def __init__(self, generation, population, limit_population, crossover_rate,
                  mutation_rate, cost_rate, prizes_rate, map_points,
-                 prizes, max_cost, start_point, end_point):
+                 prizes, max_cost, start_point, end_point, depositos=[]):
 
         self.generationSize = generation
         self.populationSize = population
@@ -39,6 +40,7 @@ class GaTopMd:
         self.max_cost = np.array(max_cost)
         self.start_point = start_point
         self.end_point = end_point
+        self.depositos = depositos
 
         self.number_agents = len(max_cost)
 
@@ -57,7 +59,7 @@ class GaTopMd:
         deposits += [x for x in self.end_point if x not in deposits]
         deposits = np.unique(np.array(deposits))
         self.initialChromossome = np.arange(self.map_points.shape[0])
-        self.initialChromossome = np.delete(self.initialChromossome, [deposits])
+        self.initialChromossome = np.delete(self.initialChromossome, self.depositos)
 
         self.allElementsMap = np.copy(self.initialChromossome)
 
@@ -88,7 +90,8 @@ class GaTopMd:
         x = self.map_points[:, 0]
         y = self.map_points[:, 1]
 
-        cid_nome = range(elements.size)
+        # cid_nome = range(elements.size)
+        cid_nome = self.allElementsMap
 
         plt.figure(num=None,
                    figsize=(size, size),
@@ -101,18 +104,29 @@ class GaTopMd:
                      pos_y[i],
                      'C' + str(i),
                      lw=5,
-                     label='agente ' + str(i + 1))
+                     label='agente ' + str(i + 1),
+                     zorder=1)
 
         plt.rc('font', size=font_size)
 
         plt.legend(loc='center left')
 
-        plt.scatter(self.map_points[:, 0], self.map_points[:, 1], s=120, marker="s")
+        plt.scatter(self.map_points[cid_nome, 0], self.map_points[cid_nome, 1], s=120, marker="s", zorder=2)
 
-        for i, txt in enumerate(cid_nome):
+        plt.scatter(self.map_points[self.depositos,0], self.map_points[self.depositos,1], s=150,marker='^', zorder=3, c='black')
+
+        # for i, txt in enumerate(cid_nome):
+        for i in cid_nome:
             plt.annotate(str(self.prizes[i]), (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
 
+        for i in self.start_point:
+            plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
+
+        for i in self.depositos:
+            plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
+
         #        plt.title('Mapa GA')
+        # plt.margins(0.05)
         if file_plot:
             plt.savefig(name_file_plot+'.png')
         else:
@@ -176,6 +190,7 @@ class GaTopMd:
                                                            self.populationSize,
                                                            self.number_agents)
 
+
         size_best_elements = 4
         bestElements = population[0:4]
         bestElementsCosts = np.array([self.reply_method_top(self.FO, element).sum() for element in bestElements])
@@ -185,6 +200,7 @@ class GaTopMd:
         bestElementAlways = bestElements[0]
         bestElementGenaration = list()
         bestElementGenarationCost = list()
+        count_dis = 0
 
         for g in range(self.generationSize):
 
@@ -253,6 +269,13 @@ class GaTopMd:
                 new_population.append(offspring1)
                 new_population.append(offspring2)
 
+                # offspring_1, offspring_2 = self.crossoverObject.cross_teste(parents_selected[select_2_parents[0]],
+                #                                                           parents_selected[select_2_parents[1]],
+                #                                           function_objective=self.FO)
+                # new_population.append(offspring_1)
+                # new_population.append(offspring_2)
+
+
             # new_population = new_population + [population[i] for i in select_parents_index if i not in select_parents_index]
 
             # for i in range(len(new_population)):
@@ -277,30 +300,38 @@ class GaTopMd:
             # aqui não foi atualizado####################
             new_population.append(bestElementAlways)
             rand= np.insert(rand, rand.size, self.mutation_rate)
+
+            for i in bestElements:
+                new_population.append(i)
+                rand= np.insert(rand, rand.size, self.mutation_rate)
+
             population_mutation = list()
             for i in range(rand.size):
                 if rand[i] <= self.mutation_rate:
                     list_mut = list()
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.insertion,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i], 1))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.insertion,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
                     # list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i]))
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.SWGLM,new_population[i]))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.SWGLM,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.SWGLM,new_population[i], 1))
 
-                    # if self.number_agents > 1:
-                    #     try:
-                    #         ind = np.random.choice(range(self.number_agents), 2, replace=False)
-                    #         elemento = [np.copy(chromossome) for chromossome in new_population[i]]
-                    #         elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
-                    #             elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
-                    #         list_mut.append(elemento)
-                    #     except:
-                    #         print(ind, elemento)
-                    #         print(ind, elemento)
-                    #         raise
-                    # else:
-                    #     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble, new_population[i]))
+
+
+                    if self.number_agents > 1:
+                        try:
+                            ind = np.random.choice(range(self.number_agents), 2, replace=False)
+                            elemento = [np.copy(chromossome) for chromossome in new_population[i]]
+                            elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
+                                elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
+                            list_mut.append(elemento)
+                        except:
+                            print(ind, elemento)
+                            print(ind, elemento)
+                            raise
+                    else:
+                        list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble, new_population[i]))
 
 
 
@@ -308,8 +339,8 @@ class GaTopMd:
                     # list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i], 2))
                         # list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i], 2))
                         # list_mut.append(self.reply_method_mutation_top(self.mutationObject.insertion,new_population[i], 2))
-                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i]))
-                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i]))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWRGM,new_population[i],1))
+                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.WGWWGM,new_population[i],1))
                     # list_mut.append(self.reply_method_mutation_top(self.mutationObject.SWGLM,new_population[i]))
 
 
@@ -379,40 +410,40 @@ class GaTopMd:
                     crhomossome = new_population[min_index]
 
                     if len(exist_menor) > 0:
-                        flag_possui = [np.array_equal(element, crhomossome) for element in bestElements]
-                        if True not in flag_possui:
+                        # flag_possui = [np.array_equal(element, crhomossome) for element in bestElements]
+                        # if True not in flag_possui:
 
-                            # beste_elements_new = list()
-                            # best_costs_new = list()
-                            # cost_chromosome = self.reply_method_top(self.FO, crhomossome).sum()
-                            # add_elemente = False
-                            # for element in range(size_best_elements):
-                            #     if cost_chromosome < bestElementsCosts[element]:
-                            #         beste_elements_new.append(crhomossome)
-                            #         best_costs_new.append(cost_chromosome)
-                            #
-                            #         if element < size_best_elements -1:
-                            #             for restante in range(element,size_best_elements-1):
-                            #                 beste_elements_new.append(bestElements[restante])
-                            #                 best_costs_new.append(bestElementsCosts[restante])
-                            #         break
-                            #     else:
-                            #         beste_elements_new.append(bestElements[element])
-                            #         best_costs_new.append(bestElementsCosts[element])
-                            #
-                            # bestElements = beste_elements_new
-                            # bestElementsCosts = best_costs_new
+                        # beste_elements_new = list()
+                        # best_costs_new = list()
+                        # cost_chromosome = self.reply_method_top(self.FO, crhomossome).sum()
+                        # add_elemente = False
+                        # for element in range(size_best_elements):
+                        #     if cost_chromosome < bestElementsCosts[element]:
+                        #         beste_elements_new.append(crhomossome)
+                        #         best_costs_new.append(cost_chromosome)
+                        #
+                        #         if element < size_best_elements -1:
+                        #             for restante in range(element,size_best_elements-1):
+                        #                 beste_elements_new.append(bestElements[restante])
+                        #                 best_costs_new.append(bestElementsCosts[restante])
+                        #         break
+                        #     else:
+                        #         beste_elements_new.append(bestElements[element])
+                        #         best_costs_new.append(bestElementsCosts[element])
+                        #
+                        # bestElements = beste_elements_new
+                        # bestElementsCosts = best_costs_new
 
-                            best_elements_temporary = bestElements
-                            best_elements_temporary.append(crhomossome)
+                        best_elements_temporary = bestElements
+                        best_elements_temporary.append(crhomossome)
 
-                            new_cousts = np.array(
-                                [self.reply_method_top(self.FO, tmp).sum() for tmp in best_elements_temporary])
-                            indexes_best_individual = np.argsort(new_cousts)
-                            indexes_best_individual = indexes_best_individual[0:size_best_elements]
+                        new_cousts = np.array(
+                            [self.reply_method_top(self.FO, tmp).sum() for tmp in best_elements_temporary])
+                        indexes_best_individual = np.argsort(new_cousts)
+                        indexes_best_individual = indexes_best_individual[0:size_best_elements]
 
-                            bestElementsCosts = new_cousts[indexes_best_individual]
-                            bestElements = [best_elements_temporary[best_index] for best_index in indexes_best_individual]
+                        bestElementsCosts = new_cousts[indexes_best_individual]
+                        bestElements = [best_elements_temporary[best_index] for best_index in indexes_best_individual]
                     else:
                         # if fitness_values[min_index] not in population_select:
                         population.append(new_population[min_index])
@@ -443,6 +474,12 @@ class GaTopMd:
             else:
                 countGenaration += 1
                 population.append(bestElementAlways)
+
+                if countGenaration > 10:
+                    bestCost = bestElementsCosts[3]
+                    bestElementAlways = np.copy(bestElements[3])
+                    count_dis = 1
+
                 # custos = self.reply_method_top(self.mensureCost, bestElements[0])
                 # print(custos)
                 # print([True for item in range(self.number_agents) if custos[item] > self.max_cost[item]])
@@ -464,17 +501,18 @@ class GaTopMd:
 if __name__ == '__main__':
     ga = GaTopMd(
         generation = 1000,
-        population = 250,
-        limit_population = 25,
-        crossover_rate = .8,
-        mutation_rate = .5,
+        population = 200,
+        limit_population = 20,
+        crossover_rate = .6,
+        mutation_rate = .3,
         cost_rate = 2,
         prizes_rate = 5,
-        map_points = 'GATOPMD/mapas/novas_cidades_6.txt',
-        prizes = 'GATOPMD/mapas/novos_premios_6.txt',
-        max_cost=[35,35,40,35],
+        map_points = 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
+        prizes = 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
+        max_cost= [35]*4,
         start_point = [0,0,0,0],
-        end_point = [2,4,40,37])
+        end_point = [1,2,3,4],
+        depositos=[0,1,2,3,4])
         # individual= 0)
     a, b, c, d = ga.run()
 
