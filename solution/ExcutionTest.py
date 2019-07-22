@@ -142,7 +142,7 @@ costs=[
     # [28,26,28,26],
     # [26,27,34,28],
     # [24,25,26,28],
-    [35]*4,
+    [30]*4,
 
 ]
 
@@ -259,13 +259,13 @@ for i in range(len(paths)):
     current_deposits = deposits[i]
 
     ga_execution = GaTopMd(
-        generation = 1000,
-        population = 210,
-        limit_population = 25,
-        crossover_rate = .8,
-        mutation_rate = .3,
-        cost_rate = 5,
-        prizes_rate = 2,
+        generation=1000,
+        population=150,
+        limit_population=20,
+        crossover_rate=.8,
+        mutation_rate=.3,
+        cost_rate=2,
+        prizes_rate=5,
         map_points = path_current,
         prizes = prize_current,
         max_cost= cost_current,

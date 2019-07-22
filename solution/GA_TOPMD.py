@@ -223,11 +223,7 @@ class GaTopMd:
 
             # Realizando o cruzamento entre os genees
             for cross in range(select_parents_index.size):
-                select_2_parents = np.random.randint(select_parents_index.size, size=2)
-
-                # offspring1, offspring2 = self.crossover(parents_selected[select_2_parents[0]],
-                #                                         parents_selected[select_2_parents[1]],
-                #                                         function_objective=self.FO)
+                select_2_parents = np.random.randint(select_parents_index.size, size=4)
 
                 offspring1, offspring2 = list(), list()
                 all_elements_1, all_elements_2 = np.array([]), np.array([])
@@ -242,38 +238,16 @@ class GaTopMd:
                     offspring1.append(x)
                     offspring2.append(y)
 
+                a,b = self.crossoverObject.cross_teste(parents_selected[select_2_parents[0]],
+                                                     parents_selected[select_2_parents[1]],
+                                                       self.mensureCost)
 
-                # for ii in range(len(offspring1)):
-                #     for jj in range(len(offspring1)):
-                #         if ii != jj:
-                #             xxx = np.intersect1d(offspring1[ii], offspring1[jj])
-                #             yyy = np.intersect1d(offspring2[ii], offspring2[jj])
-                #
-                #             if xxx.size > 1:
-                #                 print('xxx')
-                #                 print(offspring1)
-                #                 # offspring1[jj] = offspring1[jj][np.isin(offspring1[jj],offspring1[ii], invert=True)]
-                #             if yyy.size > 1:
-                #                 print('yyy')
-                #                 print(offspring2)
-                #                 # offspring2[jj] = offspring2[jj][np.isin(offspring2[jj],offspring2[ii], invert=True)]
-
-
-                # offspring3, offspring4 = self.crossoverObject.PMX_2(parents_selected[select_2_parents[0]],
-                #                                                     parents_selected[select_2_parents[1]])
-
-                # if(g > 21):
-                #     print(parents_selected[select_2_parents[0]])
-                #     print(parents_selected[select_2_parents[1]])
 
                 new_population.append(offspring1)
                 new_population.append(offspring2)
+                new_population.append(a)
+                new_population.append(b)
 
-                # offspring_1, offspring_2 = self.crossoverObject.cross_teste(parents_selected[select_2_parents[0]],
-                #                                                           parents_selected[select_2_parents[1]],
-                #                                           function_objective=self.FO)
-                # new_population.append(offspring_1)
-                # new_population.append(offspring_2)
 
 
             # new_population = new_population + [population[i] for i in select_parents_index if i not in select_parents_index]
@@ -309,7 +283,7 @@ class GaTopMd:
             for i in range(rand.size):
                 if rand[i] <= self.mutation_rate:
                     list_mut = list()
-                    list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i], 1))
+                    # list_mut.append(self.reply_method_mutation_top(self.mutationObject.swap,new_population[i], 1))
                     # list_mut.append(self.reply_method_mutation_top(self.mutationObject.insertion,new_population[i]))
                     # list_mut.append(self.reply_method_mutation_top(self.mutationObject.reverse,new_population[i]))
                     # list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble,new_population[i]))
@@ -318,20 +292,20 @@ class GaTopMd:
                     list_mut.append(self.reply_method_mutation_top(self.mutationObject.SWGLM,new_population[i], 1))
 
 
-
-                    if self.number_agents > 1:
-                        try:
-                            ind = np.random.choice(range(self.number_agents), 2, replace=False)
-                            elemento = [np.copy(chromossome) for chromossome in new_population[i]]
-                            elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
-                                elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
-                            list_mut.append(elemento)
-                        except:
-                            print(ind, elemento)
-                            print(ind, elemento)
-                            raise
-                    else:
-                        list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble, new_population[i]))
+                    #
+                    # if self.number_agents > 1:
+                    #     try:
+                    #         ind = np.random.choice(range(self.number_agents), 2, replace=False)
+                    #         elemento = [np.copy(chromossome) for chromossome in new_population[i]]
+                    #         elemento[ind[0]], elemento[ind[1]] = self.mutationObject.PMX_mutation(
+                    #             elemento[ind[0]], elemento[ind[1]], np.array([]), np.array([]))
+                    #         list_mut.append(elemento)
+                    #     except:
+                    #         print(ind, elemento)
+                    #         print(ind, elemento)
+                    #         raise
+                    # else:
+                    #     list_mut.append(self.reply_method_mutation_top(self.mutationObject.scramble, new_population[i]))
 
 
 
@@ -501,15 +475,15 @@ class GaTopMd:
 if __name__ == '__main__':
     ga = GaTopMd(
         generation = 1000,
-        population = 200,
+        population = 150,
         limit_population = 20,
-        crossover_rate = .6,
+        crossover_rate = .8,
         mutation_rate = .3,
         cost_rate = 2,
         prizes_rate = 5,
         map_points = 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
         prizes = 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
-        max_cost= [35]*4,
+        max_cost= [30]*4,
         start_point = [0,0,0,0],
         end_point = [1,2,3,4],
         depositos=[0,1,2,3,4])

@@ -20,9 +20,6 @@ class Crossover:
             self.I = route_insert_points.min()
             self.J = route_insert_points.max()
 
-
-
-
     @staticmethod
     def removed_citys_repeat(flux):
         citys_position = np.unique(flux, return_index=True)[1]
@@ -31,10 +28,8 @@ class Crossover:
 
         return new_citys
 
-
     def one_point(self, City1, City2):
         pass
-
 
     def two_point(self, parent_1, parent_2):
         start = np.array([parent_1[0]])
@@ -268,7 +263,6 @@ class Crossover:
 
         return offspring_1.astype(int), offspring_2.astype(int)
 
-
     def OX(self, parent_1, parent_2):
 
         start = np.array([parent_1[0]])
@@ -483,28 +477,47 @@ class Crossover:
         return offspring_1, offspring_2
 
     def cross_teste(self, parent_1, parent_2, function_objective):
-        costs_p1 = [function_objective(i) for i in parent_1]
-        costs_p2 = [function_objective(i) for i in parent_2]
 
-        ind_min_1 = np.argmin(costs_p1)
+        cost = [function_objective(i) for i in parent_1]
+        ind_min_1 = np.argmin(cost)
+
+        # ind_min_1 = np.random.randint(len(parent_1),size=1)[0]
         # ind_min_2 = np.argmin(costs_p2)
+        a = [parent_1[i][1:-1] for i in range(len(parent_1)) if i != ind_min_1]
+        b = [parent_2[i][1:-1] for i in range(len(parent_1)) if i != ind_min_1]
+        all_elements_1 = np.concatenate(a)
+        all_elements_2 = np.concatenate(b)
 
-        point = ind_min_1
+        ind = np.isin(parent_2[ind_min_1], all_elements_1, invert=True)
+        ind2 = np.isin( parent_1[ind_min_1],all_elements_2, invert=True)
 
-        all_elements_1 = np.array(parent_1[ind_min_1][1:-1])
-        all_elements_2 = np.array(parent_2[ind_min_1][1:-1])
+        x = parent_2[ind_min_1][ind]
+        y = parent_1[ind_min_1][ind2]
+
+        off1 = list()
+        off2 = list()
         for i in range(len(parent_1)):
-            if i != point:
-                ind = np.isin(all_elements_1, parent_1[i], invert=True)
-                parent_1[i] = parent_1[i][ind]
-                all_elements_1 = np.unique(np.concatenate([all_elements_1, parent_1[i][1:-1]]))
+            if i != ind_min_1:
+                off1.append(np.copy(parent_1[i]))
+                off2.append(np.copy(parent_2[i]))
+            else:
+                off1.append(x)
+                off2.append(y)
 
+        # all_elements_1 = np.array(parent_1[ind_min_1][1:-1])
+        # all_elements_2 = np.array(parent_2[ind_min_1][1:-1])
+        # for i in range(len(parent_1)):
+        #     if i != point:
+        #         ind = np.isin(all_elements_1, parent_1[i], invert=True)
+        #         parent_1[i] = parent_1[i][ind]
+        #         all_elements_1 = np.unique(np.concatenate([all_elements_1, parent_1[i][1:-1]]))
+        #
+        #
+        #         ind = np.isin(all_elements_2, parent_2[i], invert=True)
+        #         parent_2[i] = parent_2[i][ind]
+        #         all_elements_2 = np.unique(np.concatenate([all_elements_2, parent_2[i][1:-1]]))
 
-                ind = np.isin(all_elements_2, parent_2[i], invert=True)
-                parent_2[i] = parent_2[i][ind]
-                all_elements_2 = np.unique(np.concatenate([all_elements_2, parent_2[i][1:-1]]))
-
-        return  parent_1, parent_2
+        return off1, off2
 
 
 
