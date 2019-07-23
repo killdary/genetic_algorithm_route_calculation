@@ -1,5 +1,0 @@
-Cenario: GATOPMD/path_4.txt
-Cenario: GATOPMD/path_4.txt
-Cenario: GATOPMD/path_4.txt
-Cenario: GATOPMD/path_4.txt
-Cenario: GATOPMD/path_4.txt

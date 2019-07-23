@@ -1,4 +1,0 @@
-Cenario: GATOPMD/mapas/rota_team_57.txt
-Cenario: GATOPMD/mapas/rota_team_57.txt
-Cenario: GATOPMD/mapas/rota_team_57.txt
-Cenario: GATOPMD/mapas/rota_team_57.txt
