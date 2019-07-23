@@ -147,6 +147,32 @@ class Population:
 
         return newPopulation
 
+    def testeinit(self, initial, size, numberAgents):
+        new_population = list()
+        # size = initial.size
+        slice = int(initial.size/numberAgents)
+        for n in range(size):
+            all_points = np.copy(initial)
+            np.random.shuffle(all_points)
+            agent = list()
+            count = 0
+            end = slice
+            for i in range(numberAgents):
+                if i < numberAgents-1:
+                    x = np.copy(all_points[count:end])
+                    agent.append(np.concatenate([[self.start[i]],x, [self.end[i]]]))
+                    count = end
+                    end = slice +end
+                else:
+                    x = np.copy(all_points[count:-1])
+                    agent.append(np.concatenate([[self.start[i]],x, [self.end[i]]]))
+
+            new_population.append(agent)
+
+        return new_population
+
+
+
 if __name__ == '__main__':
     start = np.array([0])
     end = np.array([15])

@@ -202,21 +202,25 @@ class GaTopMd:
         bestElementGenarationCost = list()
         count_dis = 0
         real_cost = self.max_cost
-        self.max_cost = [i*.8 for i in self.max_cost]
-        flag = True
+        self.max_cost = [i*.7 for i in self.max_cost]
+        flag = False
+        mutation_rate_begin = self.mutation_rate
+        crossover_rate_begin = self.crossover_rate
 
         for g in range(self.generationSize):
 
             print(g, bestCost, countGenaration, len(population))
 
+            # x = self.PopulationObject.testeinit(self.initialChromossome,10,self.number_agents)
+
             # completando populacao depois que apenas os melhores individuos restaram
-            population += self.PopulationObject.initializeTopMd(self.initialChromossome,
+            population += self.PopulationObject.testeinit(self.initialChromossome,
                                                               self.populationSize - len(population),
                                                               self.number_agents)
 
-            if countGenaration == 10:
-                bestElements = population[:4]
-                bestElementsCosts = np.array([self.reply_method_top(self.FO, element).sum() for element in bestElements])
+            # if countGenaration == 10:
+            #     bestElements = population[1:5]
+            #     bestElementsCosts = np.array([self.reply_method_top(self.FO, element).sum() for element in bestElements])
 
 
 
@@ -232,14 +236,30 @@ class GaTopMd:
 
             # Realizando o cruzamento entre os genees
             for cross in range(select_parents_index.size):
-                select_2_parents = np.random.randint(select_parents_index.size, size=4)
+                select_2_parents = np.random.randint(select_parents_index.size, size=2)
+
+                compar = [np.array_equal(parents_selected[select_2_parents[0]][i],parents_selected[select_2_parents[1]][i]) for i in range(self.number_agents)]
+
+                for i in compar:
+                    fg = True
+                    if i == False:
+                        fg = False
+                        break
+
+                if fg:
+                    par_1 = [np.copy(i) for i in parents_selected[select_2_parents[0]]]
+                    par_2 = self.PopulationObject.testeinit(self.initialChromossome, 1,self.number_agents)[0]
+                else:
+                    par_1 = [np.copy(i) for i in parents_selected[select_2_parents[0]]]
+                    par_2 = [np.copy(i) for i in parents_selected[select_2_parents[1]]]
+
 
                 if flag:
                     offspring1, offspring2 = list(), list()
                     all_elements_1, all_elements_2 = np.array([]), np.array([])
-                    for i in range(len(parents_selected[select_2_parents[0]])):
-                        x,y = self.crossoverObject.PMX_3(parents_selected[select_2_parents[0]][i],
-                                                         parents_selected[select_2_parents[1]][i],
+                    for i in range(len(par_1)):
+                        x,y = self.crossoverObject.PMX_3(par_1[i],
+                                                         par_2[i],
                                                          all_elements_1, all_elements_2 )
 
                         all_elements_1 = np.unique(np.concatenate([all_elements_1, x[1:-1]]))
@@ -251,11 +271,10 @@ class GaTopMd:
                     new_population.append(offspring1)
                     new_population.append(offspring2)
                 else:
-                    a,b = self.crossoverObject.cross_teste(parents_selected[select_2_parents[0]],
-                                                         parents_selected[select_2_parents[1]],
+                    a,b = self.crossoverObject.cross_teste(par_1,par_2,
                                                            self.mensureCost)
-                    new_population.append(a)
-                    new_population.append(b)
+                    new_population.append(par_1)
+                    new_population.append(par_2)
 
 
 
@@ -435,7 +454,9 @@ class GaTopMd:
                 bestCost = bestElementsCosts[0]
                 bestElementAlways = np.copy(bestElements[0])
                 countGenaration = 0
-                flag = True
+                # flag = True
+                # self.mutation_rate = mutation_rate_begin
+                # self.crossover_rate = crossover_rate_begin
 
                 # bestElementTesteando = [np.copy(element) for element in bestElements]
                 # bestElementTesteandoCost = np.copy(bestElementsCosts)
@@ -460,20 +481,29 @@ class GaTopMd:
 
             bestElementGenarationCost.append(bestElementsCosts[0])
 
-            if countGenaration == 10:
-                bestElementAlways = np.copy(bestElements[0])
-                bestCost = bestElementsCosts[0]
-                if self.max_cost[0] < real_cost[0]:
+            if countGenaration == 5:
+                # bestElementAlways = np.copy(bestElements[0])
+                # bestCost = bestElementsCosts[0]
+                if self.max_cost[0] < real_cost[0] and False in np.isin(self.allElementsMap, bestElementAlways):
                     self.max_cost = [self.max_cost[i] + (real_cost[i]*.1) for i in range(len(real_cost))]
-                self.mutation_rate = self.mutation_rate + .1
-                # self.crossover_rate = self.crossover_rate + .1
-                population = list()
 
-            if countGenaration == 15:
+                if self.mutation_rate < .2:
+                    self.mutation_rate = self.mutation_rate + .1
+                    # self.crossover_rate = self.crossover_rate + .1
+                # else:
+                #     self.mutation_rate = mutation_rate_begin
+                #     self.crossover_rate = crossover_rate_begin
+
+
+
+            if countGenaration > 10:
+                population.append(bestElementAlways)
                 flag = not flag
+                self.mutation_rate = mutation_rate_begin
+                # self.crossover_rate = crossover_rate_begin
 
-            if len(population) >= self.populationSize:
-                population = list()
+            if len(population) > self.populationSize * .7:
+                population.append(bestElementAlways)
 
             population = population+bestElements
             if countGenaration >= self.limit_population:
@@ -495,7 +525,7 @@ if __name__ == '__main__':
         prizes_rate = 5,
         map_points = 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
         prizes = 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
-        max_cost= [28]*4,
+        max_cost= [30]*4,
         start_point = [0,0,0,0],
         end_point = [1,2,3,4],
         depositos=[0,1,2,3,4])
