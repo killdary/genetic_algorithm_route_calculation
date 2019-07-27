@@ -206,6 +206,7 @@ class GaTopMd:
         flag = False
         mutation_rate_begin = self.mutation_rate
         crossover_rate_begin = self.crossover_rate
+        pop_size = self.populationSize
 
         for g in range(self.generationSize):
 
@@ -394,7 +395,6 @@ class GaTopMd:
 
 
             # new_population = new_population + population
-
             fitness_values = np.zeros(len(new_population))
             cousts_values = np.zeros(len(new_population))
 
@@ -412,11 +412,14 @@ class GaTopMd:
                 # if cousts_values[i].sum() <= self.max_cost.sum():
                 passa = list()
                 custo = self.reply_method_top(self.mensureCost, new_population[min_index])
+                s = False
                 for j in range(self.number_agents):
                     if custo[j] > self.max_cost[j]:
+                        s = True
                         passa.append(False)
+                        break
 
-                if False not in passa:
+                if not s:
 
                     exist_menor = [best for best in range(4) if
                                    fitness_values[min_index] < bestElementsCosts[best]]
@@ -452,6 +455,10 @@ class GaTopMd:
                 bestCost = bestElementsCosts[0]
                 bestElementAlways = np.copy(bestElements[0])
                 countGenaration = 0
+                self.populationSize = pop_size
+                print(self.reply_method_top(self.mensureCost, bestElementAlways))
+                print(self.max_cost)
+                print(real_cost)
                 # flag = True
                 # self.mutation_rate = mutation_rate_begin
                 # self.crossover_rate = crossover_rate_begin
@@ -482,11 +489,18 @@ class GaTopMd:
             if countGenaration == 5:
                 # bestElementAlways = np.copy(bestElements[0])
                 # bestCost = bestElementsCosts[0]
-                if self.max_cost[0] < real_cost[0]:
-                    self.max_cost = [self.max_cost[i] + (real_cost[i]*.1) for i in range(len(real_cost))]
+                self.max_cost = [self.max_cost[i] + (real_cost[i]*.1) for i in range(len(real_cost))]
+
+                c = False
+                for i in range(self.number_agents):
+                    if self.max_cost[i] > real_cost[i]:
+                        c = True
+                        break
+                if c:
+                    self.max_cost = real_cost
 
                 if self.mutation_rate < .3:
-                    self.mutation_rate = self.mutation_rate + .1
+                    self.mutation_rate = self.mutation_rate + .05
                     # self.crossover_rate = self.crossover_rate + .1
                 # else:
                 #     self.mutation_rate = mutation_rate_begin
@@ -495,12 +509,17 @@ class GaTopMd:
 
 
             if countGenaration > 10:
-                flag = not flag
-                self.mutation_rate = mutation_rate_begin
+                flag = False
+
+            # if countGenaration % 10 == 0:
+            #     self.populationSize = self.populationSize + 10
                 # self.crossover_rate = crossover_rate_begin
 
             if len(population) > self.populationSize * .7:
-                population = list()
+                x = np.arange(len(population))
+
+                np.random.shuffle(x)
+                population = [population[i] for i in x[:int(self.populationSize*.5)]]
                 population.append(bestElementAlways)
 
             population = population+bestElements
@@ -521,9 +540,9 @@ if __name__ == '__main__':
         mutation_rate = .01,
         cost_rate = 2,
         prizes_rate = 5,
-        map_points = 'GATOPMD/mapas/artigo/mapa_4r_35_1d.txt',
-        prizes = 'GATOPMD/mapas/artigo/premio_4r_35_1d.txt',
-        max_cost= [25]*4,
+        map_points = 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
+        prizes = 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
+        max_cost= [24]*4,
         start_point = [0,0,0,0],
         end_point = [1,2,3,4],
         depositos=[0,1,2,3,4])

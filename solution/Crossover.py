@@ -489,7 +489,7 @@ class Crossover:
         all_elements_2 = np.concatenate(b)
 
         ind = np.isin(parent_2[ind_min_1], all_elements_1, invert=True)
-        ind2 = np.isin( parent_1[ind_min_1],all_elements_2, invert=True)
+        ind2 = np.isin(parent_1[ind_min_1], all_elements_2, invert=True)
 
         x = parent_2[ind_min_1][ind]
         y = parent_1[ind_min_1][ind2]
@@ -519,6 +519,37 @@ class Crossover:
 
         return off1, off2
 
+    def cross_Minimun_path(self, parent_1_aux, parent_2_aux, function_objective, start, end,  number_changes = 1):
+        ind = np.random.choice(range(len(parent_1_aux)), number_changes, replace=False)
+
+
+
+        parent_1 = [np.copy(i[1:-1]) for i in parent_1_aux]
+        parent_2 = [np.copy(i[1:-1]) for i in parent_2_aux]
+
+        gene_1 = np.copy(parent_1[ind[0]])
+        gene_2 = np.copy(parent_2[ind[0]])
+
+        offspring_1, offspring_2 = list(), list()
+
+        for i in range(len(parent_1)):
+            if i != ind[0]:
+                ind_not_1 = np.isin(parent_1[i], gene_2, invert=True)
+                ind_not_2 = np.isin(parent_2[i], gene_1, invert=True)
+                print(parent_1)
+                c = np.concatenate([start[i],parent_1[i][ind_not_1], end[i]])
+                offspring_1.append(np.concatenate([start[i],parent_1[i][ind_not_1], end[i]]))
+
+                offspring_2.append(np.concatenate([[start[i]],parent_2[i][ind_not_2], [end[i]]]))
+            else:
+                offspring_1.append(np.concatenate([[start[i]],gene_2, [end[i]]]))
+                offspring_2.append(np.concatenate([[start[i]],gene_1, [end[i]]]))
+
+
+        offspring_1_final = [np.concatenate([[start[i]], offspring_1[i], [end[i]]]) for i in range(len(parent_1))]
+        offspring_2_final = [np.concatenate([[start[i]], offspring_2[i], [end[i]]]) for i in range(len(parent_2))]
+
+        return offspring_1_final, offspring_2_final
 
 
 if __name__ == '__main__':
