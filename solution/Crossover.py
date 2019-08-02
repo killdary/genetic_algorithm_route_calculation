@@ -522,6 +522,53 @@ class Crossover:
     def cross_Minimun_path(self, parent_1_aux, parent_2_aux, function_objective, start, end,  number_changes = 1):
         ind = np.random.choice(range(len(parent_1_aux)), number_changes, replace=False)
 
+        parent_1 = [np.copy(i[1:-1]) for i in parent_1_aux]
+        parent_2 = [np.copy(i[1:-1]) for i in parent_2_aux]
+
+        gene_1 = np.copy(parent_1[ind[0]])
+        gene_2 = np.copy(parent_2[ind[0]])
+
+
+        offspring_1, offspring_2 = list(), list()
+
+        for i in range(len(parent_1)):
+            if i != ind:
+                new_gene_1 = np.isin(parent_2[i], gene_1, invert=True)
+                new_gene_1 = parent_2[i][new_gene_1]
+
+                new_gene_2 = np.isin(parent_1[i], gene_2, invert=True)
+                new_gene_2 = parent_1[i][new_gene_2]
+
+                offspring_1.append(np.concatenate([[start[i]],new_gene_1, [end[i]]]))
+                offspring_2.append(np.concatenate([[start[i]],new_gene_2, [end[i]]]))
+            else:
+                offspring_1.append(np.concatenate([[start[i]],gene_2, [end[i]]]))
+                offspring_2.append(np.concatenate([[start[i]],gene_1, [end[i]]]))
+
+
+        return offspring_1, offspring_2
+
+    def points_cross(self, parent):
+        size = parent.size
+
+        if size == 2:
+            I = 0
+            J = 1
+        else:
+            route_insert_points = np.zeros(2)
+            x = np.arange(size)
+            np.random.shuffle(x)
+            route_insert_points = x[:2]
+
+            # while route_insert_points[0] == route_insert_points[1]:
+            #     route_insert_points = np.random.randint(size, size=2)
+
+            I = route_insert_points.min()
+            J = route_insert_points.max()
+        return I, J
+
+    def cross_slice(self, parent_1_aux, parent_2_aux, function_objective, start, end,  number_changes = 1):
+        ind = np.random.choice(range(len(parent_1_aux)), number_changes, replace=False)
 
 
         parent_1 = [np.copy(i[1:-1]) for i in parent_1_aux]
@@ -530,26 +577,131 @@ class Crossover:
         gene_1 = np.copy(parent_1[ind[0]])
         gene_2 = np.copy(parent_2[ind[0]])
 
-        offspring_1, offspring_2 = list(), list()
+        if gene_1.size >= 2 and gene_2.size >= 2:
 
-        for i in range(len(parent_1)):
-            if i != ind[0]:
-                ind_not_1 = np.isin(parent_1[i], gene_2, invert=True)
-                ind_not_2 = np.isin(parent_2[i], gene_1, invert=True)
-                print(parent_1)
-                c = np.concatenate([start[i],parent_1[i][ind_not_1], end[i]])
-                offspring_1.append(np.concatenate([start[i],parent_1[i][ind_not_1], end[i]]))
+            I_p_1, J_p_1 = self.points_cross(gene_1)
+            I_p_2, J_p_2 = self.points_cross(gene_2)
 
-                offspring_2.append(np.concatenate([[start[i]],parent_2[i][ind_not_2], [end[i]]]))
-            else:
-                offspring_1.append(np.concatenate([[start[i]],gene_2, [end[i]]]))
-                offspring_2.append(np.concatenate([[start[i]],gene_1, [end[i]]]))
+            slice_1 = gene_2[I_p_2:J_p_2]
+            slice_2 = gene_1[I_p_1:J_p_1]
+            if I_p_1 > 0:
+                slice_1_ind = np.isin(slice_1,gene_1[:I_p_1], invert=True)
+                slice_1 = slice_1[slice_1_ind]
+
+            if J_p_1 < gene_1.size:
+                slice_1_ind = np.isin(slice_1, gene_1[J_p_1:], invert=True)
+                slice_1 = slice_1[slice_1_ind]
+
+            if I_p_2 > 0:
+                slice_2_ind = np.isin(slice_2, gene_2[:I_p_2], invert=True)
+                slice_2 = slice_2[slice_2_ind]
+
+            if J_p_2 < gene_2.size:
+                slice_2_ind = np.isin(slice_2, gene_2[J_p_2:], invert=True)
+                slice_2 = slice_2[slice_2_ind]
 
 
-        offspring_1_final = [np.concatenate([[start[i]], offspring_1[i], [end[i]]]) for i in range(len(parent_1))]
-        offspring_2_final = [np.concatenate([[start[i]], offspring_2[i], [end[i]]]) for i in range(len(parent_2))]
+            new_gene_1_p = np.concatenate([gene_1[:I_p_1], slice_1,gene_1[J_p_1:]])
+            new_gene_2_p = np.concatenate([gene_2[:I_p_2], slice_2,gene_2[J_p_2:]])
 
-        return offspring_1_final, offspring_2_final
+            gene_1 = new_gene_1_p
+            gene_2 = new_gene_2_p
+
+            all_elements_off_1 = gene_1
+            all_elements_off_2 = gene_2
+
+
+            offspring_1, offspring_2 = list(), list()
+
+            for i in range(len(parent_1)):
+                if i != ind:
+                    new_gene_1 = np.isin(parent_1[i], all_elements_off_1, invert=True)
+                    new_gene_1 = parent_1[i][new_gene_1]
+                    all_elements_off_1 = np.concatenate([new_gene_1, all_elements_off_1])
+
+                    new_gene_2 = np.isin(parent_2[i], all_elements_off_2, invert=True)
+                    new_gene_2 = parent_2[i][new_gene_2]
+                    all_elements_off_2 = np.concatenate([new_gene_2, all_elements_off_2])
+
+                    offspring_1.append(np.concatenate([[start[i]],new_gene_1, [end[i]]]))
+                    offspring_2.append(np.concatenate([[start[i]],new_gene_2, [end[i]]]))
+                else:
+                    offspring_1.append(np.concatenate([[start[i]],gene_1, [end[i]]]))
+                    offspring_2.append(np.concatenate([[start[i]],gene_2, [end[i]]]))
+
+
+            # elements_chromossome = np.array([])
+            #
+            # for i in offspring_1:
+            #     elements_chromossome = np.concatenate([elements_chromossome, i[1:-1]])
+            #
+            # if elements_chromossome.size > np.unique(elements_chromossome).size:
+            #     print('aqui')
+            # elements_chromossome = np.array([])
+            # for i in offspring_2:
+            #     elements_chromossome = np.concatenate([elements_chromossome, i[1:-1]])
+            #
+            # if elements_chromossome.size > np.unique(elements_chromossome).size:
+            #     print('aqui')
+
+            return offspring_1, offspring_2
+        else:
+            return parent_1_aux, parent_2_aux
+
+
+    def cross_slice_mult(self, parent_1_aux, parent_2_aux, function_objective, start, end):
+        # ind = np.random.choice(range(len(parent_1_aux)), number_changes, replace=False)
+
+        parent_1 = [np.copy(i[1:-1]) for i in parent_1_aux]
+        parent_2 = [np.copy(i[1:-1]) for i in parent_2_aux]
+
+        all_elements_1 = np.array([])
+        all_elements_2 = np.array([])
+        offspring_1 = list()
+        offspring_2 = list()
+        for ind in range(len(parent_1)):
+
+            gene_1 = np.copy(parent_1[ind])
+            gene_2 = np.copy(parent_2[ind])
+
+            I_p_1, J_p_1 = self.points_cross(gene_1)
+            I_p_2, J_p_2 = self.points_cross(gene_2)
+
+            slice_1 =  gene_2[I_p_2:J_p_2]
+            slice_2 = gene_1[I_p_1:J_p_1]
+            if I_p_1 > 0:
+                slice_1_ind = np.isin(slice_1,gene_1[:I_p_1], invert=True)
+                slice_1 = slice_1[slice_1_ind]
+
+            if J_p_1 < gene_1.size:
+                slice_1_ind = np.isin(slice_1, gene_1[J_p_1:], invert=True)
+                slice_1 = slice_1[slice_1_ind]
+
+            if I_p_2 > 0:
+                slice_2_ind = np.isin(slice_2, gene_2[:I_p_2], invert=True)
+                slice_2 = slice_2[slice_2_ind]
+
+            if J_p_2 < gene_2.size:
+                slice_2_ind = np.isin(slice_2, gene_2[J_p_2:], invert=True)
+                slice_2 = slice_2[slice_2_ind]
+
+
+            new_gene_1_p = np.concatenate([gene_1[:I_p_1], slice_1,gene_1[J_p_1:]])
+            new_gene_2_p = np.concatenate([gene_2[:I_p_2], slice_2,gene_2[J_p_2:]])
+
+            new_gene_1_p_ind = np.isin(new_gene_1_p, all_elements_1, invert=True)
+            new_gene_2_p_ind = np.isin(new_gene_2_p, all_elements_2, invert=True)
+            gene_1 = new_gene_1_p[new_gene_1_p_ind]
+            gene_2 = new_gene_2_p[new_gene_2_p_ind]
+            all_elements_1 = np.concatenate([all_elements_1, gene_1])
+            all_elements_2 = np.concatenate([all_elements_2, gene_2])
+
+            offspring_1.append(np.concatenate([[start[ind]], gene_2, [end[ind]]]))
+            offspring_2.append(np.concatenate([[start[ind]], gene_1, [end[ind]]]))
+
+
+
+        return offspring_1, offspring_2
 
 
 if __name__ == '__main__':

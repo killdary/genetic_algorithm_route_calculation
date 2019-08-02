@@ -2,11 +2,12 @@ import numpy as np
 
 
 class Population:
-    def __init__(self, start_city, end_city, function_mensure_coust, max_coust):
+    def __init__(self, start_city, end_city, function_mensure_coust, max_coust, distance):
         self.start = np.array(start_city)
         self.end = np.array(end_city)
         self.function_mensure_coust = function_mensure_coust
         self.max_coust = max_coust
+        self.distance = distance
 
 
 
@@ -132,9 +133,9 @@ class Population:
                     tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
                     coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
 
-                    if coust_route > max_cost * 3:
+                    if coust_route > max_cost * 5:
                         break
-                    if coust_route <= max_cost * 3:
+                    if coust_route <= max_cost * 5:
                         chromossome[n_ag] = tmp_agent
                         all_points = np.setdiff1d(all_points, tmp_agent)
                     if all_points.size > 0:
@@ -143,6 +144,51 @@ class Population:
                 coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
                 chromossome[n_ag] = np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]])
 
+            elements_chromossome = np.array([])
+
+            for i in chromossome:
+                elements_chromossome = np.concatenate([elements_chromossome, i[1:-1]])
+
+            if elements_chromossome.size > np.unique(elements_chromossome).size:
+                print('aqui')
+            newPopulation.append(chromossome)
+
+        return newPopulation
+
+
+    def initializeTopMd2(self, initial, size, numberAgents):
+        newPopulation = list()
+        listAgents = range(numberAgents)
+        for n in range(size):
+            all_points = np.copy(initial)
+
+            chromossome = list()
+            for n_ag in listAgents:
+                chromossome.append(np.array([]))
+                max_cost = self.max_coust[n_ag]
+                while True:
+                    point_add = np.random.choice(np.arange(all_points.size), 1)
+                    tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
+                    coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
+
+                    if coust_route > max_cost:
+                        break
+                    if coust_route <= max_cost:
+                        chromossome[n_ag] = tmp_agent
+                        all_points = np.setdiff1d(all_points, tmp_agent)
+                    if all_points.size > 0:
+                        break
+
+                coust_route = self.function_mensure_coust(np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
+                chromossome[n_ag] = np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]])
+
+            elements_chromossome = np.array([])
+
+            for i in chromossome:
+                elements_chromossome = np.concatenate([elements_chromossome, i[1:-1]])
+
+            if elements_chromossome.size > np.unique(elements_chromossome).size:
+                print('aqui')
             newPopulation.append(chromossome)
 
         return newPopulation
@@ -171,7 +217,102 @@ class Population:
 
         return new_population
 
+    def initializeTopMdGreed(self, initial, size, numberAgents, biggest=5):
+        new_population = list()
+        list_agents = range(numberAgents)
 
+        for n in range(size):
+            all_points = np.copy(initial)
+
+            chromossome = list()
+            for n_ag in list_agents:
+                chromossome.append(np.array([]))
+                max_cost = self.max_coust[n_ag]
+                while True:
+                    key = np.random.choice(range(numberAgents), 1, replace=False)
+                    list_dist_key = self.distance[key,all_points]
+                    # ind_minor = np.argmin(list_dist_key)
+                    key = [np.argmin(list_dist_key)]
+
+
+                    point_add = key
+
+                    tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
+                    coust_route = self.function_mensure_coust(
+                        np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
+
+                    if coust_route > max_cost *biggest:
+                        break
+                    if coust_route <= max_cost*biggest:
+                        chromossome[n_ag] = tmp_agent
+                        all_points = np.setdiff1d(all_points, tmp_agent)
+                    if all_points.size == 0:
+                        break
+
+                chromossome[n_ag] = np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]])
+
+            new_population.append(chromossome)
+
+        return new_population
+
+    def initializeTopMdGreed2(self, initial, size, numberAgents, biggest=5):
+        new_population = list()
+        list_agents = range(numberAgents)
+
+        for n in range(size):
+            all_points = np.copy(initial)
+            all_elements_cromossomo = np.array([])
+
+            chromossome = list()
+            for n_ag in list_agents:
+                chromossome.append(np.array([]))
+                max_cost = self.max_coust[n_ag]
+
+                ind = np.arange(all_points.size)
+                np.random.shuffle(ind)
+
+                key = all_points[ind[0]]
+                chromossome[n_ag] = np.array([key])
+                ind_remove = np.isin(all_points,chromossome[n_ag], invert=True)
+                all_points =all_points[ind_remove]
+                all_elements_cromossomo = np.concatenate([all_elements_cromossomo, chromossome[n_ag]])
+                all_elements_cromossomo = np.unique(all_elements_cromossomo)
+
+                while True:
+                    last = chromossome[n_ag][-1]
+                    indices_vizinho = np.isin(all_points,[last], invert=True)
+                    vizinhos = all_points[indices_vizinho]
+                    list_dist_key = self.distance[last][vizinhos]
+                    # ind_minor = np.argmin(list_dist_key)
+                    if list_dist_key.size == 0:
+                        break
+                    key = [np.argmin(list_dist_key)]
+
+                    point_add = key
+
+                    tmp_agent = np.concatenate([chromossome[n_ag], all_points[point_add]])
+                    coust_route = self.function_mensure_coust(
+                        np.concatenate([[self.start[n_ag]], tmp_agent, [self.end[n_ag]]]))
+
+                    if coust_route > max_cost * biggest:
+                        break
+                    if coust_route <= max_cost * biggest:
+                        chromossome[n_ag] = tmp_agent
+                        ind_remove = np.isin(all_points,chromossome[n_ag], invert=True)
+                        all_points =all_points[ind_remove]
+                        all_elements_cromossomo = np.concatenate([all_elements_cromossomo, chromossome[n_ag]])
+                        all_elements_cromossomo = np.unique(all_elements_cromossomo)
+                    if all_points.size == 0:
+                        break
+
+                chromossome[n_ag] = np.concatenate([[self.start[n_ag]], chromossome[n_ag], [self.end[n_ag]]])
+
+            if 0 not in chromossome[0]:
+                print('falha')
+
+            new_population.append(chromossome)
+
+        return new_population
 
 if __name__ == '__main__':
     start = np.array([0])

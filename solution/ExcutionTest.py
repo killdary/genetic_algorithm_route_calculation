@@ -37,6 +37,9 @@ paths = [
     # 'GATOPMD/mapas/artigo/mapa_4r_12_1d.txt',
     # 'GATOPMD/mapas/artigo/mapa_4r_12_1d.txt',
     'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
     # 'GATOPMD/mapas/artigo/mapa_4r_25_1d.txt',
     # 'GATOPMD/mapas/artigo/mapa_4r_30_1d.txt',
     # 'GATOPMD/mapas/artigo/mapa_4r_35_1d.txt',
@@ -78,6 +81,9 @@ prizes = [
     # 'GATOPMD/mapas/artigo/premio_12.txt',
     # 'GATOPMD/mapas/artigo/premio_4r_12_1d.txt',
     'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
+    # 'GATOPMD/mapas/artigo/premio_4r_40_1d.txt',
     # 'GATOPMD/mapas/artigo/premio_4r_25_1d.txt',
     # 'GATOPMD/mapas/artigo/premio_4r_30_1d.txt',
     # 'GATOPMD/mapas/artigo/premio_4r_35_1d.txt',
@@ -142,7 +148,10 @@ costs=[
     # [28,26,28,26],
     # [26,27,34,28],
     # [24,25,26,28],
-    [30]*3
+    [20]*3,
+    # [20]*4,
+    # [15,20,22,24],
+    # [20, 20, 22, 24],
 ]
 
 points_init = [
@@ -180,7 +189,10 @@ points_init = [
     # [0,0,0,0],
     # [0,0,0,0],
     # [0,0,0,0],
-    [0,0,0]
+    [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0]
 
 ]
 
@@ -219,7 +231,10 @@ points_end = [
     # [1,2,3],
     # [1,2,3,4],
     # [1,2,3,4],
-    [1,2, 3],
+    [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0],
+    # [0,0,0,0]
 ]
 
 
@@ -233,6 +248,9 @@ deposits = [
     # [0,4,2,37,40],
     # [0,1,2,3,4],
     [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
+    # [0,1,2,3,4],
 ]
 number_executions = 15
 
@@ -259,10 +277,10 @@ for i in range(len(paths)):
 
     ga_execution = GaTopMd(
         generation=1000,
-        population=150,
-        limit_population=20,
-        crossover_rate=.8,
-        mutation_rate=.3,
+        population = 50,
+        limit_population = 25,
+        crossover_rate = .8,
+        mutation_rate = .01,
         cost_rate=2,
         prizes_rate=5,
         map_points = path_current,
