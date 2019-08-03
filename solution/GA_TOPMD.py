@@ -250,7 +250,7 @@ class GaTopMd:
             # population += teste_population
 
 
-            cost_population = [self.reply_method_top(self.FO, individual) for individual in population]
+            cost_population = [self.reply_method_top(self.FO, individual).sum() for individual in population]
             cost_population = [costs.sum() for costs in cost_population]
             cost_population = np.array([costs.sum() for costs in cost_population])
 
@@ -313,7 +313,7 @@ class GaTopMd:
             #    new_population[i] = self.reply_crossover_inner_agents(self.crossover_class.PMX, new_population[i])
 
             # gerando lista de probabilidades para os novos indivíduos sofrerem mutações
-            rand = np.random.uniform(0,1, len(new_population))
+            # rand = np.random.uniform(0,1, len(new_population))
             #
             # for i in range(len(new_population)):
             #     new_population[i] = self.mutationObject.insert_points_TOP_3(self.mensureCost,
@@ -338,7 +338,7 @@ class GaTopMd:
 
             population_mutation = list()
             for a in range(5):
-                for i in range(rand.size):
+                for i in range(len(new_population)):
                     r = np.random.uniform(0,1, 1)
                     if r <= self.mutation_rate:
                         # for jj in range(3):
@@ -586,9 +586,10 @@ if __name__ == '__main__':
         # start_point = [0,0],
         # end_point = [1,1],
         # depositos=[0,1])
-        map_points = 'GATOPMD/mapas/artigo/mapa_4r_50_5d.txt',
-        prizes = 'GATOPMD/mapas/artigo/premio_4r_50_5d.txt',
-        max_cost= [23, 25, 27, 30],
+        map_points = 'GATOPMD/mapas/artigo/mapa_4r_80_5d.txt',
+        prizes = 'GATOPMD/mapas/artigo/premio_4r_80_5d.txt',
+        # max_cost= [25, 27, 29, 31],
+        max_cost= [25, 27, 30, 32],
         start_point = [0,0,0,0],
         end_point = [0,0,0,0],
         depositos=[0,1,2,3,4])
@@ -606,7 +607,7 @@ if __name__ == '__main__':
             print(ga.prizes.take(b[i][j].astype(int)).sum())
 
         print(x)
-        # ga.plota_rotas_TOP(ga.map_points, b[i])
+        ga.plota_rotas_TOP(ga.map_points, b[i])
 
         print(b[i])
         # input()
