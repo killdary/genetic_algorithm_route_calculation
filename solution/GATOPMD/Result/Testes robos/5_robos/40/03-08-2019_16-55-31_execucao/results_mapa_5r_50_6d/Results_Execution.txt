@@ -1,0 +1,4 @@
+Cenario: GATOPMD/mapas/artigo/mapa_5r_50_6d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_5r_50_6d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_5r_50_6d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_5r_50_6d.txt

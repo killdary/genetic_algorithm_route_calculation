@@ -1,0 +1,5 @@
+Cenario: GATOPMD/mapas/artigo/mapa_7r_70_8d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_7r_70_8d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_7r_70_8d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_7r_70_8d.txt
+Cenario: GATOPMD/mapas/artigo/mapa_7r_70_8d.txt

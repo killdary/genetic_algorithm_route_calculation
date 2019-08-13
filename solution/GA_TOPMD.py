@@ -109,12 +109,14 @@ class GaTopMd:
 
         plt.rc('font', size=font_size)
 
+        plt.xlabel("X")
+        plt.ylabel("Y")
+
+        plt.scatter(self.map_points[cid_nome, 0], self.map_points[cid_nome, 1], s=120, marker="s", zorder=2, label='waypoint')
+
+        plt.scatter(self.map_points[self.depositos,0], self.map_points[self.depositos,1], s=150,marker='^', zorder=3, c='black', label='depósito')
+
         plt.legend(loc='lower left',bbox_to_anchor=(0,1.02,1,0.2),ncol=4, mode='expand')
-
-
-        plt.scatter(self.map_points[cid_nome, 0], self.map_points[cid_nome, 1], s=120, marker="s", zorder=2)
-
-        plt.scatter(self.map_points[self.depositos,0], self.map_points[self.depositos,1], s=150,marker='^', zorder=3, c='black')
 
         # for i, txt in enumerate(cid_nome):
         for i in cid_nome:
@@ -123,8 +125,8 @@ class GaTopMd:
         # for i, txt in enumerate(cid_nome):
         #     plt.annotate(txt, (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
 
-        for i in self.start_point:
-            plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
+        # for i in self.start_point:
+        #     plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
 
         for i in self.depositos:
             plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
@@ -573,7 +575,7 @@ class GaTopMd:
 
 if __name__ == '__main__':
     ga = GaTopMd(
-        generation = 1000,
+        generation = 1,
         population = 100,
         limit_population = 20,
         crossover_rate = .3,
@@ -586,10 +588,10 @@ if __name__ == '__main__':
         # start_point = [0,0],
         # end_point = [1,1],
         # depositos=[0,1])
-        map_points = 'GATOPMD/mapas/artigo/mapa_4r_80_5d.txt',
-        prizes = 'GATOPMD/mapas/artigo/premio_4r_80_5d.txt',
+        map_points = 'GATOPMD/mapas/artigo/mapa_7r_70_8d.txt',
+        prizes = 'GATOPMD/mapas/artigo/premio_7r_70_8d.txt',
         # max_cost= [25, 27, 29, 31],
-        max_cost= [25, 27, 30, 32],
+        max_cost= [15, 19 ,20, 21],
         start_point = [0,0,0,0],
         end_point = [0,0,0,0],
         depositos=[0,1,2,3,4])
@@ -606,8 +608,9 @@ if __name__ == '__main__':
             x = x+ga.prizes.take(b[i][j].astype(int)).sum()
             print(ga.prizes.take(b[i][j].astype(int)).sum())
 
-        print(x)
-        ga.plota_rotas_TOP(ga.map_points, b[i])
+        print('pontos total rota')
+        print(ga.prizes.sum())
+        # ga.plota_rotas_TOP(ga.map_points, b[i])
 
         print(b[i])
         # input()
