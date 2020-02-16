@@ -1,19 +1,18 @@
-## Calulate Routes Traveling Salesman Problem
-This project aims to develop a python module that performs the route calculations of
-the Traveling Salesman Problem(TSP). The initial version focuses only on the symmetric TSP.
+## Calculo de Rotas para o Problema de Orientação de Equipes com Múltiplas Restrições de Locomoção e Mudança de Base
+Este projeto foi desenvolvido em python para o cálculo de rotas para múltiplos agentes com restrições de locomoção e mudança de base. Este problema foi criado com a junção do Problema de Orientação de Equipes e o Problema daMochila Múltipla
 
 #### Feature
 
-* Receives a .txt file with the location of cities on a cartesian plane
-* Calculate the route for the TSP
-* Creates a graph with the route found
+* Recebe um .txtcom a localização das cidaddes em um plano cartesiano 2D.
+* Calcula a rota para os agentes
+* Cria um gráfico da rota criada
 
-#### Prerequisites
+#### Pré Requisitos
 
 * Numpy
 * Matplotlib
 
-#### Usage
+#### Uso
 ```python
     from AG_routes import CalulateRoutesTSP
     route = CalulateRoutesTSP()
