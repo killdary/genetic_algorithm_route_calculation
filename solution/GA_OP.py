@@ -35,23 +35,6 @@ class GA_TSPKP:
 
         self.distancias = distancias
 
-    # def med_custo(self, flux):
-    #     dist_total = 0
-    #     rota = flux.astype(int)
-    #
-    #     cidade_atual = -1
-    #     for cidade in rota:
-    #         if cidade_atual >= 0:
-    #             dist_total += self.distancias[cidade_atual, cidade]
-    #         cidade_atual = cidade
-    #
-    #     return dist_total
-    # #
-    # def function_objective(self, cromossome):
-    #     coust = self.med_custo(cromossome)
-    #     prizes = self.prizes.take(cromossome).sum()
-    #     return ((prizes ** 3)  /coust) * -1
-
     '''funcao para remover valores repetidos da ordem da cidade'''
     @staticmethod
     def removed_citys_repeat(flux):
@@ -60,7 +43,6 @@ class GA_TSPKP:
         new_citys = flux.take(citys_position)
 
         return new_citys
-
 
     def plota_rotas(self,cidades, rota, size=8, font_size=20):
         """
@@ -129,6 +111,8 @@ class GA_TSPKP:
                 self.initial_cromossome = value
                 self.best_route = value
                 self.receive_route = True
+            elif key == 'number_agents':
+                self.number_agents = value
 
         self.mapa = np.loadtxt(self.map_points)
         self.distance_matrix_calculate()
@@ -314,18 +298,20 @@ if __name__ == '__main__':
         mutation_rate = 0.8,
         coust_rate = 5,
         prizes_rate = 2,
-        # map_points = '../novas_cidades.txt',
-        # prizes = '../novos_premios.txt',
-        map_points = '../adilson_cidades.txt',
-        prizes = '../adilson_premios.txt',
-        max_coust = 5.9,
+        map_points = '../novas_cidades_5.txt',
+        prizes = '../novos_premios_5.txt',
+        # map_points = '../adilson_cidades.txt',
+        # prizes = '../adilson_premios.txt',
+        max_coust = 20,
         start_point = 0,
         end_point = 0,
         individual= 0)
     a , b = ga.run()
 
     for i in range(1):
+        print('premios')
         print(ga.prizes.take(b[i]).sum())
+        print('custo')
         print(ga.med_custo(b[i]))
         ga.plota_rotas(ga.mapa, b[i])
         # print(a[i])

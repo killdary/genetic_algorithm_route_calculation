@@ -29,6 +29,11 @@ class FunctionObjective:
 
         self.distancias = distancias
 
+    def med_custo_TOP(self, chromossome):
+        chromossome_dists = [self.med_custo(c) for c in chromossome]
+
+        return chromossome_dists
+
     def med_custo(self, flux):
         dist_total = 0
         rota = flux.astype(int)
@@ -41,14 +46,20 @@ class FunctionObjective:
 
         return dist_total
 
+    def TOP_FO(self, chromossome):
+        print(len(chromossome))
+        couts = [self.FO(c) for c in chromossome]
+
+        return couts
+
     def FO(self, chromosome):
-        prizes_total = self.prizes.take(chromosome).sum()
+        prizes_total = self.prizes.take(chromosome.astype(int)).sum()
         coust_total = self.med_custo(chromosome)
-        return ((prizes_total ** 3) - coust_total) * -1
+        return ((prizes_total * 7) - coust_total * 4) * -1
 
     def coust_insert(self, chromosome):
-        prizes_total = self.prizes.take(chromosome).sum()
+        prizes_total = self.prizes.take(chromosome.astype(int)).sum()
         coust_total = self.med_custo(chromosome)
-        return ((prizes_total ** 2)/ coust_total)
+        return ((prizes_total * 7) - coust_total * 4)
 
 

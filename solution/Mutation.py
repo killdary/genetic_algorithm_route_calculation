@@ -1,13 +1,35 @@
+from itertools import chain
+
 import numpy as np
+
+# from ExcutionTest import custo
+
 
 class Mutation:
 
-    def __init__(self, max_coust = 0, prizes = ''):
+    def __init__(self, med_custo, max_coust = 0, prizes = '', distance=[]):
         self.max_coust = max_coust
         self.prizes = prizes
+        self.med_custo = med_custo
+        self.distance= distance
 
     def __point_mutation(self, flux):
         size_min = flux.size
+
+        if size_min == 2:
+            self.I = 0
+            self.J = 1
+        else:
+            route_insert_points = np.zeros(2)
+
+            while route_insert_points[0] == route_insert_points[1]:
+                route_insert_points = np.random.randint(size_min - 1, size=2)
+
+            self.I = route_insert_points.min()
+            self.J = route_insert_points.max()
+
+    def __point_mutation_2(self,  parent_1, parent_2):
+        size_min = parent_1.size if parent_1.size < parent_2.size else parent_2.size
 
         if size_min == 2:
             self.I = 0
@@ -61,12 +83,12 @@ class Mutation:
 
         return city_mutation
 
-    def WGWRGM(self, City, med_custo):
+    def WGWRGM(self, City):
         value_worst = 0
         index_worst = 0
         individual = self.__trata_crhomossomo(City)
         for i in range(0, City.size -2):
-            value = med_custo(individual[i:i+2])
+            value = self.med_custo(individual[i:i+2])
             if value < value_worst:
                 value_worst = value
                 index_worst = i
@@ -80,13 +102,13 @@ class Mutation:
 
         return individual
 
-    def WGWWGM(self, City, med_custo):
+    def WGWWGM(self, City):
         value_worst = 0
         index_worst = 0
         individual = self.__trata_crhomossomo(City)
         # if individual.size > 3
         for i in range(0, individual.size):
-            value = med_custo(individual[i:i + 2])
+            value = self.med_custo(individual[i:i + 2])
             if value > value_worst:
                 index_worst2 = index_worst
                 value_worst = value
@@ -97,7 +119,7 @@ class Mutation:
         individual = self.__corrige_chromossomo(individual)
         return individual
 
-    def WGWNNM(self, City, med_custo):
+    def WGWNNM(self, City):
         value_worst = 0
         index_worst = 0
         individual = self.__trata_crhomossomo(City)
@@ -105,7 +127,7 @@ class Mutation:
             individual[0], individual[1] = individual[1], individual[0]
         else:
             for i in range(1, individual.size - 2):
-                value = med_custo(individual[i - 1:i]) + med_custo(individual[i:i + 2])
+                value = self.med_custo(individual[i - 1:i]) + self.med_custo(individual[i:i + 2])
                 if value > value_worst:
                     value_worst = value
                     index_worst = i
@@ -113,7 +135,7 @@ class Mutation:
             minor = 100
             for i in np.arange(individual.size):
                 if i != 0 and i != index_worst and i != (individual.size - 1):
-                    value = med_custo(np.array([individual[index_worst], individual[i]]))
+                    value = self.med_custo(np.array([individual[index_worst], individual[i]]))
                     if minor > value:
                         minor = value
                         minor_i = i
@@ -125,6 +147,32 @@ class Mutation:
 
         individual = self.__corrige_chromossomo(individual)
 
+        return individual
+
+    def SWGLM(self, City):
+        value_worst = 0
+        index_worst = 0
+        individual = self.__trata_crhomossomo(City)
+        # if individual.size > 3
+        for i in range(0, individual.size):
+            value = self.med_custo(individual[i:i + 2])
+            if value > value_worst:
+                value_worst = value
+                index_worst = i
+
+        best_cost_individual = self.med_custo(individual)
+        best_individual = individual
+        for i in range(0, individual.size):
+            if i != index_worst:
+                teste_individual = np.copy(individual)
+                teste_individual[i], teste_individual[index_worst] = teste_individual[index_worst], teste_individual[i]
+                cost_test = self.med_custo(teste_individual)
+                if cost_test < best_cost_individual:
+                    best_cost_individual = cost_test
+                    best_individual = teste_individual
+
+        individual = self.__corrige_chromossomo(best_individual)
+        # print('.', end='')
         return individual
 
     def insert_individualin_cromossome(self, City, chromossome, med_custo):
@@ -159,6 +207,14 @@ class Mutation:
         return chromossome_generate
 
     def insert_individualin_cromossome_2(self, City, chromossome, med_custo, function_aux):
+        """
+
+        :param City: all points oh the map
+        :param chromossome: route
+        :param med_custo: function with mensure of the couste
+        :param function_aux: function with mensure the coust of the route, not only coust but prize too
+        :return:
+        """
         citys_fall = np.delete(chromossome, City)
         chromossome_generate = self.__trata_crhomossomo(City)
 
@@ -192,6 +248,59 @@ class Mutation:
         return chromossome_generate
 
 
+    def insert_individualin_cromossome_TOP(self, 
+                                           chromossome, 
+                                           all_elements_chromossome, 
+                                           elements_chromossome, 
+                                           med_custo, 
+                                           function_aux,
+                                           max_coust):
+        """
+
+        :param chromossome: all points oh the map
+        :param all_elements_chromossome: elements of the team of routes
+        :param elements_chromossome: route
+        :param med_custo: function with mensure of the couste
+        :param function_aux: function with mensure the coust of the route, not only coust but prize too
+        :return:
+        """
+        citys_fall = np.setdiff1d(all_elements_chromossome, elements_chromossome)
+        citys_fall = np.setdiff1d(citys_fall, chromossome)
+        chromossome_generate = self.__trata_crhomossomo(chromossome)
+
+        idx_best = 0
+        value_best = 0
+        if citys_fall.size > 0:
+            if citys_fall.size > 1:
+                city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+            else:
+                city_rmv = 0
+            idx_best = -1
+            value_best = -1
+            element_insert = citys_fall[city_rmv]
+
+            for i in range(chromossome_generate.size+1):
+                tmp = np.insert(chromossome_generate, i, element_insert)
+                tmp = self.__corrige_chromossomo(tmp)
+                coust = med_custo(tmp)
+                if coust <= max_coust:
+                    value_function = function_aux(tmp)
+                    if value_function > value_best:
+                        idx_best = i
+                        value_best = value_function
+
+            if idx_best != -1:
+                chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
+                elements_chromossome = np.insert(elements_chromossome,0, element_insert)
+                # elements_chromossome = np.concatenate([elements_chromossome, element_insert])
+
+
+
+        chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+        return chromossome_generate, elements_chromossome
+
+
+
     def remove_pior_custo(self, City, med_custo):
         value_worst = 0
         index_worst = 0
@@ -208,8 +317,34 @@ class Mutation:
 
         return individual
 
+    def remove_pior_custo_2(self, City, med_custo, function_aux, max_coust):
 
-    def remove_pior_custo_2(self, City, med_custo, function_aux):
+        individual = np.copy(City)
+
+        coust = med_custo(City)
+        if coust > max_coust:
+            individual = self.__trata_crhomossomo(individual)
+
+            idx_worst = -1
+            value_worst = -1
+            for i in range(individual.size):
+                tmp = np.copy(individual)
+                tmp = np.delete(tmp, [i])
+
+                tmp_coust = function_aux(self.__corrige_chromossomo(tmp))
+                tmp_c = med_custo(self.__corrige_chromossomo(tmp))
+
+                if value_worst > tmp_coust:
+                    idx_worst = i
+                    value_worst = tmp_coust
+
+
+            individual = np.delete(individual,[idx_worst])
+            individual = self.__corrige_chromossomo(individual)
+
+        return individual
+
+    def remove_pior_custo_TOP(self, City, med_custo, function_aux):
 
         individual = np.copy(City)
 
@@ -260,8 +395,475 @@ class Mutation:
 
         return individual
 
+    def insert_remove_points_TOP(self, 
+                                 med_custo, 
+                                 function_insert_remove, 
+                                 all_elements, 
+                                 chromossome):
+        elements_chromossome = np.array([])
 
-    def SWGLM(self, City, med_custo):
-        value_worst = 0
-        index_worst = 0
-        individual = self.__trata_crhomossomo(City)
+        for i in chromossome:
+            tmp = self.__trata_crhomossomo(i)
+            elements_chromossome = np.concatenate([elements_chromossome, tmp])
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust > self.max_coust[i]:
+                chromossome[i] = self.remove_pior_custo_2(chromossome[i],
+                                                             med_custo,
+                                                             function_insert_remove,
+                                                             self.max_coust[i])
+            if coust < self.max_coust[i]:
+                chromossome[i], elements_chromossome = self.insert_individualin_cromossome_TOP(chromossome[i],
+                                                                         all_elements,
+                                                                         elements_chromossome,
+                                                                         med_custo,
+                                                                         function_insert_remove,
+                                                                         self.max_coust[i])
+            # tmp = med_custo(chromossome[i])
+            # if tmp > self.max_coust[i]:
+            #     print(tmp, self.max_coust)
+
+
+        return chromossome
+
+    ''' Teste de metodo paenas pa inserção para melhorar a rota criada'''
+    def insert_points_TOP(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        elements_chromossome = np.array([])
+
+        for i in chromossome:
+            tmp = self.__trata_crhomossomo(i)
+            elements_chromossome = np.concatenate([elements_chromossome, tmp])
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust < self.max_coust[i]:
+                chromossome[i], elements_chromossome = self.insert_individualin_cromossome_TOP(chromossome[i],
+                                                                                               all_elements,
+                                                                                               elements_chromossome,
+                                                                                               med_custo,
+                                                                                               function_insert_remove,
+                                                                                               self.max_coust[i])
+
+        return chromossome
+
+    def insert_points_TOP_2(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome,
+                          limit=3):
+
+        elements_chromossome = np.array([])
+        resultado = [0]*len(chromossome)
+
+        for i in chromossome:
+            tmp = self.__trata_crhomossomo(i)
+            elements_chromossome = np.concatenate([elements_chromossome, tmp])
+
+
+        range_chormosome = np.arange(len(chromossome))
+        np.random.shuffle(range_chormosome)
+
+        for i in range_chormosome:
+            coust = med_custo(chromossome[i])
+            if coust < self.max_coust[i] * limit:
+
+                citys_fall = np.setdiff1d(all_elements, elements_chromossome)
+                citys_fall = np.setdiff1d(citys_fall, chromossome[i])
+                chromossome_generate = self.__trata_crhomossomo(chromossome[i])
+
+                idx_best = 0
+                value_best = 0
+                if citys_fall.size > 0:
+                    if citys_fall.size > 1:
+                        city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+                    else:
+                        city_rmv = 0
+                    idx_best = np.random.randint(chromossome_generate.size - 1, size=1) if chromossome_generate.size > 2 else 0
+                    element_insert = citys_fall[city_rmv]
+
+                    chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
+                    elements_chromossome = np.insert(elements_chromossome, 0, element_insert)
+                    # elements_chromossome = np.concatenate([elements_chromossome, element_insert])
+
+                chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+
+                resultado[i] = chromossome_generate
+            else:
+                resultado[i] = chromossome[i]
+
+        return resultado
+
+    def insert_points_TOP_3(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        elements_chromossome = np.array([])
+        resultado = [0]*len(chromossome)
+
+        for i in chromossome:
+            try:
+                tmp = self.__trata_crhomossomo(i)
+            except:
+                print(chromossome)
+                raise
+            elements_chromossome = np.concatenate([elements_chromossome, tmp])
+
+
+        range_chormosome = np.arange(len(chromossome))
+        np.random.shuffle(range_chormosome)
+
+        for i in range_chormosome:
+            coust = med_custo(chromossome[i])
+            # if coust < self.max_coust[i]:
+
+            citys_fall = np.setdiff1d(all_elements, elements_chromossome)
+            citys_fall = np.setdiff1d(citys_fall, chromossome[i])
+            chromossome_generate = self.__trata_crhomossomo(chromossome[i])
+
+            idx_best = 0
+            value_best = 0
+            if citys_fall.size > 0:
+                if citys_fall.size > 1:
+                    city_rmv = np.random.randint(citys_fall.size - 1, size=1)
+                else:
+                    city_rmv = 0
+                idx_best = np.random.randint(chromossome_generate.size - 1, size=1) if chromossome_generate.size > 2 else 0
+                element_insert = citys_fall[city_rmv]
+
+                chromossome_generate = np.insert(chromossome_generate, idx_best, element_insert)
+                elements_chromossome = np.insert(elements_chromossome, 0, element_insert)
+                # elements_chromossome = np.concatenate([elements_chromossome, element_insert])
+
+            chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+
+            resultado[i] = chromossome_generate
+            # else:
+            #     resultado[i] = chromossome[i]
+
+        return resultado
+
+
+    def insert_points_TOP_4(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome,
+                          probabilidade_mut):
+
+        elements_chromossome = np.array([])
+        resultado = [0]*len(chromossome)
+
+        for i in chromossome:
+            elements_chromossome = np.concatenate([elements_chromossome, i[1:-1]])
+
+        if elements_chromossome.size > np.unique(elements_chromossome).size:
+            print('aqui')
+
+
+        range_chormosome = np.arange(len(chromossome))
+        np.random.shuffle(range_chormosome)
+        indices = np.isin(all_elements, elements_chromossome, invert=True)
+        citys_fall = all_elements[indices]
+
+        cromossome_temp = chromossome
+        all_elements_cromossomo = np.array([])
+
+        for i in range_chormosome:
+
+            chromossome_generate = cromossome_temp[i]
+            for j in range(3):
+                prob = np.random.uniform(0, 1, 1)
+
+                custo_inicial = med_custo(chromossome_generate)
+                inds = np.isin(chromossome_generate, all_elements_cromossomo, invert=True)
+                chromossome_generate = chromossome_generate[inds]
+                if len(chromossome_generate) == 0:
+                    pass
+
+                if prob <= probabilidade_mut:
+                    fitness_inicial = function_insert_remove(chromossome_generate)
+                    chromossome_generate = self.__trata_crhomossomo(chromossome_generate)
+
+                    if custo_inicial >= self.max_coust[i] * 0.99:
+                        ind = np.arange(chromossome_generate.size)
+                        np.random.shuffle(ind)
+                        if len(ind) != 0:
+                            ind = ind[0]
+                            vertice = chromossome_generate[ind].astype(int)
+                            distancias = citys_fall
+                            vizinhos = self.distance[vertice][distancias]
+                            if vizinhos.size > 0:
+                                indice_menor_vizinho = np.argmin(vizinhos)
+                                menor_vizinho = citys_fall[indice_menor_vizinho]
+                                new_gene = np.insert(chromossome_generate, ind,menor_vizinho)
+                                new_gene = np.delete(new_gene, ind+1)
+                                custo_new_gene = function_insert_remove(new_gene)
+                                if fitness_inicial >= custo_new_gene:
+                                    custo_atual = med_custo(chromossome_generate)
+                                    chromossome_generate = np.copy(new_gene)
+                                    citys_fall = np.delete(citys_fall, indice_menor_vizinho)
+                        else:
+                            elemento =np.copy(citys_fall[ind[0]])
+                            citys_fall = np.delete(citys_fall, 0)
+                            chromossome_generate = np.insert(chromossome_generate, 0, elemento)
+
+
+                    else:
+                        if citys_fall.size > 0:
+                            if citys_fall.size >= chromossome_generate.size:
+                                ind = np.arange(chromossome_generate.size)
+                            else:
+                                ind = np.arange(citys_fall.size)
+                            np.random.shuffle(ind)
+                            if len(ind) == 0:
+                                ind = [0]
+                            elemento = np.copy(citys_fall[ind[0]])
+                            citys_fall = np.delete(citys_fall, ind)
+
+                            if len(ind) == 0:
+                                custo_melhor = None
+                                for j in range(chromossome_generate.size):
+                                    gene_temp = np.insert(chromossome_generate, j, elemento)
+                                    custo_temp = function_insert_remove(gene_temp)
+                                    if custo_melhor is None:
+                                        custo_melhor = custo_temp
+                                        gene_melhor = np.copy(gene_temp)
+                                    elif custo_melhor > custo_temp:
+                                        custo_melhor = custo_temp
+                                        gene_melhor = np.copy(gene_temp)
+                            else:
+                                gene_melhor = np.insert(chromossome_generate, 0, elemento)
+
+                            chromossome_generate = np.copy(gene_melhor)
+                    chromossome_generate = self.__corrige_chromossomo(chromossome_generate)
+                custo_inicial = med_custo(chromossome_generate)
+                if custo_inicial >= self.max_coust[i] *0.99:
+                    while custo_inicial >= self.max_coust[i] *0.99:
+
+                        individual = np.copy(chromossome_generate)
+
+                        coust = med_custo(chromossome_generate)
+                        individual = self.__trata_crhomossomo(individual)
+
+                        idx_worst = -1
+                        value_worst = None
+                        for j in range(individual.size):
+                            tmp = np.copy(individual)
+                            tmp = np.delete(tmp, [j])
+
+                            tmp_coust = function_insert_remove(self.__corrige_chromossomo(tmp))
+                            tmp_c = med_custo(self.__corrige_chromossomo(tmp))
+
+                            if value_worst is None:
+                                idx_worst = j
+                                value_worst = tmp_coust
+                                t = tmp_c
+
+                            elif value_worst > tmp_coust:
+                                idx_worst = j
+                                value_worst = tmp_coust
+                                t = tmp_c
+
+                        individual = np.delete(individual, [idx_worst])
+                        chromossome_generate = self.__corrige_chromossomo(individual)
+
+
+
+                        custo_inicial = med_custo(chromossome_generate)
+
+            temp = chromossome_generate[1:-1]
+            all_elements_cromossomo = np.concatenate([all_elements_cromossomo, temp])
+
+            resultado[i] = np.copy(chromossome_generate)
+
+        return resultado
+
+    def swap_points_TOP(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome,
+                          probabilidade_mut, distance):
+
+        elements_chromossome = np.array([])
+        resultado = [0]*len(chromossome)
+
+        for i in chromossome:
+            elements_chromossome = np.concatenate([elements_chromossome, i[1:-1]])
+
+        if elements_chromossome.size > np.unique(elements_chromossome).size:
+            print('aqui')
+
+
+
+        return resultado
+
+
+    def remove_points_TOP(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust > self.max_coust[i]:
+                chromossome[i] = self.remove_pior_custo_2(chromossome[i],
+                                                          med_custo,
+                                                          function_insert_remove,
+                                                          self.max_coust[i])
+
+        return chromossome
+
+    def remove_points_TOP_2(self,
+                          med_custo,
+                          function_insert_remove,
+                          all_elements,
+                          chromossome):
+
+        for i in range(len(chromossome)):
+            coust = med_custo(chromossome[i])
+
+            if coust > self.max_coust[i]:
+                chromossome[i] = self.remove_pior_custo_2(chromossome[i],
+                                                          med_custo,
+                                                          function_insert_remove,
+                                                          self.max_coust[i])
+
+        return chromossome
+
+    # def SWGLM(self, City, med_custo):
+    #     value_worst = 0
+    #     index_worst = 0
+    #     individual = self.__trata_crhomossomo(City)
+
+    def PMX_mutation(self, parent_1_tmp, parent_2_tmp, all_elements_1, all_elements_2):
+        start_parent_1 = np.array([parent_1_tmp[0]])
+        end_parent_1 = np.array([parent_1_tmp[-1]])
+        start_parent_2 = np.array([parent_2_tmp[0]])
+        end_parent_2 = np.array([parent_2_tmp[-1]])
+
+        parent_1 = np.delete(parent_1_tmp, [0, parent_1_tmp.size - 1])
+        parent_2 = np.delete(parent_2_tmp, [0, parent_2_tmp.size - 1])
+
+        all_elemnts = np.unique(np.concatenate([parent_1, parent_2]))
+
+        if parent_1.size > 1 and parent_2.size > 1:
+
+            self.__point_mutation_2(parent_1, parent_2)
+            offspring_1 = np.ones(parent_1.size).astype(int) * -1
+            offspring_2 = np.ones(parent_2.size).astype(int) * -1
+            offspring_1[self.I:self.J] = parent_2[self.I:self.J]
+            offspring_2[self.I:self.J] = parent_1[self.I:self.J]
+
+            for i in np.arange(offspring_1.size):
+                if i < self.I or i >= self.J:
+                    if parent_1[i] not in offspring_1:
+                        offspring_1[i] = parent_1[i]
+
+            for i in np.arange(offspring_2.size):
+                if i < self.I or i > self.J:
+                    if parent_2[i] not in offspring_2:
+                        offspring_2[i] = parent_2[i]
+
+            index_fall_1 = np.where(offspring_1 == -1)[0]
+            index_fall_2 = np.where(offspring_2 == -1)[0]
+            #
+            # elements_1 = list()
+            # for value in range(parent_1.size):
+            #     if parent_1[value] not in offspring_1:
+            #         elements_1.append(parent_1[value])
+
+
+            # elements_1 = np.array(elements_1)
+
+            # elements_2 = list()
+            # for value in range(parent_2.size):
+            #     if parent_2[value] not in offspring_2:
+            #         elements_2.append(parent_2[value])
+            #
+            # elements_2 = np.array(elements_2)
+
+
+            # elements_tmp = np.setdiff1d(parent_1, offspring_1)
+            # elements_tmp2 = np.setdiff1d(parent_2, offspring_2)
+            # test = np.setdiff1d(np.concatenate([elements_tmp, elements_tmp2]), offspring_1)
+            # test2 = np.setdiff1d(all_elemnts, offspring_2)
+            # test2 = np.setdiff1d(test2, offspring_1)
+
+            # if (all_elements_1.size > 0):
+            #     elements_1 = np.setdiff1d(elements_1, all_elements_1)
+            #     test2 = np.setdiff1d(test2, all_elements_2)
+            #     if elements_1.size < index_fall_1.size:
+            #         index_fall_1 = index_fall_1[:elements_1.size]
+            #     if test2.size < index_fall_2.size:
+            #         index_fall_2 = index_fall_2[:test2.size]
+
+            # offspring_1[index_fall_1] = np.array(elements_1[:index_fall_1.size])
+            # offspring_1 = offspring_1[offspring_1 != -1]
+            #
+            # if test2.size == 0 or index_fall_2.size == 0:
+            #     offspring_2 = offspring_2[offspring_2 != -1]
+            # elif test2.size < index_fall_2.size:
+            #     offspring_2[index_fall_2[:test2.size]] = np.array(test2)
+            #     offspring_2 = offspring_2[offspring_2 !=-1]
+            # else:
+            #     offspring_2[index_fall_2] = np.array(test2[:index_fall_2.size])
+            #     # offspring_2 = test2[test2 != -1]
+
+
+
+            elements_1_teste = np.setdiff1d(all_elemnts, offspring_1)
+            elements_2_teste = np.setdiff1d(all_elemnts, offspring_2)
+
+            # offspring_1[offspring_1 == -1] = elements_1_teste[:offspring_1[offspring_1 == -1].size]
+
+            if elements_1_teste.size == 0:
+                offspring_1 = offspring_1[offspring_1 != -1]
+            elif elements_1_teste.size < offspring_1[offspring_1 == -1].size:
+                indixes = np.where(offspring_1 == -1)[0]
+                offspring_1[indixes[:elements_1_teste.size]] = elements_1_teste
+                offspring_1 = offspring_1[offspring_1 != -1]
+            else:
+                offspring_1[offspring_1 == -1] = elements_1_teste[:offspring_1[offspring_1 == -1].size]
+
+            elements_2_teste = np.setdiff1d(elements_2_teste, offspring_1)
+
+            if elements_2_teste.size == 0:
+                offspring_2 = offspring_2[offspring_2 !=-1]
+            elif elements_2_teste.size < offspring_2[offspring_2 == -1].size:
+                indixes = np.where(offspring_2 == -1)[0]
+                offspring_2[indixes[:elements_2_teste.size]] = elements_2_teste
+                offspring_2 = offspring_2[offspring_2 !=-1]
+            else:
+                offspring_2[offspring_2 == -1] = elements_2_teste[:offspring_2[offspring_2 == -1].size]
+
+            elements_1_teste = np.setdiff1d(all_elemnts, elements_1_teste)
+
+            if True in np.isin(offspring_1, all_elements_1) or True in np.isin(offspring_2, all_elements_2):
+                offspring_1 = np.setdiff1d(offspring_1, all_elements_1)
+                offspring_2 = np.setdiff1d(offspring_2, all_elements_2)
+
+        else:
+            offspring_1 = parent_1
+            offspring_2 = parent_2
+
+        if np.intersect1d(offspring_1, offspring_2).size > 0:
+            offspring_1 = offspring_1[np.isin(offspring_1, offspring_2, invert=True)]
+
+        offspring_1 = np.concatenate([start_parent_1, offspring_1, end_parent_1])
+        offspring_2 = np.concatenate([start_parent_2, offspring_2, end_parent_2])
+
+        return offspring_1.astype(int), offspring_2.astype(int)

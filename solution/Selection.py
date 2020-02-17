@@ -29,6 +29,24 @@ class Selection:
 
         return parents_selected.astype(int)
 
+    def probabilidade(self, number_parents, population_cousts, z):
+        x = np.copy(population_cousts)
+        x.sort()
+        y = int(number_parents/z)
+        count = 0
+        a = np.array([])
+        for i in range(z):
+            count_end = count + y
+            if i < z-1:
+                a = np.concatenate([a, x[count:count_end]])
+            else:
+                a = np.concatenate([a, x[count:-1]])
+            count = count_end
+
+        return np.array(a)
+    #
+
+
 
 
 if __name__ == '__main__':
