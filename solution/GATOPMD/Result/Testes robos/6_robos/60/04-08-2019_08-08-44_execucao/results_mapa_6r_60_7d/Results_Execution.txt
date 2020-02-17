@@ -1,1 +1,0 @@
-Cenario: GATOPMD/mapas/artigo/mapa_6r_60_7d.txt

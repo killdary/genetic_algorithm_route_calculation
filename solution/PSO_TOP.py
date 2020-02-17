@@ -224,7 +224,7 @@ class PSO:
                      pos_y[i],
                      'C' + str(i),
                      lw=5,
-                     label='agente ' + str(i + 1),
+                     label='robot ' + str(i + 1),
                      zorder=1)
 
         plt.rc('font', size=font_size)
@@ -232,9 +232,9 @@ class PSO:
         plt.xlabel("X")
         plt.ylabel("Y")
 
-        plt.scatter(self.map_points[cid_nome, 0], self.map_points[cid_nome, 1], s=120, marker="s", zorder=2, label='waypoint')
+        plt.scatter(self.map_points[cid_nome, 0], self.map_points[cid_nome, 1], s=120, marker="s", zorder=2)
 
-        plt.scatter(self.map_points[self.depositos,0], self.map_points[self.depositos,1], s=150,marker='^', zorder=3, c='black', label='depósito')
+        plt.scatter(self.map_points[self.depositos,0], self.map_points[self.depositos,1], s=150,marker='^', zorder=3, c='black')
 
         plt.legend(loc='lower left',bbox_to_anchor=(0,1.02,1,0.2),ncol=4, mode='expand')
 
@@ -249,7 +249,7 @@ class PSO:
         #     plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
 
         for i in self.depositos:
-            plt.annotate('dep.', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
+            plt.annotate('base', (x[i] - 0.01, y[i] + 0.3), fontsize=font_size)
 
         #        plt.title('Mapa GA')
         # plt.margins(0.05)
@@ -268,6 +268,7 @@ class PSO:
     def run(self):
 
         self.gbest = min(self.particles,  key=attrgetter('finess_total'))
+        self.primeiro = self.particles
         for t in range(self.iterations):
 
             if t%10 == 0:
@@ -357,12 +358,13 @@ class PSO:
                     if best_particle.finess_total < self.particles[ind_p].finess_total:
                         self.particles[ind_p] = best_particle
 
-        return self.gbest
+        self.ultimo = self.particles
+        return self.gbest, self.primeiro, self.ultimo
 
 if __name__ == '__main__':
     p = PSO(
         map_points='GATOPMD/mapas/artigo/mapa_4r_40_1d.txt',
-        iterations=1000,
+        iterations=300,
         size_population=100,
         beta=.3,
         alfa=.8,

@@ -307,8 +307,8 @@ class Population:
 
                 chromossome[n_ag] = np.concatenate([[self.start[n_ag]], chromossome[n_ag], [self.end[n_ag]]])
 
-            if 0 not in chromossome[0]:
-                print('falha')
+            # if 0 not in chromossome[0]:
+            #     print('falha')
 
             new_population.append(chromossome)
 
